@@ -23,6 +23,7 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " Plug 'https://github.com/kassio/neoterm' " terminal
 Plug 'https://github.com/sheerun/vim-polyglot' "polygot
 Plug 'https://github.com/joshdick/onedark.vim' " onedark
+Plug 'mangeshrex/everblush.vim' "everblush
 
 set encoding=UTF-8
 
@@ -43,6 +44,6 @@ map K ~
 
 
 syntax on
-colorscheme onedark
+colorscheme everblush
 
 map K 
