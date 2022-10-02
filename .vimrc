@@ -7,7 +7,9 @@ set nu rnu
 :set softtabstop=4
 :set mouse=a
 
-
+let mapleader = ";"
+set clipboard=unnamedplus
+" you have to :CocInstall coc-rust-analyzer
 call plug#begin()
 
 Plug 'https://github.com/preservim/nerdtree' " NerdTree
@@ -29,10 +31,30 @@ set encoding=UTF-8
 
 call plug#end()
 
-nnoremap <C-f> :NERDTreeFocus<CRo>
+function! s:show_documentation()
+	if &filetype == 'vim' 
+		execute 'h '.expand('<cword>')
+	else 
+		call CocAction('doHover')
+	endif
+endfunction
+
+
+nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-p> :CtrlP<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+inoremap <M-BS> <C-o>db
+
+nnoremap <leader>y "+y
+nnoremap <leader>p "+p
 
 map H ^
 map L $
@@ -47,3 +69,4 @@ syntax on
 colorscheme everblush
 
 map K 
+
