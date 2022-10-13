@@ -86,6 +86,7 @@ nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gi <Plug>(coc-implementation)
 nnoremap <silent> gh :call <SID>show_documentation()<CR>
+nmap <leader>qf <Plug>(coc-fix-current)
 
 " ###########################################################
 
