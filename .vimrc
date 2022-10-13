@@ -33,11 +33,15 @@ Plug 'https://github.com/sheerun/vim-polyglot' "polygot
 Plug 'https://github.com/joshdick/onedark.vim' " onedark
 Plug 'mangeshrex/everblush.vim' "everblush
 Plug 'https://github.com/alisdair/vim-armasm' "asm syntax
+Plug 'https://github.com/ARM9/arm-syntax-vim'
+Plug 'https://github.com/christoomey/vim-tmux-navigator'
 
 set encoding=UTF-8
 
 call plug#end()
 
+
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
 " COC Configuration
 
