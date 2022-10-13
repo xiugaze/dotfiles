@@ -31,10 +31,12 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " Plug 'https://github.com/kassio/neoterm' " terminal
 Plug 'https://github.com/sheerun/vim-polyglot' "polygot
 Plug 'https://github.com/joshdick/onedark.vim' " onedark
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'mangeshrex/everblush.vim' "everblush
 Plug 'https://github.com/alisdair/vim-armasm' "asm syntax
 Plug 'https://github.com/ARM9/arm-syntax-vim'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 set encoding=UTF-8
 
@@ -115,8 +117,8 @@ map K ~
 map <leader>j <C-w>w
 
 syntax on
-colorscheme everblush
-
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 
 map <leader>l :tabn<CR>
 map <leader>h :tabp<CR>
