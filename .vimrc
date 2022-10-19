@@ -17,11 +17,11 @@ Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'https://github.com/vim-airline/vim-airline' " Status bar
 Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
-
+Plug 'https://github.com/smithbm2316/centerpad.nvim'
 Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 " you have to :CocInstall coc-rust-analyzer
 Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
-
+Plug 'https://github.com/bling/vim-bufferline'
 Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
@@ -148,6 +148,8 @@ syntax on
 colorscheme one
 set background=dark
 let g:airline_theme='onehalfdark'
+
+nnoremap <silent><leader>z <cmd>Centerpad<cr>
 
 map <leader>l :tabn<CR>
 map <leader>h :tabp<CR>
