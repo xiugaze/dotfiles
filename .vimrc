@@ -12,7 +12,7 @@ let mapleader = ";"
 
 
 call plug#begin()
-
+Plug 'lervag/vimtex'
 Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'https://github.com/vim-airline/vim-airline' " Status bar
@@ -39,6 +39,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'vim-airline/vim-airline-themes' "
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 
 set encoding=UTF-8
 
@@ -49,14 +50,14 @@ lua << EOF
   }
 EOF
 
-au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7"
 
 " COC Configuration
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.'
+" other plugin before putting this into your config.
 
 
 
@@ -153,4 +154,7 @@ nnoremap <silent><leader>z <cmd>Centerpad<cr>
 
 map <leader>l :tabn<CR>
 map <leader>h :tabp<CR>
+
+let g:vimtex_view_method = 'zathura'
+let g:tex_flavor = 'latex'
 
