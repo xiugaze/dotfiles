@@ -158,3 +158,4 @@ map <leader>h :tabp<CR>
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor = 'latex'
 
+" coc langauges: rust, python, tsserver, nue
