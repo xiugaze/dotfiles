@@ -12,6 +12,7 @@ let mapleader = ";"
 
 
 call plug#begin()
+Plug 'mattn/emmet-vim'
 Plug 'lervag/vimtex'
 Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
@@ -40,6 +41,14 @@ Plug 'vim-airline/vim-airline-themes' "
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
+
+"snippets
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+
+" Optional:
+Plug 'honza/vim-snippets'
 
 set encoding=UTF-8
 
