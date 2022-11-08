@@ -1,8 +1,11 @@
 local servers = {
-	-- "sumneko_lua",
-	-- "pyright",
-	-- "jsonls",
+	"sumneko_lua",
+	"pyright",
 	-- "rust_analyzer",
+	-- handled by rust tools
+	"volar",
+	"tsserver",
+	"asm_lsp", 
 }
 
 local settings = {
