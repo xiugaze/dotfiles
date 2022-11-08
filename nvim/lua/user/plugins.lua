@@ -125,6 +125,9 @@ return packer.startup(function(use)
         require('crates').setup()
     end,
 } 
+	
+	-- assembly
+	use 'ARM9/arm-syntax-vim'
 
 
 
