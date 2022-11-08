@@ -70,10 +70,6 @@ return packer.startup(function(use)
   -- some colorschemes 
   use 'lunarvim/colorschemes'
   use 'rakr/vim-one'
-  use {
-    "simrat39/rust-tools.nvim",
-    ft = { "rust", "rs" },
-  }
 
   -- autocompletion
   use 'neovim/nvim-lspconfig'
@@ -84,7 +80,6 @@ return packer.startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lua'
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "Saecki/crates.nvim"       -- rust crate dependencies
   use 'ray-x/cmp-treesitter'
 
   -- snippets
@@ -119,6 +114,17 @@ return packer.startup(function(use)
 		end
 	}
 
+  -- rust
+  use "simrat39/rust-tools.nvim"
+  
+ use {
+    'saecki/crates.nvim',
+    tag = 'v0.3.0',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+        require('crates').setup()
+    end,
+} 
 
 
 

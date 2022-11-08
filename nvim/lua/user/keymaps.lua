@@ -26,8 +26,8 @@ keymap("", "<leader>y", "\"+y", opts)
 keymap("", "<leader>p", "\"+p", opts)
 
 -- jump to end of line
-keymap("n", "H", "^", opts)
-keymap("n", "L", "$", opts)
+keymap("", "H", "^", opts)
+keymap("", "L", "$", opts)
 
 -- end of word
 keymap("n", "E", "ge", opts)
