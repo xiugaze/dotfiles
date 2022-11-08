@@ -54,6 +54,7 @@ set encoding=UTF-8
 
 call plug#end()
 
+" TODO: this needs to get aded
 lua << EOF
   require("todo-comments").setup {
   }
