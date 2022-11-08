@@ -66,9 +66,6 @@ return packer.startup(function(use)
   -- navigate around panes in tmux and vim
   -- must be installed in tmuxconf, look at git repo if any issues
   use 'christoomey/vim-tmux-navigator'
-
-  -- highlight TODO comments
-  use 'folke/todo-comments.nvim'
  
   -- some colorschemes 
   use 'lunarvim/colorschemes'
@@ -107,6 +104,20 @@ return packer.startup(function(use)
   -- nvimtree
   use 'nvim-tree/nvim-tree.lua'
   use 'nvim-tree/nvim-web-devicons'
+
+  -- comments
+ use 'terrortylor/nvim-comment'
+	use {
+	  "folke/todo-comments.nvim",
+	  requires = "nvim-lua/plenary.nvim",
+	  config = function()
+		require("todo-comments").setup()
+		  -- your configuration comes here
+		  -- or leave it empty to use the default settings
+		  -- refer to the configuration section below
+		
+		end
+	}
 
 
 

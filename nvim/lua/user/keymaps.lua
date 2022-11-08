@@ -33,9 +33,9 @@ keymap("n", "L", "$", opts)
 keymap("n", "E", "ge", opts)
 
 -- capitalize selection
---keymap("n", "K", "~h", opts)
---keymap("v", "K", "~", opts)
---keymap("x", "K", "~", opts)
+keymap("n", "K", "~h", opts)
+keymap("v", "K", "~", opts)
+keymap("x", "K", "~", opts)
 
 -- navigate tabs with leader l and h
 keymap("", "<leader>l", ":tabn<CR>", opts)
