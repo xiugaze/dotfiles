@@ -73,7 +73,10 @@ return packer.startup(function(use)
   -- some colorschemes 
   use 'lunarvim/colorschemes'
   use 'rakr/vim-one'
-
+  use {
+    "simrat39/rust-tools.nvim",
+    ft = { "rust", "rs" },
+  }
 
   -- autocompletion
   use 'neovim/nvim-lspconfig'
@@ -94,7 +97,6 @@ return packer.startup(function(use)
   -- lsp:
   use "williamboman/mason.nvim" -- simple to use language server installer
   use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
-  use 'simrat39/rust-tools.nvim'
 
   -- autopairs
   use "windwp/nvim-autopairs"
