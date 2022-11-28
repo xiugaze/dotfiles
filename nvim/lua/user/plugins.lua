@@ -95,6 +95,8 @@ return packer.startup(function(use)
 
   -- gitsigns
   use 'lewis6991/gitsigns.nvim'
+  -- indent lines
+  use 'lukas-reineke/indent-blankline.nvim'
 
   -- nvimtree
   use 'nvim-tree/nvim-tree.lua'
