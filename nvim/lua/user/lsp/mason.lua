@@ -1,7 +1,7 @@
 local servers = {
 	"sumneko_lua",
 	"pyright",
-	-- "rust_analyzer",
+	"rust_analyzer",
 	-- handled by rust tools
 	"volar",
 	"tsserver",

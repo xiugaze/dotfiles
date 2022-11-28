@@ -10,6 +10,6 @@ require "user.autopairs"
 require "user.gitsigns"
 require "user.nvim-tree"
 require "user.nvim-comment"
-require "user.rust-tools"
+--require "user.rust-tools"
 require "user.indent-blankline"
 

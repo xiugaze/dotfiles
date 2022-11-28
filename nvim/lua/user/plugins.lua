@@ -117,7 +117,7 @@ return packer.startup(function(use)
 	}
 
   -- rust
-  use "simrat39/rust-tools.nvim"
+  --use "simrat39/rust-tools.nvim"
   
  use {
     'saecki/crates.nvim',
