@@ -8,6 +8,7 @@ local servers = {
 	-- "asm_lsp", 
 	"html", 
 	"cssls", 
+	"clangd",
 
 }
 
