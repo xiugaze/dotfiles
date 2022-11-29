@@ -5,7 +5,7 @@ local servers = {
 	-- handled by rust tools
 	"volar",
 	"tsserver",
-	-- "asm_lsp", 
+	"asm_lsp", 
 	"html", 
 	"cssls", 
 	"clangd",
