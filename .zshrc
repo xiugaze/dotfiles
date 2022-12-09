@@ -90,6 +90,7 @@ alias gf='git reflog'
 alias py="python"
 
 
+export PATH="/usr/bin/rg:$PATH"
 
 
 # Load zsh-syntax-highlighting; should be last.
