@@ -144,3 +144,14 @@ cmp.setup {
     native_menu = false,
   },
 }
+
+  cmp.setup.filetype('markdown', {
+    sources = cmp.config.sources({
+      { name = 'luasnip' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'treesitter' },
+    }, {
+	  { name = 'path'}
+
+	})
+  })
