@@ -12,6 +12,7 @@ require "user.nvim-tree"
 require "user.nvim-comment"
 require "user.obsidian-nvim"
 require "user.snippets"
+require "user.vimtex"
 --require "user.rust-tools"
 require "user.indent-blankline"
 
