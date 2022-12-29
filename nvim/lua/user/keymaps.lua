@@ -62,3 +62,9 @@ keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
 
 -- Nvimtree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+
+-- clear / search
+keymap("n", "<leader>k", ":noh<CR>", opts)
+
+
+
