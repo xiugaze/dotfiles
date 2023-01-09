@@ -3,8 +3,7 @@ require("obsidian").setup({
   completion = {
     nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
   },
-  note_frontmatter_func = function(note)
-  end
+  disable_frontmatter = true;
 })
 
 vim.keymap.set(

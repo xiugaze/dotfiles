@@ -119,14 +119,7 @@ return packer.startup(function(use)
 		end
 	}
 
-    use {
-        'glepnir/template.nvim',
-        config = function() 
-            require('template').setup({
-                temp_dir = '~/.config/nvim/templates'
-            })
-        end
-    }
+    use 'glepnir/template.nvim'
     
   -- rust
   --use "simrat39/rust-tools.nvim"

@@ -15,4 +15,5 @@ require "user.snippets"
 require "user.vimtex"
 --require "user.rust-tools"
 require "user.indent-blankline"
+require "user.templates"
 
