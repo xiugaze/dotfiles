@@ -54,6 +54,8 @@ return packer.startup(function(use)
 
 
     -- UTILITIES
+    use {'edluffy/specs.nvim'}
+  -- TreeSitter: don't actually understand what this does, 
 
     -- something something abstract syntax tree
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
