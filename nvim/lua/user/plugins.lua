@@ -53,7 +53,7 @@ return packer.startup(function(use)
     use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
     use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 
------ DEEP UTILS --
+    ----- DEEP UTILS --
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
@@ -81,7 +81,7 @@ return packer.startup(function(use)
     use 'nvim-tree/nvim-tree.lua'
     use 'nvim-tree/nvim-web-devicons'
 
------- SHALLOW UTILS
+    ------ SHALLOW UTILS
     --
     -- autopairs
     use "windwp/nvim-autopairs"
@@ -100,14 +100,17 @@ return packer.startup(function(use)
     }
 
     use 'glepnir/template.nvim'
+    use {'glepnir/dashboard-nvim'}
+    
 
     -- indent lines
     use 'lukas-reineke/indent-blankline.nvim'
+    use 'nanozuki/tabby.nvim'
 
------ LANGUAGES ------
+    ----- LANGUAGES ------
 
     -- lsp:
-    use "williamboman/mason.nvim"           -- simple to use language server installer
+    use "williamboman/mason.nvim" -- simple to use language server installer
     use "williamboman/mason-lspconfig.nvim" -- lspconfig drop in
 
     -- latex support: only on tex filetpes
@@ -116,15 +119,6 @@ return packer.startup(function(use)
     -- rust
 
     use "simrat39/rust-tools.nvim"
-
-
-
-
-
-
-
-
-
     use {
         'saecki/crates.nvim',
         tag = 'v0.3.0',
@@ -159,6 +153,9 @@ return packer.startup(function(use)
         end,
     }
 
+
+
+
     -- PERSONALIZATION
     -- some colorschemes
     use 'lunarvim/colorschemes'
@@ -167,12 +164,19 @@ return packer.startup(function(use)
 
     -- gitsigns
     use 'lewis6991/gitsigns.nvim'
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
+
+
 
     -- ORGANIZATION
     --obsidian
     use 'epwalsh/obsidian.nvim'
-    use {'nvim-orgmode/orgmode', config = function()
-      require('orgmode').setup{}
+    use { 'nvim-orgmode/orgmode', config = function()
+        require('orgmode').setup {}
     end
     }
 
