@@ -17,4 +17,6 @@ require "user.rust-tools"
 require "user.indent-blankline"
 require "user.templates"
 require "user.orgmode"
+require "user.lualine"
+require "user.tabline"
 
