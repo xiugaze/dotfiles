@@ -19,10 +19,10 @@ end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
+    augroup packer_user_config
+        autocmd!
+        autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    augroup end
 ]]
 
 -- Use a protected call so we don't error out on first use
@@ -44,41 +44,27 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
 
-
     -- My plugins here
     use "wbthomason/packer.nvim" -- Have packer manage itself
 
+
+    -- DEPENDENCIES --
     -- a lot of plugins need these two as dependencies
     use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
     use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 
+----- DEEP UTILS --
 
-    -- UTILITIES
-    use {'edluffy/specs.nvim'}
-  -- TreeSitter: don't actually understand what this does, 
-
-    -- something something abstract syntax tree
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-    -- Telescope: Fuzzyfinder
-    use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
-    use { 'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
     -- navigate around panes in tmux and vim
     -- must be installed in tmuxconf, look at git repo if any issues
     use 'christoomey/vim-tmux-navigator'
 
+    use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
+    use { 'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
-
-    -- LANGUAGES
-    --
-    -- latex support: only on tex filetpes
-    use { "lervag/vimtex", ft = { "tex", "lyx" } }
-
-    --  COLORS
-    use 'lunarvim/colorschemes'
-    use 'rakr/vim-one'
 
     -- autocompletion
     use 'neovim/nvim-lspconfig'
@@ -91,27 +77,17 @@ return packer.startup(function(use)
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
     use 'ray-x/cmp-treesitter'
 
-    --obsidian
-    use 'epwalsh/obsidian.nvim'
-
-    -- snippets
-    use 'L3MON4D3/LuaSnip'
-    use 'rafamadriz/friendly-snippets'
-
-    -- lsp:
-    use "williamboman/mason.nvim" -- simple to use language server installer
-    use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
-
-    -- autopairs
-    use "windwp/nvim-autopairs"
-
-    -- gitsigns
-    use 'lewis6991/gitsigns.nvim'
-    -- indent lines
-    use 'lukas-reineke/indent-blankline.nvim'
     -- nvimtree
     use 'nvim-tree/nvim-tree.lua'
     use 'nvim-tree/nvim-web-devicons'
+
+------ SHALLOW UTILS
+    --
+    -- autopairs
+    use "windwp/nvim-autopairs"
+    -- snippets
+    use 'L3MON4D3/LuaSnip'
+    use 'rafamadriz/friendly-snippets'
 
     -- comments
     use 'terrortylor/nvim-comment'
@@ -120,17 +96,37 @@ return packer.startup(function(use)
         requires = "nvim-lua/plenary.nvim",
         config = function()
             require("todo-comments").setup()
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-
         end
     }
 
     use 'glepnir/template.nvim'
 
+    -- indent lines
+    use 'lukas-reineke/indent-blankline.nvim'
+
+----- LANGUAGES ------
+
+    -- lsp:
+    use "williamboman/mason.nvim"           -- simple to use language server installer
+    use "williamboman/mason-lspconfig.nvim" -- lspconfig drop in
+
+    -- latex support: only on tex filetpes
+    use { "lervag/vimtex", ft = { "tex", "lyx" } }
+
     -- rust
-    --use "simrat39/rust-tools.nvim"
+
+
+
+
+    use "simrat39/rust-tools.nvim"
+
+
+
+
+
+
+
+
 
     use {
         'saecki/crates.nvim',
@@ -143,6 +139,49 @@ return packer.startup(function(use)
 
     -- assembly
     use 'ARM9/arm-syntax-vim'
+
+    -- markdown
+    use {
+        'lukas-reineke/headlines.nvim',
+        config = function()
+            require("headlines").setup({
+                markdown = {
+                    headline_highlights = {
+                        "Headline1",
+                        "Headline2",
+                        "Headline3",
+                        "Headline4",
+                        "Headline5",
+                        "Headline6",
+                    },
+                    codeblock_highlight = "CodeBlock",
+                    dash_highlight = "Dash",
+                    quote_highlight = "Quote",
+                },
+            })
+        end,
+    }
+
+    -- PERSONALIZATION
+    -- some colorschemes
+    use 'lunarvim/colorschemes'
+    use 'rakr/vim-one'
+    use 'shaunsingh/nord.nvim'
+
+    -- gitsigns
+    use 'lewis6991/gitsigns.nvim'
+
+    -- ORGANIZATION
+    --obsidian
+    use 'epwalsh/obsidian.nvim'
+    use {'nvim-orgmode/orgmode', config = function()
+      require('orgmode').setup{}
+    end
+    }
+
+
+
+
 
 
 
