@@ -9,6 +9,7 @@ local servers = {
 	"cssls", 
 	"clangd",
     "marksman",
+    "hls"
 
 }
 

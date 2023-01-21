@@ -32,6 +32,11 @@ keymap("", "L", "$", opts)
 -- end of word
 keymap("n", "E", "ge", opts)
 
+
+-- ctrl-backspace
+keymap("i", "<C-BS>", "<C-W>", opts)
+keymap("i", "<C-H>", "<C-W>", opts)
+
 -- capitalize selection
 keymap("n", "K", "~h", opts)
 keymap("v", "K", "~", opts)
