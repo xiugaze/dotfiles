@@ -6,6 +6,7 @@ end
 require("mason").setup()
 require("mason-lspconfig").setup()
 
+
 local rt = require("rust-tools")
 local rust_opts = {
   server  = {
@@ -37,8 +38,19 @@ local rust_opts = {
     settings = {
       ['rust-analyzer'] = {
         checkOnSave = {
-          command = "clippy"
-        }
+          command = "clippy",
+            allTargets = false,
+            extraArgs = {
+                "--target",
+                "thumbv7em-none-eabihf",
+            }
+        },
+
+        allTargets = false,
+        check = {
+            allTargets = false,
+        },
+        target = "thumbv7em-none-eabihf",
       }
     }
   }
