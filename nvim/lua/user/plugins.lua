@@ -119,6 +119,9 @@ return packer.startup(function(use)
     -- rust
 
     use "simrat39/rust-tools.nvim"
+    use "tamago324/nlsp-settings.nvim"
+
+
     use {
         'saecki/crates.nvim',
         tag = 'v0.3.0',
