@@ -56,6 +56,7 @@ return packer.startup(function(use)
     ----- DEEP UTILS --
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use 'vimpostor/vim-tpipeline'
 
     -- navigate around panes in tmux and vim
     -- must be installed in tmuxconf, look at git repo if any issues
@@ -101,7 +102,13 @@ return packer.startup(function(use)
 
     use 'glepnir/template.nvim'
     use {'glepnir/dashboard-nvim'}
-    
+
+    use {
+        'brenoprata10/nvim-highlight-colors',
+        config = function()
+            require('nvim-highlight-colors').setup {}
+        end 
+    }
 
     -- indent lines
     use 'lukas-reineke/indent-blankline.nvim'

@@ -16,41 +16,41 @@ local rust_opts = {
 
       -- Code action groups
       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'gh', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-        vim.keymap.set('n', '<space>wl', function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, bufopts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set("n", "gk", vim.diagnostic.open_float, bufopts)
-        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+        local opts = { noremap = true, silent = true }
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+        -- changed from K
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gqf", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gk", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "gfo", "<cmd>lua vim.lsp.buf.format({async = true})<CR>", opts);
+        vim.api.nvim_buf_set_keymap(
+            bufnr,
+            "n",
+            "gl",
+            '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<CR>',
+            opts
+        )
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+        vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 
     end,
     settings = {
       ['rust-analyzer'] = {
         checkOnSave = {
           command = "clippy",
-            allTargets = false,
-            extraArgs = {
-                "--target",
-                "thumbv7em-none-eabihf",
-            }
         },
 
         allTargets = false,
         check = {
             allTargets = false,
         },
-        target = "thumbv7em-none-eabihf",
       }
     }
   }
