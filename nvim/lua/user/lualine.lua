@@ -1,40 +1,148 @@
+
+local colors = {
+    darkgray = "#16161d",
+    gray = "#727169",
+    innerbg = nil,
+    outerbg = "#16161D",
+    normal = "#7e9cd8",
+    insert = "#98bb6c",
+    visual = "#ffa066",
+    replace = "#e46876",
+    command = "#e6c384",
+}
+
+local theme = {
+        inactive = {
+            a = { fg = colors.gray, bg = colors.outerbg, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+        visual = {
+            a = { fg = colors.darkgray, bg = colors.visual, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+        replace = {
+            a = { fg = colors.darkgray, bg = colors.replace, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+        normal = {
+            a = { fg = colors.darkgray, bg = colors.normal, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+        insert = {
+            a = { fg = colors.darkgray, bg = colors.insert, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+        command = {
+            a = { fg = colors.darkgray, bg = colors.command, gui = "bold" },
+            b = { fg = colors.gray, bg = colors.outerbg },
+            c = { fg = colors.gray, bg = colors.innerbg },
+        },
+}
+
+local empty = require('lualine.component'):extend()
+function empty:draw(default_highlight)
+  self.status = ''
+  self.applied_separator = ''
+  self:apply_highlights(default_highlight)
+  self:apply_section_separators()
+  return self.status
+end
+
+-- Put proper separators and gaps between components in sections
+local function process_sections(sections)
+  for name, section in pairs(sections) do
+    local left = name:sub(9, 10) < 'x'
+    for pos = 1, name ~= 'lualine_z' and #section or #section - 1 do
+      table.insert(section, pos * 2, { empty, color = { fg = colors.white, bg = colors.white } })
+    end
+    for id, comp in ipairs(section) do
+      if type(comp) ~= 'table' then
+        comp = { comp }
+        section[id] = comp
+      end
+      comp.separator = left and { right = '' } or { left = '' }
+    end
+  end
+  return sections
+end
+
+local function search_result()
+  if vim.v.hlsearch == 0 then
+    return ''
+  end
+  local last_search = vim.fn.getreg('/')
+  if not last_search or last_search == '' then
+    return ''
+  end
+  local searchcount = vim.fn.searchcount { maxcount = 9999 }
+  return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
+end
+
+local function modified()
+  if vim.bo.modified then
+    return '+'
+  elseif vim.bo.modifiable == false or vim.bo.readonly == true then
+    return '-'
+  end
+  return ''
+end
+
 require('lualine').setup {
   options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-    }
+    theme = theme,
+    component_separators = '',
+    section_separators = { left = '', right = '' },
   },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+  sections = process_sections {
+    lualine_a = { 'mode' },
+    lualine_b = {
+      'branch',
+      'diff',
+      {
+        'diagnostics',
+        source = { 'nvim' },
+        sections = { 'error' },
+        diagnostics_color = { error = { bg = colors.red, fg = colors.white } },
+      },
+      {
+        'diagnostics',
+        source = { 'nvim' },
+        sections = { 'warn' },
+        diagnostics_color = { warn = { bg = colors.orange, fg = colors.white } },
+      },
+      { 'filename', file_status = false, path = 1 },
+      { modified, color = { bg = colors.red } },
+      {
+        '%w',
+        cond = function()
+          return vim.wo.previewwindow
+        end,
+      },
+      {
+        '%r',
+        cond = function()
+          return vim.bo.readonly
+        end,
+      },
+      {
+        '%q',
+        cond = function()
+          return vim.bo.buftype == 'quickfix'
+        end,
+      },
+    },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = { search_result, 'filetype' },
+    lualine_z = { '%l:%c', '%p%%/%L' },
   },
   inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
+    lualine_c = { '%f %y %m' },
+    lualine_x = {},
   },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
 }
