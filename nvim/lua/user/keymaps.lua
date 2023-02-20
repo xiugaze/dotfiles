@@ -65,11 +65,16 @@ keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 
 -- Telescope
 -- keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
 
 -- Nvimtree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+
+-- tabs
+keymap("n", "<leader>tl", ":tabn<CR>", opts)
+keymap("n", "<leader>th", ":tabp<CR>", opts)
+
 
 -- clear / search
 keymap("n", "<leader>k", ":noh<CR>", opts)
