@@ -11,7 +11,7 @@ local options = {
   cursorline = false,
   expandtab = false,
   fileencoding = "utf-8",
-  foldexpr = "nvim_treesitter#foldexpr()",
+  -- foldexpr = "nvim_treesitter#foldexpr()",
   foldmethod = "manual",
   hidden = true,
   hlsearch = true,
@@ -33,7 +33,9 @@ local options = {
   undofile = true,
   updatetime = 100,
   writebackup = false,
+  laststatus = 0,
 }
+
 
 -- vim.filetype.add {
 --   extension = {

@@ -99,16 +99,34 @@ local servers = {
     },
   },
   rust_analyzer = rust_analyzer,
+  clangd = {},
+  pyright = {},
+  html = {},
+  cssls = {},
+  neocmake = {},
 }
+
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 
 -- Setup mason so it can manage external tooling
-require('mason').setup()
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
 
-mason_lspconfig.setup {
+local settings = {
+   ui = {
+    border = "rounded",
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  },
+}
+
+require('lspconfig.ui.windows').default_options.border = "rounded"
+require('mason').setup(settings)
+-- Ensure the servers above are installed
+require('mason-lspconfig').setup {
   ensure_installed = vim.tbl_keys(servers),
+  automatic_installation = true,
 }
 ---
 local setup_server = function(server, config)

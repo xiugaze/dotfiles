@@ -57,9 +57,17 @@ require('lazy').setup({
   {
     'shaunsingh/nord.nvim',
     config = function()
+      vim.g.nord_contrast = true
+      vim.g.nord_borders = true
+      vim.g.nord_disable_background = false
+      vim.g.nord_italic = false
+      vim.g.nord_uniform_diff_background = true
+      vim.g.nord_bold = true
       vim.cmd.colorscheme 'nord'
+
     end,
   },
+  'rafamadriz/friendly-snippets',
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -73,12 +81,19 @@ require('lazy').setup({
     },
   },
   'vimpostor/vim-tpipeline',
+  {
+    'nvim-orgmode/orgmode',
+    config = function() 
+      require('orgmode').setup_ts_grammar()
+    end
+  },
 
-  -- {'norcalli/nvim-colorizer.lua',
-  --   config = function()
-  --     require('colorizer').setup()
-  --   end
-  -- },
+  {'norcalli/nvim-colorizer.lua',
+    config = function()
+      vim.opt.termguicolors = true;
+      require('colorizer').setup()
+    end
+  },
 
 
   { -- Add indentation guides even on blank lines
@@ -118,6 +133,14 @@ require('lazy').setup({
     end,
   },
 
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("core.nvimtree").setup()
+    end,
+  },
+
+
   { 'simrat39/rust-tools.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -129,6 +152,7 @@ require('lazy').setup({
       },
     },
   },
+
 
   { 'christoomey/vim-tmux-navigator' },
 
@@ -159,6 +183,7 @@ require('telescope').setup {
   },
 }
 
+
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -175,7 +200,10 @@ require('nvim-treesitter.configs').setup {
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
 
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = { 'org' },
+  },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -231,6 +259,12 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+require('orgmode').setup({
+  org_agenda_files = '~/docs/org/*',
+  org_default_notes_file = '~/docs/org/refile.org',
+})
+
 -- Diagnostic keymaps
 vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'g]', vim.diagnostic.goto_next)
