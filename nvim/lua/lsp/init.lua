@@ -103,7 +103,6 @@ local servers = {
   pyright = {},
   html = {},
   cssls = {},
-  neocmake = {},
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
