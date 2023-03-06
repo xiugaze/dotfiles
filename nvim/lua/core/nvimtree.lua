@@ -1,6 +1,28 @@
 local M = {}
 
 function M.config()
+  local function open_nvim_tree(data)
+
+    -- buffer is a [No Name]
+    local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(data.file) == 1
+
+    if not no_name and not directory then
+      return
+    end
+
+    -- change to the directory
+    if directory then
+      vim.cmd.cd(data.file)
+    end
+
+    -- open the tree
+    require("nvim-tree.api").tree.open()
+  end
+
+  vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
   local function telescope_find_files(_)
     require("core.nvimtree").start_telescope "find_files"
   end
@@ -10,19 +32,20 @@ function M.config()
   end
 
   local config = {
+    sync_root_with_cwd = true,
     auto_reload_on_write = false,
-    disable_netrw = false,
+    disable_netrw = true,
     hijack_cursor = false,
     hijack_netrw = true,
-    hijack_unnamed_buffer_when_opening = false,
-    ignore_buffer_on_setup = false,
+    -- hijack_unnamed_buffer_when_opening = false,
+    -- ignore_buffer_on_setup = false,
     sort_by = "name",
-    root_dirs = {},
-    prefer_startup_root = false,
-    sync_root_with_cwd = true,
+    -- root_dirs = {},
+    -- prefer_startup_root = false,
+    -- sync_root_with_cwd = true,
     reload_on_bufenter = false,
     respect_buf_cwd = false,
-    on_attach = "disable",
+    -- on_attach = "disable",
     remove_keymaps = false,
     select_prompts = false,
     view = {
@@ -114,9 +137,11 @@ function M.config()
     },
     update_focused_file = {
       enable = true,
-      debounce_delay = 15,
+      -- debounce_delay = 15,
+      -- update_root = true,
+      -- ignore_list = {},
       update_root = true,
-      ignore_list = {},
+
     },
     diagnostics = {
       enable = true,
@@ -224,7 +249,6 @@ function M.config()
 end
 
 function M.setup()
-
   require('nvim-tree').setup(M.config())
 end
 
