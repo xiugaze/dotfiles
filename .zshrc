@@ -119,3 +119,4 @@ alias org="nvim ~/docs/org/school.org"
 alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
 alias ls='ls --color=auto'
+alias jg="~/src/jiggle.sh"

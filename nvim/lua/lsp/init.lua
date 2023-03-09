@@ -103,6 +103,7 @@ local servers = {
   pyright = {},
   html = {},
   cssls = {},
+  jdtls = {},
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -129,6 +130,8 @@ require('mason-lspconfig').setup {
 }
 ---
 local setup_server = function(server, config)
+  require('lspconfig').ghdl_ls.setup{}
+
   if not config then
     return
   end
