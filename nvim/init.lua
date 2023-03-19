@@ -1,5 +1,6 @@
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
+vim.g.sleuth_org_heuristics = 0
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -91,10 +92,15 @@ require('lazy').setup({
     config = function()
       require('orgmode').setup_ts_grammar()
       require("orgmode").setup({
-        org_agenda_files = { "~/sync/org/**/*" },
-        org_default_notes_file = "~/sync/org/refile.org",
-        org_deadline_warning_days = 5,
-        org_agenda_start_on_weekday = 7,
+        org_agenda_files = { "~/docs/org/**/*" },
+        org_blank_before_new_entry = { false, false },
+        win_split_mode = "float",
+        org_hide_leading_stars = true,
+        org_default_notes_file = "~/docs/org/**/*",
+        org_deadline_warning_days = 7,
+        org_agenda_start_on_weekday = false,
+        org_log_repeat = nil,
+        org_log_done = nil,
         org_highlight_latex_and_related = "native",
         highlight = {
           additional_vim_regex_highlighting = { 'org' },
