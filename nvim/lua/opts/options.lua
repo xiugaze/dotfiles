@@ -2,7 +2,7 @@ local M = {}
 
 local options = {
 
-  clipboard = "unnamedplus",
+  --clipboard = "c,
   -- foldmethod = "expr",
   backup = false,
   breakindent = true,

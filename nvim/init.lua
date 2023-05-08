@@ -209,18 +209,26 @@ require('lazy').setup({
   },
 
 
-  { 'simrat39/rust-tools.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'mfussenegger/nvim-dap',
-      { 'saecki/crates.nvim',
-        config = function()
+  -- { 'simrat39/rust-tools.nvim',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'mfussenegger/nvim-dap',
+  --     { 'saecki/crates.nvim',
+  --       config = function()
+  --         require('crates').setup()
+  --       end
+  --     },
+  --   },
+  -- },
+  --
+  --
+  {
+      'saecki/crates.nvim',
+      config = function()
           require('crates').setup()
-        end
-      },
-    },
+      end,
+      dependencies = { 'nvim-lua/plenary.nvim' },
   },
-
 
   { 'christoomey/vim-tmux-navigator' },
 
@@ -263,7 +271,7 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { d
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = 'all',
+  ensure_installed = 'lua';
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
