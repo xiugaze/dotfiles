@@ -98,6 +98,7 @@ function M.load()
   map("n", "<leader>fh", ts.help_tags, { desc = "[F]ind [H]elp tags" })
   map("n", "<leader>fg", ts.live_grep, { desc = "[F]ind [G]rep" })
   map("n", "<leader>fd", ts.diagnostics, { desc = "[F]ind [D]iagnostics" })
+  map("n", "<leader>ft", ":TodoTelescope<CR>", { desc = "[F]ind [T]odo" })
 
   map('n', '<leader>fo', ts.oldfiles, { desc = '[F]ind recently [O]pened files' })
   map('n', '<leader>f<space>', ts.buffers, { desc = '[F_] Find existing buffers' })

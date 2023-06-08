@@ -118,5 +118,5 @@ source $ZSH/oh-my-zsh.sh
 alias org="nvim ~/docs/org/school.org"
 alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
-alias ls='ls --color=auto'
+alias ls='exa -abghHliS'
 alias jg="~/src/jiggle.sh"

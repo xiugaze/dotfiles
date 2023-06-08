@@ -46,17 +46,53 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+
 -- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
--- rust_analyzer = {
---   cmd = rust_analyzer_cmd,
---   settings = {
---     ["rust-analyzer"] = {
---       checkOnSave = {
---         command = "clippy",
+-- local has_rt, rt = pcall(require, "rust-tools")
+-- if has_rt then
+--   local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
+--   local codelldb_path = extension_path .. "adapter/codelldb"
+--   local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+--   
+--   local rt_binds = function(_, bufnr)
+--       vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
+--       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+--   end
+--
+--   rt.setup {
+--     server = {
+--       cmd = rust_analyzer_cmd,
+--       capabilities = capabilities,
+--       on_attach = function(_, bufnr)
+--         rt_binds(_, bufnr)
+--         on_attach(_, bufnr)
+--       end;
+--     },
+--     dap = {
+--       adapter = nil
+--     },
+--     tools = {
+--       inlay_hints = {
+--         auto = false,
+--       },
+--       hover_actions = {
+--         auto_focus = true,
 --       },
 --     },
---   },
--- }
+--   }
+-- else
+--   rust_analyzer = {
+--     cmd = rust_analyzer_cmd,
+--     settings = {
+--       ["rust-analyzer"] = {
+--         checkOnSave = {
+--           command = "clippy",
+--         },
+--       },
+--     },
+--   }
+-- end
+--
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -69,7 +105,7 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-  rust_analyzer = {},
+  -- rust_analyzer = rust_analyzer,
   clangd = {},
   pyright = {},
   html = {},
@@ -99,10 +135,9 @@ require('mason-lspconfig').setup {
   ensure_installed = vim.tbl_keys(servers),
   automatic_installation = true,
 }
+require('lspconfig').ghdl_ls.setup{}
 ---
 local setup_server = function(server, config)
-  require('lspconfig').ghdl_ls.setup{}
-
   if not config then
     return
   end

@@ -17,17 +17,18 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive', -- git commands
-  'tpope/vim-rhubarb', -- git browse
+  'tpope/vim-rhubarb',  -- git browse
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
-      -- Useful status updates for LSP
+      -- Useful status updates for L)SP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
@@ -36,17 +37,19 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 
-      'hrsh7th/cmp-nvim-lsp', 
-      'hrsh7th/cmp-path', 
-      'L3MON4D3/LuaSnip', 
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip'
     },
   }, -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  { 'folke/which-key.nvim',          opts = {} },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -61,6 +64,15 @@ require('lazy').setup({
   },
 
   {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  {
     'shaunsingh/nord.nvim',
     config = function()
       vim.g.nord_contrast = true
@@ -70,11 +82,11 @@ require('lazy').setup({
       vim.g.nord_uniform_diff_background = true
       vim.g.nord_bold = true
       vim.cmd.colorscheme 'nord'
-
     end,
   },
   'rafamadriz/friendly-snippets',
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -83,6 +95,11 @@ require('lazy').setup({
         theme = 'nord',
         component_separators = '|',
         section_separators = '',
+        ignore_focus = {
+          "dapui_watches", "dapui_breakpoints",
+          "dapui_scopes", "dapui_console",
+          "dapui_stacks", "dap-repl"
+        }
       },
     },
   },
@@ -148,15 +165,13 @@ require('lazy').setup({
           -- end,
           additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
         },
-        ensure_installed = { "org" }, -- Or run :TSUpdate org
+        ensure_installed = { "org" },                    -- Or run :TSUpdate org
       })
-
-
-
     end
   },
 
-  { 'norcalli/nvim-colorizer.lua',
+  {
+    'norcalli/nvim-colorizer.lua',
     config = function()
       vim.opt.termguicolors = true;
       require('colorizer').setup()
@@ -164,7 +179,8 @@ require('lazy').setup({
   },
 
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     opts = {
       char = '┊',
@@ -173,7 +189,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -191,7 +207,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -209,18 +226,34 @@ require('lazy').setup({
   },
 
 
-  { 'simrat39/rust-tools.nvim',
+  {
+    'simrat39/rust-tools.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'mfussenegger/nvim-dap',
-      { 'saecki/crates.nvim',
-        config = function()
-          require('crates').setup()
-        end
-      },
     },
   },
+  --
+  --
+  {
+    'saecki/crates.nvim',
+    config = function()
+      require('crates').setup()
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
 
+  {
+    'rcarriga/nvim-dap-ui',
+    dependencies = {
+      {
+        'mfussenegger/nvim-dap',
+        config = function()
+          require("core.dap")
+        end,
+      }
+    }
+  },
 
   { 'christoomey/vim-tmux-navigator' },
 
@@ -263,7 +296,7 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { d
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = 'all',
+  ensure_installed = 'lua',
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
@@ -341,6 +374,7 @@ vim.keymap.set('n', '<leader>sll', vim.diagnostic.setloclist)
 
 require('lsp')
 require('lsp.cmp')
+require('core.rust-tools')
 
 -- nvim-cmp setup
 
