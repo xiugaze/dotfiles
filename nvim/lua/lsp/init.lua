@@ -46,59 +46,30 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
-local has_rt, rt = pcall(require, "rust-tools")
-if has_rt then
-  -- local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
-  -- local codelldb_path = extension_path .. "adapter/codelldb"
-  -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-
-  rt.setup {
-    server = {
-      cmd = rust_analyzer_cmd,
-      capabilities = capabilities,
-      on_attach = on_attach 
-    },
-    -- dap = {
-    --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-    -- },
-    tools = {
-      inlay_hints = {
-        auto = false,
-      },
-    },
-  }
-else
-  rust_analyzer = {
-    cmd = rust_analyzer_cmd,
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy",
-        },
-      },
-    },
-  }
-end
-
+-- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
+-- rust_analyzer = {
+--   cmd = rust_analyzer_cmd,
+--   settings = {
+--     ["rust-analyzer"] = {
+--       checkOnSave = {
+--         command = "clippy",
+--       },
+--     },
+--   },
+-- }
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
   },
-  rust_analyzer = rust_analyzer,
+  rust_analyzer = {},
   clangd = {},
   pyright = {},
   html = {},
