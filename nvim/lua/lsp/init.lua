@@ -1,142 +1,139 @@
+-- This file configures mason, lspconfig, and nvim-cmp
 
-local on_attach = function(_, bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
+require('lsp.telescope')
+require('lsp.treesitter')
+require('lsp.cmp')
+
+local lspconfig = vim.F.npcall(require, "lspconfig")
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>di', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+local custom_attach = function(client, bufnr)
+    local nmap = function(keys, func, desc)
+        if desc then
+            desc = 'LSP: ' .. desc
+        end
+
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
+    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+    nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
+    -- See `:help K` for why this keymap
+    nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('gH', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    -- Lesser used LSP functionality
+    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    nmap('<leader>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, '[W]orkspace [L]ist Folders')
 
-  -- See `:help K` for why this keymap
-  nmap('gh', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-  nmap('<leader>gfo', ':Format<CR>', '[G]et [Fo]rmat')
-
+    -- Create a command `:Format` local to the LSP buffer
+    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+        vim.lsp.buf.format()
+    end, { desc = 'Format current buffer with LSP' })
 end
 
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
+updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
+
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
+local has_rt, rt = pcall(require, "rust-tools")
+if has_rt then
+    rt.setup {
+        server = {
+            cmd = rust_analyzer_cmd,
+            capabilities = updated_capabilities,
+            on_attach = function(_, bufnr)
+                custom_attach(_, bufnr)
+
+                -- Hover actions
+                vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+                -- Code action groups
+                vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+            end,
+        },
+        -- dap = {
+        --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+        -- },
+        tools = {
+            inlay_hints = {
+                auto = false,
+            },
+        },
+    }
+else
+    rust_analyzer = {
+        cmd = rust_analyzer_cmd,
+        settings = {
+            ["rust-analyzer"] = {
+                checkOnSave = {
+                    command = "clippy",
+                },
+            },
+        },
+    }
+end
+local servers = {
+    -- clangd = {},
+    -- gopls = {},
+    -- pyright = {},
+    rust_analyzer = rust_analyzer,
+    -- tsserver = {},
+
+    lua_ls = {
+        Lua = {
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+        },
+    },
+}
 
 -- Setup neovim lua configuration
 require('neodev').setup()
 
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-
--- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
--- local has_rt, rt = pcall(require, "rust-tools")
--- if has_rt then
---   local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
---   local codelldb_path = extension_path .. "adapter/codelldb"
---   local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
---   
---   local rt_binds = function(_, bufnr)
---       vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
---       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
---   end
---
---   rt.setup {
---     server = {
---       cmd = rust_analyzer_cmd,
---       capabilities = capabilities,
---       on_attach = function(_, bufnr)
---         rt_binds(_, bufnr)
---         on_attach(_, bufnr)
---       end;
---     },
---     dap = {
---       adapter = nil
---     },
---     tools = {
---       inlay_hints = {
---         auto = false,
---       },
---       hover_actions = {
---         auto_focus = true,
---       },
---     },
---   }
--- else
---   rust_analyzer = {
---     cmd = rust_analyzer_cmd,
---     settings = {
---       ["rust-analyzer"] = {
---         checkOnSave = {
---           command = "clippy",
---         },
---       },
---     },
---   }
--- end
---
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
-local servers = {
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-  -- rust_analyzer = rust_analyzer,
-  clangd = {},
-  pyright = {},
-  html = {},
-  cssls = {},
-  jdtls = {},
-}
-
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-
--- Setup mason so it can manage external tooling
-
-local settings = {
-   ui = {
-    border = "rounded",
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  },
-}
-
-require('lspconfig.ui.windows').default_options.border = "rounded"
-require('mason').setup(settings)
 -- Ensure the servers above are installed
-require('mason-lspconfig').setup {
-  ensure_installed = vim.tbl_keys(servers),
-  automatic_installation = true,
+local mason_lspconfig = require 'mason-lspconfig'
+
+mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
 }
-require('lspconfig').ghdl_ls.setup{}
----
+
+-- mason_lspconfig.setup_handlers {
+--     function(server_name)
+--         require('lspconfig')[server_name].setup {
+--             capabilities = capabilities,
+--             on_attach = custom_attach,
+--             settings = servers[server_name],
+--         }
+--     end,
+-- }
+local custom_init = function(client)
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
+end
+
 local setup_server = function(server, config)
   if not config then
     return
@@ -147,14 +144,12 @@ local setup_server = function(server, config)
   end
 
   config = vim.tbl_deep_extend("force", {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = nil,
-    },
+    on_init = custom_init,
+    on_attach = custom_attach,
+    capabilities = updated_capabilities,
   }, config)
 
-  require('lspconfig')[server].setup(config)
+  lspconfig[server].setup(config)
 end
 
 for server, config in pairs(servers) do
