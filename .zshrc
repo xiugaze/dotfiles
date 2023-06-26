@@ -120,3 +120,5 @@ alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
 alias ls='exa -abghHliS'
 alias jg="~/src/jiggle.sh"
+alias news="newsboat"
+alias pod="podboat"

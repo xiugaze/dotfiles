@@ -20,6 +20,7 @@ require('lazy').setup({
   'tpope/vim-rhubarb',  -- git browse
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  'tpope/vim-obsession',
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -223,6 +224,9 @@ require('lazy').setup({
     config = function()
       require("core.nvimtree").setup()
     end,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons'
+    }
   },
 
 

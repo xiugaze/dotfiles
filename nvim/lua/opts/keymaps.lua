@@ -41,6 +41,7 @@ local maps = {
     -- ["<C-l>"] = "<C-w>l",
     -- end of last word
     ["E"] = "ge",
+    ["<C-_>"] = "gcc",
     -- back and forth
   },
   insert_mode = {
