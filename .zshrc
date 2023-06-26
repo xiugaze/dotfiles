@@ -118,5 +118,8 @@ source $ZSH/oh-my-zsh.sh
 alias org="nvim ~/docs/org/school.org"
 alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
-alias ls='exa -abghHliS'
+# alias ls='exa -abghHliS'
 alias jg="~/src/jiggle.sh"
+
+ZSH_THEME="gruvbox"
+SOLARIZED_THEME="dark"

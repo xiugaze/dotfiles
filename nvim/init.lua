@@ -255,7 +255,6 @@ require('lazy').setup({
     }
   },
 
-  { 'christoomey/vim-tmux-navigator' },
 
   { import = 'custom.plugins' },
 }, {})

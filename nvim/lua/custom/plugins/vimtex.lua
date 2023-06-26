@@ -7,5 +7,4 @@ return {
   requires = {
     'iurimateus/luasnip-latex-snippets.nvim'
   },
-
 }
