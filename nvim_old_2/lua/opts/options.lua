@@ -36,7 +36,6 @@ local options = {
   laststatus = 0,
 }
 
-
 -- vim.filetype.add {
 --   extension = {
 --     tex = "tex",

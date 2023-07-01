@@ -1,5 +1,9 @@
-vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
+vim.g.mapleader = ";"
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -18,7 +22,6 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: `opts = {}` is the same as calling `require('plugin').setup({})`
 require("lazy").setup({
 
-    { "folke/which-key.nvim",          opts = {} },
     { "folke/neoconf.nvim",            cmd = "Neoconf" },
     { 'christoomey/vim-tmux-navigator' },
     {
@@ -51,6 +54,11 @@ require("lazy").setup({
                 inc_rename = false,           -- enables an input dialog for inc-rename.nvim
                 lsp_doc_border = false,       -- add a border to hover docs and signature help
             },
+            messages = {
+                view = "mini",
+                view_error = "mini",
+                view_warn = "mini",
+            },
         },
         dependencies = {
             "MunifTanjim/nui.nvim",
@@ -58,12 +66,13 @@ require("lazy").setup({
         }
     },
     {
-        'Maan2003/lsp_lines.nvim',
-        opts = {},
+        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
         config = function()
             vim.diagnostic.config({
                 virtual_text = false,
+                virtual_lines = { only_current_line = true },
             })
+            require('lsp_lines').setup()
         end
     },
     {
@@ -138,20 +147,35 @@ require("lazy").setup({
 
             -- Adds LSP completion capabilities
             'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-path',
 
             -- Adds a number of user-friendly snippets
             'rafamadriz/friendly-snippets',
         },
     },
+    -- {
+    --     "ellisonleao/gruvbox.nvim",
+    --     priority = 1000,
+    --     config = function()
+    --         require("gruvbox").setup({
+    --             palette_overrides = {
+    --                 dark1 = "#282828",
+    --             },
+    --         })
+    --         vim.o.background = "dark"
+    --         vim.cmd([[colorscheme gruvbox]])
+    --     end,
+    -- },
     {
-        "ellisonleao/gruvbox.nvim",
-        priority = 1000,
+        'mcchrish/zenbones.nvim',
         config = function()
+            vim.g.zenbones_compat = 1
             vim.o.background = "dark"
-            vim.cmd([[colorscheme gruvbox]])
-        end,
+            vim.cmd([[colorscheme zenbones]])
+        end
     },
-    -- source plugins from lua/plugins
+
+
     { import = "plugins" }
 
 })

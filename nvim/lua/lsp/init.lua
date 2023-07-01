@@ -1,17 +1,16 @@
 -- This file configures mason, lspconfig, and nvim-cmp
-
 require('lsp.telescope')
 require('lsp.treesitter')
-require('lsp.cmp')
 
 local lspconfig = vim.F.npcall(require, "lspconfig")
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>di', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', 'gk', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', 'gl', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 local custom_attach = function(client, bufnr)
+    require('lsp.cmp')
     local nmap = function(keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
@@ -43,9 +42,9 @@ local custom_attach = function(client, bufnr)
     end, '[W]orkspace [L]ist Folders')
 
     -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
-    end, { desc = 'Format current buffer with LSP' })
+    -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    --     vim.lsp.buf.format()
+    -- end, { desc = 'Format current buffer with LSP' })
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -65,9 +64,9 @@ if has_rt then
                 custom_attach(_, bufnr)
 
                 -- Hover actions
-                vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+                vim.keymap.set("n", "<leader>K", rt.hover_actions.hover_actions, { buffer = bufnr })
                 -- Code action groups
-                vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+                vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
             end,
         },
         -- dap = {
@@ -98,6 +97,8 @@ local servers = {
     rust_analyzer = rust_analyzer,
     -- tsserver = {},
 
+    svelte = {},
+    tailwindcss = {},
     lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
@@ -129,6 +130,7 @@ mason_lspconfig.setup {
 --         }
 --     end,
 -- }
+--
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true

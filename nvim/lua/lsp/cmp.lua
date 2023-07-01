@@ -34,10 +34,11 @@ local kind_icons = {
 }
 cmp.setup {
   sources = {
+    { name = 'path' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'path' },
     { name = 'treesitter'},
+    { name = 'crates' }
   },
 
   formatting = {

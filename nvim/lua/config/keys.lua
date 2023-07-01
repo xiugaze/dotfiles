@@ -6,7 +6,7 @@ local opts_any = { noremap = true, silent = true }
 local maps = {
     -- note: [key] is long-form syntax for any value as a key. i.e. needed for string keys
     -- mode = {
-    --     [input sequence] = output 
+    --     [input sequence] = output
     -- }
     any = {
         ["<leader>y"] = "\"+y",
@@ -46,10 +46,10 @@ function M.set_keymap(mode, input, output)
 end
 
 -- load basic keybinds
-function M.load_basics() 
-    for mode, mappings in pairs(maps) do 
+function M.load_basics()
+    for mode, mappings in pairs(maps) do
         mode = mode_adapters[mode] or mode      -- mode = mode character
-        for input, output in pairs(mappings) do    -- for input/output pairing
+        for input, output in pairs(mappings) do -- for input/output pairing
             M.set_keymap(mode, input, output)
         end
     end
@@ -59,21 +59,57 @@ function M.load_basics()
 end
 
 -- Normal mode map with descriptions
-function M.nmap(input, output, desc) 
+function M.nmap(input, output, desc)
     vim.keymap.set("n", input, output, { noremap = true, silent = true, desc = desc })
 end
 
 function M.load_plugins()
     local map = M.nmap
+    map("<C-f>", ":lua vim.lsp.buf.format()<CR>", "Format")
     map("<leader>e", "<cmd>Neotree toggle float<cr>", "Explorer (Neotree)")
     map("<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", "Tmux Left")
     map("<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", "Tmux Down")
     map("<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", "Tmux Up")
+    map("<leader>ll", M.toggle_lines, "Toggle lsp_lines")
     map("<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", "Tmux Right")
+
+    -- See `:help telescope.builtin`
+    local builtin = require('telescope.builtin')
+    map('<leader>?', builtin.oldfiles, '[?] Find recently opened files' )
+    map('<leader><space>', builtin.buffers, '[ ] Find existing buffers' )
+    map('<leader>fb', function()
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+            winblend = 10,
+            previewer = false,
+        })
+    end, '[/] Fuzzily search in current buffer')
+
+    map('<leader>fgf', builtin.git_files,  '[F]ind [G]it [F]iles')
+    map('<leader>fgs', builtin.git_status,  '[F]ind [G]it [S]tatus')
+    map('<leader>ff', builtin.find_files, '[F]ind [F]iles')
+    map('<leader>fh', builtin.help_tags,  '[F]ind [H]elp')
+    map('<leader>fs', builtin.live_grep,  '[F]ind by [S]tring (with grep)' )
+    map('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics' )
+    map('<leader>fm', ":Telescope noice<CR>", '[F]ind [M]essages' )
+
+end
+
+M.toggle_lines = function()
+  local current = vim.diagnostic.config().virtual_lines
+  local new_value
+  if current == false then
+        new_value = { only_current_line = true }
+    else
+        new_value = false
+  vim.diagnostic.config({ virtual_lines = new_value })
+end
+
+  
+  vim.diagnostic.config({ virtual_lines = new_value })
+  return new_value
 end
 
 M.load_basics()
-M.load_plugins() 
+M.load_plugins()
 
 return M
-            
