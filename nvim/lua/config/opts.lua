@@ -2,6 +2,7 @@ local options = {
     number = true,          -- show linenumbers
     relativenumber = true,  -- relative line numbers
     list = false,           -- invisible characters
+    listchars = "tab:>\\,eol:¬",
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
     termguicolors = true,   -- truecolor terminals

@@ -11,6 +11,7 @@ local maps = {
     any = {
         ["<leader>y"] = "\"+y",
         ["<leader>p"] = "\"+p",
+        ["<leader>sh"] = ":set list!<CR>",
         ["q:"] = "<nop>",
         ["H"] = "^",
         ["L"] = "$",
@@ -75,8 +76,8 @@ function M.load_plugins()
 
     -- See `:help telescope.builtin`
     local builtin = require('telescope.builtin')
-    map('<leader>?', builtin.oldfiles, '[?] Find recently opened files' )
-    map('<leader><space>', builtin.buffers, '[ ] Find existing buffers' )
+    map('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
+    map('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
     map('<leader>fb', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
             winblend = 10,
@@ -84,29 +85,33 @@ function M.load_plugins()
         })
     end, '[/] Fuzzily search in current buffer')
 
-    map('<leader>fgf', builtin.git_files,  '[F]ind [G]it [F]iles')
-    map('<leader>fgs', builtin.git_status,  '[F]ind [G]it [S]tatus')
+    map('<leader>fgf', builtin.git_files, '[F]ind [G]it [F]iles')
+    map('<leader>fgs', builtin.git_status, '[F]ind [G]it [S]tatus')
     map('<leader>ff', builtin.find_files, '[F]ind [F]iles')
-    map('<leader>fh', builtin.help_tags,  '[F]ind [H]elp')
-    map('<leader>fs', builtin.live_grep,  '[F]ind by [S]tring (with grep)' )
-    map('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics' )
-    map('<leader>fm', ":Telescope noice<CR>", '[F]ind [M]essages' )
-
+    map('<leader>fh', builtin.help_tags, '[F]ind [H]elp')
+    map('<leader>fs', builtin.live_grep, '[F]ind by [S]tring (with grep)')
+    map('<leader>fD', builtin.diagnostics, '[F]ind Workspace [D]iagnostics')
+    map('<leader>fd', function()
+        local opts = { bufnr = 0, }
+        require("telescope.builtin").diagnostics(opts)
+    end, '[F]ind [D]iagnostics')
+    map('<leader>fm', ":Telescope noice<CR>", '[F]ind [M]essages')
+    map('<leader>ft', ":TodoTelescope<CR>", '[F]ind [T]odo')
 end
 
 M.toggle_lines = function()
-  local current = vim.diagnostic.config().virtual_lines
-  local new_value
-  if current == false then
+    local current = vim.diagnostic.config().virtual_lines
+    local new_value
+    if current == false then
         new_value = { only_current_line = true }
     else
         new_value = false
-  vim.diagnostic.config({ virtual_lines = new_value })
-end
+        vim.diagnostic.config({ virtual_lines = new_value })
+    end
 
-  
-  vim.diagnostic.config({ virtual_lines = new_value })
-  return new_value
+
+    vim.diagnostic.config({ virtual_lines = new_value })
+    return new_value
 end
 
 M.load_basics()

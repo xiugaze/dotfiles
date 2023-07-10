@@ -1,0 +1,49 @@
+https://lukesmith.xyz/index.xml "blog"
+https://notrelated.xyz/rss  "podcast"
+https://www.aomin.org/aoblog/blog/feed/ "blog"
+https://this-week-in-rust.org/rss.xml "news"
+https://archlinux.org/feeds/news/ "news"
+https://dougwils.com/feed "blog"
+https://www.andreano.dev/posts/index.xml "blog"
+
+http://www.youtube.com/feeds/videos.xml?channel_id=UC0intLFzLaudFG-xAvUEO-A "youtube" # Not Just Bikes
+http://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "youtube" # Luke Smith
+http://www.youtube.com/feeds/videos.xml?channel_id=UC3CvHbiVAaYiMY2DMd1fcEQ "youtube" # tim sway
+http://www.youtube.com/feeds/videos.xml?channel_id=UC3azLjQuz9s5qk76KEXaTvA "youtube" # suckerpinch
+http://www.youtube.com/feeds/videos.xml?channel_id=UC3qbvcgOHXRIFIofXyd1vBw "youtube" # Mic The Snare
+http://www.youtube.com/feeds/videos.xml?channel_id=UC4NNPgQ9sOkBjw6GlkgCylg "youtube" # Ben Vallack
+http://www.youtube.com/feeds/videos.xml?channel_id=UC5KDiSAFxrDWhmysBcNqtMA "youtube" # Eric Murphy
+http://www.youtube.com/feeds/videos.xml?channel_id=UC6biysICWOJ-C3P4Tyeggzg "youtube" # Low Level Learning
+http://www.youtube.com/feeds/videos.xml?channel_id=UC6ext5UAbrLT2e5y5BC6RTQ "youtube" # The Adam Friedland Show
+http://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA "youtube" # Mental Outlaw
+http://www.youtube.com/feeds/videos.xml?channel_id=UC7u2HaYBKDaLPcWmldxgGEA "youtube" # Mike Winger
+http://www.youtube.com/feeds/videos.xml?channel_id=UC8-WbPVpAZ-R2FktBVAFrEQ "youtube" # ProbablyOkay
+http://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw "youtube" # ThePrimeagen
+http://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA "youtube" # Computerphile
+http://www.youtube.com/feeds/videos.xml?channel_id=UC9_p50tH3WmMslWRWKnM7dQ "youtube" # Adam Ragusea
+http://www.youtube.com/feeds/videos.xml?channel_id=UCDq5v10l4wkV5-ZBIJJFbzQ "youtube" # Ethan Chlebowski
+http://www.youtube.com/feeds/videos.xml?channel_id=UCEWpbFLzoYGPfuWUMFPSaoA "youtube" # The Organic Chemistry Tutor
+http://www.youtube.com/feeds/videos.xml?channel_id=UCEeDTCe9GnbRPbUfNwoqEYQ "youtube" # Blog & Mablog
+http://www.youtube.com/feeds/videos.xml?channel_id=UCJHA_jMfCvEnv-3kRjTCQXw "youtube" # Babish Culinary Universe
+http://www.youtube.com/feeds/videos.xml?channel_id=UCJLZe_NoiG0hT7QCX_9vmqw "youtube" # I did a thing
+http://www.youtube.com/feeds/videos.xml?channel_id=UCK9RJwC7Er16-Y8dvIQ-3tw "youtube" # Apologia Studios
+http://www.youtube.com/feeds/videos.xml?channel_id=UCMwo6hT5hI3R56rO2HYP-wQ "youtube" # James Scholz
+http://www.youtube.com/feeds/videos.xml?channel_id=UCR-DXc1voovS8nhAvccRZhg "youtube" # Jeff Geerling
+http://www.youtube.com/feeds/videos.xml?channel_id=UCS0N5baNlQWJCUrhCEo8WlA "youtube" # Ben Eater
+http://www.youtube.com/feeds/videos.xml?channel_id=UCUMwY9iS8oMyWDYIe6_RmoA "youtube" # No Boilerplate
+http://www.youtube.com/feeds/videos.xml?channel_id=UCW0h0L-rYQhba78oWJHHXGg "youtube" # pedal partners
+http://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw "youtube" # Linus Tech Tips
+http://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw "youtube" # 3Blue1Brown
+http://www.youtube.com/feeds/videos.xml?channel_id=UC_S45UpAYVuc0fYEcHN9BVQ "youtube" # Boy Boy
+http://www.youtube.com/feeds/videos.xml?channel_id=UC_SvYP0k05UKiJ_2ndB02IA "youtube" # blackpenredpen
+http://www.youtube.com/feeds/videos.xml?channel_id=UCcaTUtGzOiS4cqrgtcsHYWg "youtube" # jvscholz
+http://www.youtube.com/feeds/videos.xml?channel_id=UCdcemy56JtVTrsFIOoqvV8g "youtube" # ANDREW HUANG
+http://www.youtube.com/feeds/videos.xml?channel_id=UCeXksuVW8H1x9v4gh7DWoyQ "youtube" # Physics for the Birds
+http://www.youtube.com/feeds/videos.xml?channel_id=UCeeFfhMcJa1kjtfZAGskOCA "youtube" # TechLinked
+http://www.youtube.com/feeds/videos.xml?channel_id=UCiLqiXa5O85APUBQV7X5w9Q "youtube" # Redeemed Zoomer
+http://www.youtube.com/feeds/videos.xml?channel_id=UCnkp4xDOwqqJD7sSM3xdUiQ "youtube" # Adam Neely
+http://www.youtube.com/feeds/videos.xml?channel_id=UCqL-oPQEozYkqef04_O47sQ "youtube" # Leather Apron Club
+http://www.youtube.com/feeds/videos.xml?channel_id=UCr7lmzIk63PZnBw3bezl-Mg "youtube" # The Math Sorcerer
+http://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA "youtube" # Fireship
+http://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg "youtube" # Wolfgang's Channel
+http://www.youtube.com/feeds/videos.xml?channel_id=UCsvn_Po0SmunchJYOWpOxMg "youtube" # videogamedunkey

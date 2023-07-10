@@ -119,7 +119,7 @@ alias org="nvim ~/docs/org/school.org"
 alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
 # alias ls='exa -abghHliS'
-alias jg="~/src/jiggle.sh"
+alias nb="newsboat"
 
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
