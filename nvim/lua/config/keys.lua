@@ -12,6 +12,7 @@ local maps = {
         ["<leader>y"] = "\"+y",
         ["<leader>p"] = "\"+p",
         ["<leader>sh"] = ":set list!<CR>",
+        ["<leader>t"] = "<C-6>",
         ["q:"] = "<nop>",
         ["H"] = "^",
         ["L"] = "$",
@@ -91,12 +92,16 @@ function M.load_plugins()
     map('<leader>fh', builtin.help_tags, '[F]ind [H]elp')
     map('<leader>fs', builtin.live_grep, '[F]ind by [S]tring (with grep)')
     map('<leader>fD', builtin.diagnostics, '[F]ind Workspace [D]iagnostics')
+    map('<leader>fi', builtin.lsp_implementations, '[F]ind [I]mplementation')
     map('<leader>fd', function()
         local opts = { bufnr = 0, }
         require("telescope.builtin").diagnostics(opts)
     end, '[F]ind [D]iagnostics')
     map('<leader>fm', ":Telescope noice<CR>", '[F]ind [M]essages')
+    map('<leader>fa', ":Telescope aerial<CR>", '[F]ind [M]essages')
     map('<leader>ft', ":TodoTelescope<CR>", '[F]ind [T]odo')
+    -- zenmode
+    map('<leader>z', ":ZenMode<CR>", '[Z]enmode')
 end
 
 M.toggle_lines = function()

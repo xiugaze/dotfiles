@@ -120,6 +120,11 @@ alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
 # alias ls='exa -abghHliS'
 alias nb="newsboat"
+alias youtube="youtube-tui"
+alias tg=". ~/scripts/toggle.sh"
+alias is="hledger is"
+alias bs="hledger bs"
+alias jg="~/scripts/jiggle.sh"
 
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"

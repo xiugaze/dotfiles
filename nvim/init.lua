@@ -4,6 +4,9 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
+vim.o.laststatus = 0
+
+
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -166,12 +169,20 @@ require("lazy").setup({
     --         vim.cmd([[colorscheme gruvbox]])
     --     end,
     -- },
+    -- {
+    --     'mcchrish/zenbones.nvim',
+    --     config = function()
+    --         vim.g.zenbones_compat = 1
+    --         vim.o.background = "dark"
+    --         vim.cmd([[colorscheme zenbones]])
+    --     end
+    -- },
     {
-        'mcchrish/zenbones.nvim',
+        'sainnhe/everforest',
         config = function()
-            vim.g.zenbones_compat = 1
+            vim.g.everforest_background = "soft"
             vim.o.background = "dark"
-            vim.cmd([[colorscheme zenbones]])
+            vim.cmd([[colorscheme everforest]])
         end
     },
 
@@ -187,6 +198,14 @@ require("lazy").setup({
     { import = "plugins" }
 
 })
+
+if os.getenv("THEME") == "dark" then
+    vim.o.background = "dark"
+    vim.cmd([[colorscheme everforest]])
+else
+    vim.o.background = "light"
+    vim.cmd([[colorscheme everforest]])
+end
 
 
 -- [[ Highlight on yank ]]
