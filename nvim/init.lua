@@ -69,14 +69,14 @@ require("lazy").setup({
         }
     },
     {
-        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        config = function()
-            vim.diagnostic.config({
-                virtual_text = false,
-                virtual_lines = { only_current_line = true },
-            })
-            require('lsp_lines').setup()
-        end
+        -- 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+        -- config = function()
+        --     vim.diagnostic.config({
+        --         virtual_text = false,
+        --         virtual_lines = { only_current_line = true },
+        --     })
+        --     require('lsp_lines').setup()
+        -- end
     },
     {
         "kylechui/nvim-surround",
@@ -199,13 +199,13 @@ require("lazy").setup({
 
 })
 
-if os.getenv("THEME") == "dark" then
-    vim.o.background = "dark"
-    vim.cmd([[colorscheme everforest]])
-else
-    vim.o.background = "light"
-    vim.cmd([[colorscheme everforest]])
-end
+-- if os.getenv("THEME") == "dark" then
+--     vim.o.background = "dark"
+--     vim.cmd([[colorscheme everforest]])
+-- else
+--     vim.o.background = "light"
+--     vim.cmd([[colorscheme everforest]])
+-- end
 
 
 -- [[ Highlight on yank ]]

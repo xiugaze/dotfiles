@@ -72,7 +72,7 @@ function M.load_plugins()
     map("<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", "Tmux Left")
     map("<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", "Tmux Down")
     map("<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", "Tmux Up")
-    map("<leader>ll", M.toggle_lines, "Toggle lsp_lines")
+    map("<leader>ll", "<cmd>VimtexCompile<cr>", "Compile Tex Document")
     map("<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", "Tmux Right")
 
     -- See `:help telescope.builtin`
