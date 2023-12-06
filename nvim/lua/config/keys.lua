@@ -14,8 +14,8 @@ local maps = {
         ["<leader>sh"] = ":set list!<CR>",
         ["<leader>t"] = "<C-6>",
         ["q:"] = "<nop>",
-        ["H"] = "^",
-        ["L"] = "$",
+        ["H"] = "g^",
+        ["L"] = "g$",
     },
     normal_mode = {
         ["E"] = "ge",

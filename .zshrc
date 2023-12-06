@@ -129,3 +129,5 @@ source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=/mnt/c/Users/andreanoc/AppData/Local/Programs/VSCodium/bin:$PATH
+export HISTFILE=~/.zsh_history
+export HISTSIZE=100000
