@@ -6,6 +6,7 @@ set nu rnu
 :set smarttab
 :set softtabstop=4
 :set mouse=a
+set viminfo+='1000,n~/.config/vim/viminfo
 
 " leader key
 let mapleader = ";"

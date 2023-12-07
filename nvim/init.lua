@@ -199,13 +199,13 @@ require("lazy").setup({
 
 })
 
-if os.getenv("THEME") == "dark" then
-    vim.o.background = "dark"
-    vim.cmd([[colorscheme everforest]])
-else
-    vim.o.background = "light"
-    vim.cmd([[colorscheme everforest]])
-end
+-- if os.getenv("THEME") == "dark" then
+--     vim.o.background = "dark"
+--     vim.cmd([[colorscheme everforest]])
+-- else
+--     vim.o.background = "light"
+--     vim.cmd([[colorscheme everforest]])
+-- end
 
 
 -- [[ Highlight on yank ]]

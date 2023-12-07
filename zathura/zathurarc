@@ -7,13 +7,31 @@ map i recolor
 map p print
 map g goto top
 
-set default-bg rgba(46,52,64,0.96)
-set recolor true
-set recolor-lightcolor rgba(46,52,64,0.96)
-set recolor-darkcolor rgba(216, 222, 233, 1)
+set default-bg rgba(51,60,67,1)    
+set default-fg rgba(211,198,170,1)   
+set statusbar-bg rgba(51,60,67,1)    
+set statusbar-fg rgba(211,198,170,1)   
+set inputbar-bg rgba(51,60,67,1)    
+set inputbar-fg rgba(211,198,170,1)   
+set completion-group-bg rgba(51,60,67,1)    
+set completion-group-fg rgba(211,198,170,1)   
+set completion-highlight-bg rgba(131,192,146,1)   
+set completion-highlight-fg rgba(51,60,67,1)    
+set completion-bg rgba(51,60,67,1)    
+set completion-fg rgba(211,198,170,1)   
 
+set highlight-active-color rgba(131,192,146,1)   
+set highlight-color rgba(167,192,128,1)   
+
+
+# recolor is custom colors
+set recolor true
+set recolor-lightcolor rgba(51,60,67,1) 
+set recolor-darkcolor rgba(211,198,170,1) 
 map = +
 map + =
 
 set selection-clipboard clipboard
 set font "JetBrains Mono normal 12"
+
+
