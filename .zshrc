@@ -8,9 +8,6 @@ fi
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -77,14 +74,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git 
-    zsh-autosuggestions
-    fast-syntax-highlighting
-    zsh-vi-mode
-)
+# plugins=(
+#     git 
+#     zsh-autosuggestions
+#     fast-syntax-highlighting
+#     zsh-vi-mode
+# )
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -128,3 +124,8 @@ alias jg="~/scripts/jiggle.sh"
 
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+export PATH=$HOME/.config/emacs/bin:$PATH
+export PATH=/mnt/c/Users/andreanoc/AppData/Local/Programs/VSCodium/bin:$PATH
