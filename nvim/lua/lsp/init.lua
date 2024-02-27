@@ -159,3 +159,7 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
+
+vim.diagnostic.config({
+  virtual_text = false,
+})
