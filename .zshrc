@@ -112,9 +112,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 alias org="nvim ~/docs/org/school.org"
+alias ls='ls --color=yes'
 alias la='ls -lah --color=auto'
 alias lh='ls -lh --color=auto'
-# alias ls='exa -abghHliS'
 alias nb="newsboat"
 alias youtube="youtube-tui"
 alias tg=". ~/scripts/toggle.sh"
@@ -129,3 +129,10 @@ source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=/mnt/c/Users/andreanoc/AppData/Local/Programs/VSCodium/bin:$PATH
+export LS_COLORS='di=4;35'
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
