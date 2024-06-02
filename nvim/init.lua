@@ -1,4 +1,5 @@
 vim.g.maplocalleader = ";"
+
 vim.g.mapleader = ";"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -27,6 +28,7 @@ require("lazy").setup({
 
     { "folke/neoconf.nvim",            cmd = "Neoconf" },
     { 'christoomey/vim-tmux-navigator' },
+    { "ixru/nvim-markdown" },
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -48,6 +50,16 @@ require("lazy").setup({
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                     ["vim.lsp.util.stylize_markdown"] = true,
                     ["cmp.entry.get_documentation"] = true,
+                },
+            },
+            routes = {
+                {
+                    filter = {
+                        event = "lsp",
+                        kind = "progress",
+                        find = "jdtls",
+                    },
+                    opts = { skip = true },
                 },
             },
             presets = {
@@ -109,8 +121,16 @@ require("lazy").setup({
             opts = {},
         },
     },
-    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-
+    {
+        -- Add indentation guides even on blank lines
+        'lukas-reineke/indent-blankline.nvim',
+        -- Enable `lukas-reineke/indent-blankline.nvim`
+        -- See `:help indent_blankline.txt`
+        main = "ibl",
+        opts = {
+            indent = { char = '┊' },
+        },
+    },
     { 'numToStr/Comment.nvim',         opts = {} },
     { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
     {
@@ -174,12 +194,13 @@ require("lazy").setup({
             vim.g.everforest_background = "soft"
             vim.o.background = "dark"
             vim.cmd([[colorscheme everforest]])
+            vim.cmd([[highlight Conceal guifg=#d3c6aa]])
         end
     },
 
     {
         "norcalli/nvim-colorizer.lua",
-        config = function() 
+        config = function()
             vim.o.termguicolors = true
             require('colorizer').setup()
         end,

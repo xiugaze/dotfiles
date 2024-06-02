@@ -1,4 +1,5 @@
 -- This file configures mason, lspconfig, and nvim-cmp
+-- 
 require('lsp.telescope')
 require('lsp.treesitter')
 
@@ -83,17 +84,17 @@ else
         cmd = rust_analyzer_cmd,
         settings = {
             ["rust-analyzer"] = {
-                checkOnSave = {
                     command = "clippy",
-                },
-            },
-        },
-    }
+	},
+    },
+}
 end
 local servers = {
     clangd = {},
+    jdtls = {
+    },
     -- gopls = {},
-    -- pyright = {},
+    pyright = {},
     rust_analyzer = rust_analyzer,
     -- tsserver = {},
 

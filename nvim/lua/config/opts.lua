@@ -29,6 +29,7 @@ local options = {
     foldmethod = "manual",
     hidden = true,
     cmdheight = 0,
+    conceallevel = 1,
 }
 
 local load = function(opts) 
