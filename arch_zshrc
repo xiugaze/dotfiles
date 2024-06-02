@@ -1,0 +1,59 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle :compinstall filename '/home/caleb/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=10000
+bindkey -v
+# End of lines configured by zsh-newuser-install
+#
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export npm_config_userconfig=$XDG_CONFIG_HOME/npm/config
+export npm_config_cache=$XDG_CACHE_HOME/npm
+# if you do this one, make sure to add $XDG_DATA_HOME/npm/bin to the $PATH,
+# otherwise global installed executables won't be accessible on the cli.
+export npm_config_prefix=$XDG_DATA_HOME/npm
+
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+
+export GTK_THEME=Everforest-Dark-BL
+export PATH=$PATH:$XDG_DATA_HOME/npm/bin
+
+export PATH="$XDG_DATA_HOME/npm/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
+export PATH="$XDG_CONFIG_HOME/emacs/bin:$PATH"
+
+#export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+#
+alias vim='vim -u $XDG_CONFIG_HOME/vim/vimrc'
+alias nconf="nvim ~/.config/nvim/lua"
+alias notes="nvim ~/docs/school-notes"
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# p10k
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. "/home/caleb/.local/share/cargo/env"
