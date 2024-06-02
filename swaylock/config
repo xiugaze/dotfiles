@@ -1,0 +1,24 @@
+screenshots
+indicator
+daemonize
+clock
+timestr=%H:%M
+effect-blur=7x5
+indicator-radius=200
+line-color=00000000
+font=JetBrains Mono
+ring-color=293136
+separator-color=00000000
+text-color=D3C6AA
+key-hl-color=83C092
+bs-hl-color=E68E80
+inside-color=293136AA
+inside-clear-color=293136AA
+inside-ver-color=293136AA
+inside-wrong-color=293136AA
+ring-clear-color=7FBBB3
+text-clear-color=7FBBB3
+ring-ver-color=83C092
+text-ver-color=83C092
+ring-wrong-color=D699B6
+text-wrong-color=D699B6
