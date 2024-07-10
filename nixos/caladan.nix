@@ -73,13 +73,9 @@ in {
 
   xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      wlr.enable = true;
   };
 
-  systemd.user.services.xdg-desktop-portal-gtk = {
-    wantedBy = [ "xdg-desktop-portal.service" ];
-    before = [ "xdg-desktop-portal.service" ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -109,14 +105,21 @@ in {
      kitty
      tmux
      unstable.neovim
-     lua
+     unstable.tree-sitter
+     unstable.nodejs_22
+     unstable.lua
+     unstable.luarocks
+     python3
      bitwarden
      librewolf
      htop
      lf
      pavucontrol
-     xdg-desktop-portal
+     imagemagick
+     luajitPackages.magick
      # pkgs.pkgsCross has all the cross compilers, we're cross-compiling for AVR
+     texlive.combined.scheme-full
+     zathura
   ];
 
 
