@@ -1,21 +1,18 @@
 { config, pkgs, inputs, ... }:
 let
-  unstable = import <nixos-unstable> {};
+  unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -77,17 +74,20 @@ in {
   };
 
 
+  imports = [
+    ./pkgs-base.nix
+    ./pkgs-neovim.nix 
+
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     git
-     vim 
-     wget
-     unzip
      zsh-powerlevel10k
      # desktop environment
      xdg-desktop-portal-hyprland
      hyprpaper
+     hyprlock
      waybar
      rofi-wayland
      pipewire
@@ -96,23 +96,11 @@ in {
      wl-clip-persist
      cliphist
      # programs
-     gcc
-     gnumake
-     ripgrep
-     binutils
-     neofetch
-     pfetch
      kitty
      tmux
-     unstable.neovim
-     unstable.tree-sitter
-     unstable.nodejs_22
-     unstable.lua
-     unstable.luarocks
      python3
      bitwarden
      librewolf
-     htop
      lf
      pavucontrol
      imagemagick
@@ -120,6 +108,19 @@ in {
      # pkgs.pkgsCross has all the cross compilers, we're cross-compiling for AVR
      texlive.combined.scheme-full
      zathura
+    # networking
+    mullvad-vpn
+    unstable.obsidian
+
+
+    # hardware stuff
+    kicad
+    stm32cubemx
+
+    cinnamon.nemo-with-extensions
+
+    prismlauncher
+    jdk21
   ];
 
 
@@ -134,11 +135,18 @@ in {
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
+  services.mullvad-vpn.enable = true;
+  services.syncthing = {
+    enable = true;
+    user = "caleb";
+    dataDir = "/home/caleb/sync/";
+    configDir = "/home/caleb/.config/syncthing";
+  };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 8384 22000 ];
+  networking.firewall.allowedUDPPorts = [ 22000 21027];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -176,7 +184,9 @@ in {
     xwayland.enable = true;
   };
 
+
   hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.production;
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
