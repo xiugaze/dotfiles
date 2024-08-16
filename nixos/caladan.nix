@@ -49,7 +49,6 @@ in {
     enableCompletion = true;
     enableLsColors = true;
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-
   };
 
   users.users.caleb = {
@@ -76,8 +75,8 @@ in {
 
   imports = [
     ./pkgs-base.nix
+    ./pkgs-wayland-hyprland.nix
     ./pkgs-neovim.nix 
-
   ];
 
   # List packages installed in system profile. To search, run:
@@ -85,22 +84,15 @@ in {
   environment.systemPackages = with pkgs; [
      zsh-powerlevel10k
      # desktop environment
-     xdg-desktop-portal-hyprland
-     hyprpaper
-     hyprlock
-     waybar
-     rofi-wayland
      pipewire
      # clipboard
-     wl-clipboard
-     wl-clip-persist
-     cliphist
      # programs
      kitty
      tmux
      python3
      bitwarden
      librewolf
+     firefox
      lf
      pavucontrol
      imagemagick
@@ -159,7 +151,6 @@ in {
     socketActivation = true;
   };
 
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -167,37 +158,6 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
-  # hyprland
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
-  services.xserver.videoDrivers = ["nvidia"];
-
-  programs.hyprland = {
-    enable = true;
-    #enableNvidiaPatches = true;
-    xwayland.enable = true;
-  };
-
-
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-  };
-
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-    NIXOS_OZONE_WL = "1";
-  };
 
   # fonts
   fonts.packages = with pkgs; [
