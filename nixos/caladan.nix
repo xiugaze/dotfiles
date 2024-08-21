@@ -48,7 +48,7 @@ in {
     enable = true;
     enableCompletion = true;
     enableLsColors = true;
-    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    #promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 
   users.users.caleb = {
@@ -82,7 +82,9 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     zsh-powerlevel10k
+     xdg-desktop-portal
+     fzf
+     starship
      # desktop environment
      pipewire
      # clipboard
@@ -113,6 +115,10 @@ in {
 
     prismlauncher
     jdk21
+
+    unstable.zed-editor
+    rsync
+    xdg-desktop-portal-kde
   ];
 
 

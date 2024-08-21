@@ -6,6 +6,8 @@ in {
      xdg-desktop-portal-hyprland
      hyprpaper
      hyprlock
+     hyprshot
+     hypridle
      waybar
      rofi-wayland
      wl-clipboard
@@ -30,7 +32,9 @@ in {
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.production;
     modesetting.enable = true;
-    powerManagement.enable = false;
+    # powerManagement.enable = false;
+    # powerManagement.finegrained = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
