@@ -16,5 +16,8 @@ in {
     opam
     ocamlPackages.ocamlformat_0_26_1
     ocamlPackages.utop
+
+    # rust
+    rustup
   ];
 }

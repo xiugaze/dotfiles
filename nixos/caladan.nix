@@ -6,6 +6,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -43,20 +44,18 @@ in {
   services.flatpak.enable = true;
   hardware.bluetooth.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableLsColors = true;
-    #promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-  };
-
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableLsColors = true;
   };
 
   # Allow unfree packages
@@ -82,36 +81,37 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     xdg-desktop-portal
-     fzf
-     starship
-     # desktop environment
-     pipewire
-     # clipboard
-     # programs
-     kitty
-     tmux
-     python3
-     bitwarden
-     librewolf
-     firefox
-     lf
-     pavucontrol
-     imagemagick
-     luajitPackages.magick
-     # pkgs.pkgsCross has all the cross compilers, we're cross-compiling for AVR
-     texlive.combined.scheme-full
-     zathura
+    xdg-desktop-portal
+    fzf
+    starship
+    # desktop environment
+    pipewire
+    # clipboard
+    # programs
+    kitty
+    tmux
+    python3
+    bitwarden
+    bitwarden-cli
+    librewolf
+    firefox
+    #lf
+    pavucontrol
+    imagemagick
+    luajitPackages.magick
+    # pkgs.pkgsCross has all the cross compilers, we're cross-compiling for AVR
+    texlive.combined.scheme-full
+    zathura
+
     # networking
     mullvad-vpn
     unstable.obsidian
-
 
     # hardware stuff
     kicad
     stm32cubemx
 
-    cinnamon.nemo-with-extensions
+    gnome.nautilus
 
     prismlauncher
     jdk21
@@ -119,8 +119,16 @@ in {
     unstable.zed-editor
     rsync
     xdg-desktop-portal-kde
+
+    nftables
+    tree
   ];
 
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+    nerdfonts
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -130,23 +138,17 @@ in {
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
+  # Services
 
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.mullvad-vpn.enable = true;
+
   services.syncthing = {
     enable = true;
     user = "caleb";
     dataDir = "/home/caleb/sync/";
     configDir = "/home/caleb/.config/syncthing";
   };
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 8384 22000 ];
-  networking.firewall.allowedUDPPorts = [ 22000 21027];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   services.pipewire = {
     enable = true;
@@ -157,18 +159,22 @@ in {
     socketActivation = true;
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  networking = {
+    firewall = {
 
-  # fonts
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-    nerdfonts
-  ];
+      allowedTCPPorts = [ 
+        8384 22000  # syncthing
+        80 443      # http/https
+      ];
+
+      allowedUDPPorts = [ 
+        22000 21027 # syncthing
+      ];
+    };
+  };
+
+
+  # don't change this
+  system.stateVersion = "24.05"; 
+
 }

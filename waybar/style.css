@@ -1,166 +1,94 @@
-/*
- ********************************************
- *░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░*
- *░░█▀█░█░░░█░█░█▀▀░░░█░█░█░░░▀█▀░█▀▄░█▀█░░*
- *░░█▀▀░█░░░█░█░▀▀█░░░█░█░█░░░░█░░█▀▄░█▀█░░*
- *░░▀░░░▀▀▀░▀▀▀░▀▀▀░░░▀▀▀░▀▀▀░░▀░░▀░▀░▀░▀░░*
- *░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░*
- ********************************************
- */
+@import "macchiato.css";
 
 * {
-	border: none;
-	border-radius: 0;
-	font-family: Fira Code;
-	font-size: 14px;
-	min-height: 24px;
+    border-radius: 0;
+    font-family: 'Fira Code';
+    font-size: 11pt;
+    min-height: 0;
 }
+
+/* make everything visible */
+/* #workspaces, #clock, #battery, #pulseaudio, #mpd, #network, #tray { */
+/*     border-color: @red; */
+/*     border-style: solid;  */
+/*     border-width: 2px; */
+/* } */
 
 window#waybar {
-	background: transparent;
+    background: @base;
+    color: @text;
 }
 
-window#waybar.hidden {
-	opacity: 0.2;
+tooltip {
+	background: @base;
+	border-width: 2px;
+	border-style: solid;
+	border-color: @mauve;
+	color: @text;
 }
 
-#window {
-    margin-top: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 0px;
-transition: none;
-color: #cad3f5; 
-background: #24273a; 
-}
-
-window#waybar.empty #window {
-    background: transparent
-}
-
-window#waybar.termite #window,
-window#waybar.Firefox #window,
-window#waybar.Navigator #window,
-window#waybar.PCSX2 #window {
-    color: #4d4d4d;
-    background: #e6e6e6;
+tooltip label {
+    color: @text;
 }
 
 #workspaces {
-	margin-top: 8px;
-	margin-left: 12px;
-	margin-bottom: 0;
-	border-radius: 6px;
-	background: #283136;
-	transition: none;
+    background: @base;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #workspaces button {
-	transition: none;
-	color: #D3C6AA;
-	background: transparent;
-	font-size: 16px;
+    padding: 0 5px;
+    color: @text;
+    background-color: transparent;
 }
 
-#workspaces button.focused {
-	color: #83C092;
+#workspaces button.active {
+    color: @mauve;
 }
 
 #workspaces button:hover {
-	transition: none;
-	box-shadow: inherit;
-	text-shadow: inherit;
-	color: #ff79c6;
+    background: @base;
+    color: @mauve;
+    border: 0;
 }
 
-#mpd {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 26px;
-	background: #282a36;
-	transition: none;
-	color: #4d4d4d;
-	background: #5af78e;
+#clock, #battery, #pulseaudio, #workspaces, #mpd  {
+    background: @base;
 }
 
-#mpd.disconnected,
-#mpd.stopped {
-	color: #f8f8f2;
-	background: #282a36;
-}
 
 #network {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #D3C6AA;
-	background: #333C43;
-}
-
-#pulseaudio {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #D3C6AA;
-	background: #3A464C;
-}
-
-#temperature {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #4d4d4d;
-	background: #5af78e;
-}
-
-#cpu {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #4d4d4d;
-	background: #f1fa8c;
-}
-
-#memory {
-	margin-top: 8px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #4d4d4d;
-	background: #ff6e67;
+    padding-right: 15px;
+    margin-right: 5px;
+    background: @base;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #clock {
-	margin-top: 8px;
-	margin-left: 8px;
-	margin-right: 12px;
-	padding-left: 16px;
-	padding-right: 16px;
-	margin-bottom: 0;
-	border-radius: 12px;
-	transition: none;
-	color: #f8f8f2;
-	background: #293136;
+    padding-right: 15px;
+    margin-right: 5px;
 }
+
+#pulseaudio {
+    padding-right: 15px;
+    margin-right: 5px;
+}
+
+#custom-separator {
+    color: @overlay0;
+    font-weight: bold;
+}
+
+
+/* #custom-spotify { */
+/*     background: #332E41; */
+/*     margin-top: 5px; */
+/*     margin-bottom: 5px; */
+/*     padding-right: 15px; */
+/*     padding-left: 15px; */
+/*     border-radius: 15px; */
+/* } */
