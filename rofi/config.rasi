@@ -4,17 +4,24 @@ configuration {
   drun-display-format: "{name}";
   font: "Fira Code Medium 10";
   modi: "run,drun";
+  sidebar-mode: true;
+  disable-history: false;
+  display-drun: "   Apps ";
+  display-run: "   Run ";
+  display-window: " 󰕰  Window";
+  display-Network: " 󰤨  Network";
+  hide-scrollbar: true;
 }
 
 @theme "/dev/null"
 
 * {
-  bg: #29313666;
-  bg-alt: #333c4366;
-  bg-selected: #3f686566;
+  bg: #24273a66;
+  bg-alt: #24273a66;
+  bg-selected: #939ab766;
 
-  fg: #83c092;
-  fg-alt: #d3c6aa;
+  fg: #b7bdf8;
+  fg-alt: #a5adcb;
 
   
   border: 0;
@@ -24,7 +31,7 @@ configuration {
 }
 
 window {
-  width: 30%;
+  width: 20%;
   background-color: @bg;
   border-radius: 6px;
 }
@@ -68,6 +75,8 @@ listview {
   columns: 1;
   lines: 10;
 }
+
+
 
 mainbox {
   children: [inputbar, listview];
