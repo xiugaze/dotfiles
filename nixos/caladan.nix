@@ -41,7 +41,6 @@ in {
     xkb.variant = "";
   };
 
-  services.flatpak.enable = true;
   hardware.bluetooth.enable = true;
 
   users.users.caleb = {
@@ -78,50 +77,36 @@ in {
     ./pkgs-neovim.nix 
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    xdg-desktop-portal
-    fzf
-    starship
-    # desktop environment
-    pipewire
-    # clipboard
-    # programs
-    kitty
-    tmux
-    python3
-    bitwarden
-    bitwarden-cli
-    librewolf
-    firefox
-    #lf
-    pavucontrol
-    imagemagick
-    luajitPackages.magick
-    # pkgs.pkgsCross has all the cross compilers, we're cross-compiling for AVR
-    texlive.combined.scheme-full
-    zathura
 
-    # networking
+    # system 
+    xdg-desktop-portal
+    xdg-desktop-portal-kde
+    pipewire
+    texlive.combined.scheme-full
+
+    # utilites
+    bitwarden-cli
+
+    # desktop programs
+    kitty
+    zathura
+    pavucontrol
     mullvad-vpn
     unstable.obsidian
-
-    # hardware stuff
+    unstable.zed-editor
+    gnome.nautilus
+    prismlauncher
     kicad
     stm32cubemx
+    bitwarden
+    librewolf
+    firefox
 
-    gnome.nautilus
-
-    prismlauncher
+    # development
     jdk21
+    python3
 
-    unstable.zed-editor
-    rsync
-    xdg-desktop-portal-kde
-
-    nftables
-    tree
   ];
 
   fonts.packages = with pkgs; [
@@ -139,25 +124,30 @@ in {
   # };
 
   # Services
+  services = {
 
-  services.openssh.enable = true;
-  services.mullvad-vpn.enable = true;
+    openssh.enable = true;
 
-  services.syncthing = {
-    enable = true;
-    user = "caleb";
-    dataDir = "/home/caleb/sync/";
-    configDir = "/home/caleb/.config/syncthing";
+    mullvad-vpn.enable = true;
+
+    syncthing = {
+      enable = true;
+      user = "caleb";
+      dataDir = "/home/caleb/sync/";
+      configDir = "/home/caleb/.config/syncthing";
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      jack.enable = true;
+      pulse.enable = true;
+      socketActivation = true;
+    };
   };
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-    pulse.enable = true;
-    socketActivation = true;
-  };
+
 
   networking = {
     firewall = {
@@ -173,8 +163,6 @@ in {
     };
   };
 
-
   # don't change this
   system.stateVersion = "24.05"; 
-
 }
