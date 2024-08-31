@@ -190,9 +190,8 @@
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "headphone": "󰋋",
+            "headset": "󰋎",
             "phone": "",
             "portable": "",
             "car": "",
@@ -220,6 +219,11 @@
         "format": " | ",
         "tooltip": false,
     
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%Y-%m-%d %H:%M}"
     },
 }
 

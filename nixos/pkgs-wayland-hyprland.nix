@@ -3,16 +3,18 @@ let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
   environment.systemPackages = with pkgs; [
-     xdg-desktop-portal-hyprland
-     hyprpaper
-     hyprlock
-     hyprshot
-     hypridle
-     waybar
-     rofi-wayland
-     wl-clipboard
-     wl-clip-persist
-     cliphist
+    xdg-desktop-portal-hyprland
+    hyprpaper
+    hyprlock
+    hyprshot
+    hypridle
+    hyprcursor
+    catppuccin-cursors
+    waybar
+    rofi-wayland
+    wl-clipboard
+    wl-clip-persist
+    cliphist
   ];
 
   hardware.opengl = {

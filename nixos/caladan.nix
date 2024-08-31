@@ -47,7 +47,7 @@ in {
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "storage" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -122,6 +122,13 @@ in {
 
     nftables
     tree
+
+    usbutils
+    udiskie
+    udisks
+
+    bluez
+    blueberry
   ];
 
   fonts.packages = with pkgs; [
@@ -142,6 +149,8 @@ in {
 
   services.openssh.enable = true;
   services.mullvad-vpn.enable = true;
+  services.udisks2.enable = true;     # automounting 
+  services.gvfs.enable = true;     
 
   services.syncthing = {
     enable = true;
