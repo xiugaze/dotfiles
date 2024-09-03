@@ -29,6 +29,9 @@ map L $
 map E ge
 map K ~
 
+vmap < <gv
+vmap > >gv
+
 map <leader>j <C-w>w
 
 map <leader>l :tabn<CR>
