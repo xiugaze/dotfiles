@@ -2,6 +2,8 @@
 let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
@@ -13,6 +15,7 @@ in {
 
   users.users.caleb = {
     shell = pkgs.zsh;
+    extraGroups = [ "docker" ];
   };
 
   programs.zsh = {
@@ -27,14 +30,22 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-     tmux
-     python3
-     lf
-     luajitPackages.magick
-     texlive.combined.scheme-full
-     zathura
-     starship
+    python3
+    # clang
+    # clang-tools
+    libclang
+    cmake
+    bear
+    jdk
+    mysql84
+    go
+
+    kubectl 
+    minikube
   ];
 
   services.openssh.enable = true;
+  virtualisation.docker =  {
+    enable = true;
+  };
 }
