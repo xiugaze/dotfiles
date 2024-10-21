@@ -67,21 +67,23 @@ in {
 
   xdg.portal = {
       enable = true;
-      wlr.enable = true;
+      xdgOpenUsePortal = true;
+      extraPortals = [
+      	# pkgs.xdg-desktop-portal-hyprland
+      	pkgs.xdg-desktop-portal-gtk
+      ];
   };
 
-
   imports = [
+    <home-manager/nixos>
     ./pkgs-base.nix
     ./pkgs-wayland-hyprland.nix
     ./pkgs-neovim.nix 
   ];
 
   environment.systemPackages = with pkgs; [
-
     # system 
-    xdg-desktop-portal
-    xdg-desktop-portal-kde
+    home-manager
     pipewire
     texlive.combined.scheme-full
 
@@ -118,6 +120,7 @@ in {
 
     bluez
     blueberry
+    nsxiv
   ];
 
   fonts.packages = with pkgs; [

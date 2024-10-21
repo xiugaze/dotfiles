@@ -9,22 +9,29 @@ in {
     unzip
     binutils
     openssh
-
-    # developer tools
     vim 
     gcc
     gnumake
-    ripgrep
-    fzf
+
+    # basic environment
     zsh
     starship
     tmux
-    tree
+
+    fzf
+    zoxide	# better cd
+    eza		# better ls
+    fd		# better find
+    bat 	# better cat
+    ripgrep	# better grep
+    tealdeer	# simpler man
 
     # other
     rsync
     neofetch
     pfetch
     htop
+    tree
+
   ];
 }

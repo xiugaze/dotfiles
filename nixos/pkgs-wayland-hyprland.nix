@@ -3,7 +3,8 @@ let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
   environment.systemPackages = with pkgs; [
-    xdg-desktop-portal-hyprland
+    # xdg-desktop-portal-hyprland
+    # xdg-desktop-portal-gnome
     hyprpaper
     hyprlock
     hyprshot
@@ -23,6 +24,8 @@ in {
     driSupport32Bit = true;
   };
 
+
+
   services.xserver.videoDrivers = ["nvidia"];
 
   programs.hyprland = {
@@ -41,6 +44,7 @@ in {
     open = false;
     nvidiaSettings = true;
   };
+
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
