@@ -51,6 +51,14 @@ in {
     shell = pkgs.zsh;
   };
 
+  home-manager.users.caleb = { config, pkgs, ...}: {
+    home.username = "caleb";
+    home.homeDirectory = "/home/caleb";
+    home.packages = [];
+    home.stateVersion = "24.05";
+  };
+
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -82,8 +90,6 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    # system 
-    home-manager
     pipewire
     texlive.combined.scheme-full
 
@@ -98,10 +104,8 @@ in {
     unstable.obsidian
     unstable.vscodium
     gnome.nautilus
-    prismlauncher
     kicad
     stm32cubemx
-    bitwarden
     librewolf
     firefox
 
@@ -121,6 +125,10 @@ in {
     bluez
     blueberry
     nsxiv
+
+
+    caffeine-ng
+    libsForQt5.partitionmanager
   ];
 
   fonts.packages = with pkgs; [

@@ -1,17 +1,8 @@
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
 local options = {
     number = true,          -- show linenumbers
     relativenumber = true,  -- relative line numbers
-    list = true,           -- invisible characters
-    listchars = { 
-        tab = '» ', 
-        trail = '·', 
-        nbsp = '␣' , 
-        -- eol = '¬'
-    },
-    -- clipboard = 'unnamedplus'
+    list = false,           -- invisible characters
+    listchars = "tab:>\\,eol:¬",
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
     termguicolors = true,   -- truecolor terminals
@@ -28,28 +19,17 @@ local options = {
     undolevels = 10000,     -- maximum number of undos
     --updatetime = 100,       -- when swapfile is written
 
+    sidescrolloff = 8,      -- lines left and right of cursor
     swapfile = false,
-    sidescrolloff = 8,      -- keep columns left and right cursor
-    scrolloff = 6,          -- keep lines above and below cursor
+    scrolloff = 6,      -- lines left and right of cursor
     pumheight = 12,         -- maximum popup items
     signcolumn = "yes",     -- display the signcolumn always
     hlsearch = true,        -- highlight all search results
-
     -- not sure what these are
     foldmethod = "manual",
     hidden = true,
     cmdheight = 0,
     conceallevel = 1,
-
-    -- from kickstart
-    cursorline = true,
-    inccommand = 'split',
-    -- Displays which-key popup sooner
-    timeoutlen = 500,
-    -- swapfile write time
-    updatetime = 250,
-    showmode = true,
-    breakindent = true,
 }
 
 local load = function(opts) 
@@ -58,10 +38,8 @@ local load = function(opts)
         vim.opt[k] = v
     end
     vim.opt.shortmess:append "c"
-    -- vim.opt.shortmess:append "I" -- don't show the intro
-
-    -- moving left/right wraps to next line
-    -- vim.opt.whichwrap:append "<,>,[,],h,l" 
+    vim.opt.shortmess:append "I"
+    vim.opt.whichwrap:append "<,>,[,],h,l"
 end
 
 load(options)
