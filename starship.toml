@@ -19,7 +19,8 @@ symbol = " "
 symbol = " "
 
 [directory]
-truncation_symbol = "󱗘/"
+#truncation_symbol = "󱗘/"
+truncation_symbol = ".../"
 truncate_to_repo = false
 repo_root_style = "bold green"
 read_only = " 󰌾"

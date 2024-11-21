@@ -8,6 +8,8 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
+vim.o.wrap = false
+vim.o.linebreak = false
 
 vim.opt.showmode = false
 
@@ -25,6 +27,10 @@ vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 500
+
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -52,7 +58,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- H and L jump to beginning and end
 vim.keymap.set('n', 'L', 'g$')
-vim.keymap.set('n', 'H', 'g0')
+vim.keymap.set('n', 'H', 'g^')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -502,7 +508,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local mason_servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         rust_analyzer = {},
@@ -648,12 +654,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -811,7 +817,7 @@ require('lazy').setup({
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
-        enable = true,
+        enable = false,
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
