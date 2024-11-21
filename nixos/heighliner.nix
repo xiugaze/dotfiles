@@ -30,6 +30,7 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
+    gcc-unwrapped
     python3
     # clang
     # clang-tools
@@ -42,6 +43,7 @@ in {
 
     kubectl 
     minikube
+    chromium
   ];
 
   services.openssh.enable = true;
