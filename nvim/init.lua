@@ -243,6 +243,7 @@ require("lazy").setup({
                         },
                     },
                 },
+                ocamllsp = {},
             }
 
             local lspconfig = require('lspconfig')
@@ -252,11 +253,16 @@ require("lazy").setup({
                     fallbackFlags = { '-std=c++17' },
                 },
             })
+
             lspconfig.opts = {
                 servers = {
                     clangd = {
                         mason = false,
                     },
+                    ocamllsp = {
+                        mason = false,
+                    },
+
                 },
             }
             require("mason").setup()

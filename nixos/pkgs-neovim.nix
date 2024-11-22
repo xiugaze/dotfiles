@@ -21,15 +21,11 @@ in {
         rustup
 
         # cpp
-        clang
-        bear
         clang-tools
-        libclang
-        libgcc
-        gdb
         llvmPackages_latest.lldb
         llvmPackages_latest.libllvm
         llvmPackages_latest.libcxx
+        llvmPackages_latest.clang
 
 
     ];
