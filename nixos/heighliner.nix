@@ -6,6 +6,7 @@ in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # add missing dynamic libraries
@@ -36,7 +37,6 @@ in {
     go
     kubectl 
     minikube
-    chromium
   ];
 
   services.openssh.enable = true;
