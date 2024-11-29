@@ -11,9 +11,9 @@ require("config.opts")
 require("lazy").setup({
 
     -- colorscheme
-    { 
-        "catppuccin/nvim", 
-        name = "catppuccin", 
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
         priority = 1000,
         config = {
             flavor = "macchiato",
@@ -24,9 +24,9 @@ require("lazy").setup({
 
         }
     },
-    {
-        "tpope/vim-sleuth"
-    },
+
+    { "tpope/vim-sleuth" },
+
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
@@ -45,6 +45,7 @@ require("lazy").setup({
             "nvim-telescope/telescope-ui-select.nvim",
             { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font }
         },
+
         config = function()
             require("telescope").setup({
                 extensions = {
@@ -122,11 +123,11 @@ require("lazy").setup({
                 -- --  This will expand snippets if the LSP sent a snippet.
                 -- -- ['<C-y>'] = cmp.mapping.confirm { select = true },
 
-                -- -- If you prefer more traditional completion keymaps,
-                -- -- you can uncomment the following lines
-                -- ['<CR>'] = cmp.mapping.confirm { select = true },
-                -- --['<Tab>'] = cmp.mapping.select_next_item(),
-                -- --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+                -- If you prefer more traditional completion keymaps,
+                -- you can uncomment the following lines
+                ['<CR>'] = cmp.mapping.confirm { select = true },
+                ['<Tab>'] = cmp.mapping.select_next_item(),
+                ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
                 -- -- Manually trigger a completion from nvim-cmp.
                 -- --  Generally you don't need this, because nvim-cmp will display
@@ -176,8 +177,60 @@ require("lazy").setup({
             "j-hui/fidget.nvim",
             -- { 'folke/neodev.nvim', opts = {} }, -- LSP for Neovim config
         },
+        opts = function()
+            local ret = {
+                servers =  {
+                    lua_ls = {
+                        settings = {
+                            Lua = {
+                                completion = {
+                                    callSnippet = 'Replace',
+                                },
+                            },
+                        },
+                    },
+                    nil_ls = {
+                        mason = false,
+                    },
 
-        config = function()
+                    clangd = {
+                        mason = false,
+                        cmd = {
+                            "clangd",
+                            "--background-index",
+                            "--clang-tidy",
+                            "--log=verbose",
+                        },
+                        init_options = {
+                            fallbackFlags = {
+                                "-std=c++17"
+                            }
+                        }
+                    },
+
+                },
+                setup = {},
+            }
+            return ret
+        end,
+
+        config = function(_, opts)
+
+
+            local servers = opts.servers
+            local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+            local has_blink, blink = pcall(require, "blink.cmp") -- try blink later
+
+
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+                has_blink and blink.get_lsp_capabilities() or {}
+                -- opts.capabilities or {}
+            )
+
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
                 callback = function(event)
@@ -185,7 +238,7 @@ require("lazy").setup({
                     local map = function(input, output, desc)
                         vim.keymap.set('n', input, output, { buffer = event.buf, desc = "LSP: " .. desc})
                     end
-                    
+
                     -- gotos
                     map("gd", builtin.lsp_definitions, "[g]oto [d]efinition")
                     map("gD", vim.lsp.buf.declaration, "[g]oto [D]eclaration")
@@ -212,73 +265,133 @@ require("lazy").setup({
                 end,
             })
 
-            -- add cmp capabilities to client capabilities
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-            local servers = {
-                -- clangd = {
-                --     cmd = {
-                --         "clangd",
-                --         "--background-index",
-                --         "--clang-tidy",
-                --         "--log=verbose",
-                --     },
-                --     init_options = {
-                --         fallbackFlags = {
-                --             "-std=c++17"
-                --         }
-                --     }
-                -- },
-                nil_ls = {},
-                lua_ls = {
-                    -- cmd = {...},
-                    -- filetypes = { ...},
-                    -- capabilities = {},
-                    settings = {
-                        Lua = {
-                            completion = {
-                                callSnippet = 'Replace',
-                            },
-                        },
-                    },
-                },
-                ocamllsp = {},
-            }
 
-            local lspconfig = require('lspconfig')
-            lspconfig.clangd.setup({
-                cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-                init_options = {
-                    fallbackFlags = { '-std=c++17' },
-                },
-            })
+            local function setup(server)
+                local server_opts = vim.tbl_deep_extend("force", {
+                    capabilities = vim.deepcopy(capabilities),
+                }, servers[server] or {})
 
-            lspconfig.opts = {
-                servers = {
-                    clangd = {
-                        mason = false,
-                    },
-                    ocamllsp = {
-                        mason = false,
-                    },
-
-                },
-            }
-            require("mason").setup()
-            local ensure_installed = vim.tbl_keys(servers or {})
-            require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-            require("mason-lspconfig").setup({
-                handlers = {
-                    function(server_name)
-                        local server = servers[server_name] or {}
-                        -- add specific capabilities from each server
-                        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                        require("lspconfig")[server_name].setup(server)
+                if server_opts.enabled == false then
+                    return
+                end
+                if opts.setup[server] then
+                    if opts.setup[server](server, server_opts) then
+                      return
                     end
-                }
-            })
+                elseif opts.setup["*"] then
+                    if opts.setup["*"](server, server_opts) then
+                        return
+                    end
+                end
+                require("lspconfig")[server].setup(server_opts)
+            end
+
+            local have_mason, mlsp = pcall(require, "mason-lspconfig")
+
+            -- NOTE: this breaks on vim.tbl_contains(...), not sure if I am doing this right
+            -- local all_mlsp_severs = {}
+            -- if have_mason then
+            --     all_mlsp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
+            -- end
+            local ensure_installed = {}
+
+            for server, server_opts in pairs(servers) do
+                if server_opts then 
+                    server_opts = server_opts == true and {} or server_opts
+                    if server_opts.enabled ~= false then 
+                        -- if we're not using mason for this server OR mason doesn't have this server
+                        if server_opts.mason == false then --or not vim.tbl_contains(all_mslp_servers, server) then
+                            setup(server)
+                        else
+                        -- otherwise, add it to the ensure_installed list
+                            ensure_installed[#ensure_installed + 1] = server
+                        end
+                    end
+                end
+            end
+
+            if have_mason then
+                mlsp.setup({
+                    ensure_installed = vim.tbl_deep_extend(
+                        "force",
+                        ensure_installed,
+                        require("mason-lspconfig").ensure_installed or {}
+                    ),
+                    handlers = { setup },
+                })
+            end
+
+
+            -- NOTE: for some reason, this tries to install servers where mason=false...
+            -- local has_mti, mti = pcall(require, "mason-tool-installer")
+            -- if has_mti then
+            --     local ensure_installed = vim.tbl_keys(servers or {})
+            --     mti.setup({ ensure_installed = ensure_installed })
+            -- end
         end
+
+
+
+
+
+
+            -- local servers = {
+        --         lua_ls = {
+        --             -- cmd = {...},
+        --             -- filetypes = { ...},
+        --             -- capabilities = {},
+        --             settings = {
+        --                 Lua = {
+        --                     completion = {
+        --                         callSnippet = 'Replace',
+        --                     },
+        --                 },
+        --             },
+        --         },
+        --         nil_ls = {
+        --             mason = false,
+        --         },
+        --         ocamllsp = {},
+        --     }
+        --
+        --     local lspconfig = require('lspconfig')
+        --     lspconfig.clangd.setup({
+        --         cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+        --         init_options = {
+        --             fallbackFlags = { '-std=c++17' },
+        --         },
+        --     })
+        --     lspconfig.nil_ls.setup({
+        --         cmd = {"nil"}
+        --     })
+        --
+        --     lspconfig.opts = {
+        --         servers = {
+        --             clangd = {
+        --                 mason = false,
+        --             },
+        --             ocamllsp = {
+        --                 mason = false,
+        --             },
+        --             -- nil_ls = {
+        --             --    mason = false,
+        --             -- },
+        --
+        --         },
+        --     }
+        --     require("mason-lspconfig").setup({
+        --         handlers = {
+        --             function(server_name)
+        --                 local server = servers[server_name] or {}
+        --                 -- add specific capabilities from each server
+        --                 server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+        --                 require("lspconfig")[server_name].setup(server)
+        --             end
+        --         }
+        --     })
+        --     require("mason").setup()
+        -- end
     },
 
     -- treesitter

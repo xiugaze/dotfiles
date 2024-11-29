@@ -27,6 +27,9 @@ in {
         llvmPackages_latest.libcxx
         llvmPackages_latest.clang
 
+        # nix
+        nil
+
 
     ];
 }
