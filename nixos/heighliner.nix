@@ -34,7 +34,6 @@ in {
     jdk
     mysql84
     go
-
     kubectl 
     minikube
     chromium
