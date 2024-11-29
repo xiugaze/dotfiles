@@ -30,13 +30,7 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    gcc-unwrapped
     python3
-    # clang
-    # clang-tools
-    libclang
-    cmake
-    bear
     jdk
     mysql84
     go

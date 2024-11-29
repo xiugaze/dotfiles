@@ -22,14 +22,13 @@ in {
 
         # cpp
         clang-tools
-        llvmPackages_latest.lldb
-        llvmPackages_latest.libllvm
-        llvmPackages_latest.libcxx
-        llvmPackages_latest.clang
 
         # nix
         nil
-
-
-    ];
+    ] ++ (with pkgs.llvmPackages_latest; [
+            lldb
+            libcxx
+            libllvm
+            clang
+	  ]);
 }

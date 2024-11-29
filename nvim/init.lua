@@ -322,6 +322,14 @@ require("lazy").setup({
                 })
             end
 
+            local lspconfig = require("lspconfig")
+            lspconfig.clangd.setup({
+                	cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
+                	init_options = {
+                		fallbackFlags = { "-std=c++17" },
+                	},
+            })
+
 
             -- NOTE: for some reason, this tries to install servers where mason=false...
             -- local has_mti, mti = pcall(require, "mason-tool-installer")
