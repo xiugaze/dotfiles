@@ -6,6 +6,7 @@ in {
     # system
     git
     wget
+    lsb-release
     unzip
     binutils
     openssh

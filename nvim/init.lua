@@ -4,6 +4,7 @@ vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 vim.g.have_nerd_font = true
 local colorscheme = "catppuccin"
+local is_nixos = (string.find(vim.fn.system("lsb_release -a"), "NixOS") ~= nil)
 
 require("config.opts")
 
@@ -190,11 +191,11 @@ require("lazy").setup({
                         },
                     },
                     nil_ls = {
-                        mason = false,
+                        mason = not is_nixos,
                     },
 
                     clangd = {
-                        mason = false,
+                        mason = not is_nixos,
                         cmd = {
                             "clangd",
                             "--background-index",
