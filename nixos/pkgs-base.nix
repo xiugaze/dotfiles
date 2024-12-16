@@ -13,6 +13,7 @@ in {
     vim 
     gcc
     gnumake
+    just
 
     # basic environment
     zsh

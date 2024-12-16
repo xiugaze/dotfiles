@@ -11,12 +11,14 @@ local options = {
         nbsp = '␣' , 
         -- eol = '¬'
     },
-    -- clipboard = 'unnamedplus'
+    clipboard = 'unnamedplus',
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
     termguicolors = true,   -- truecolor terminals
     wrap = false,           -- linewrapping
     shiftround = false,     -- indent rounding
+    -- shiftwidth = 2,         -- indent size
+    -- tabstop = 2,            -- how many spaces a tab is
     shiftwidth = 4,         -- indent size
     tabstop = 4,            -- how many spaces a tab is
     splitbelow = true,      -- buffers can split below
