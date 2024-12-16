@@ -10,6 +10,7 @@ in {
     hyprshot
     hypridle
     hyprcursor
+    hyprpolkitagent
     catppuccin-cursors
     waybar
     rofi-wayland

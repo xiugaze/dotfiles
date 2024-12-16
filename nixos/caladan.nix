@@ -36,7 +36,7 @@ in {
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
-    extraGroups = [ "networkmanager" "wheel" "storage" ];
+    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -124,6 +124,12 @@ in {
 
     posy-cursors
     nwg-look
+    ffmpeg-full
+    x264
+    mcrcon
+    rpi-imager
+    libxkbcommon
+    gparted
   ];
 
   fonts.packages = with pkgs; [
@@ -165,7 +171,9 @@ in {
     };
   };
 
-
+  virtualisation.docker =  {
+    enable = true;
+  };
 
   networking = {
     firewall = {

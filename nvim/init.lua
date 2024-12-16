@@ -181,6 +181,8 @@ require("lazy").setup({
         opts = function()
             local ret = {
                 servers =  {
+                    gopls = {},
+                    htmx = {},
                     lua_ls = {
                         settings = {
                             Lua = {

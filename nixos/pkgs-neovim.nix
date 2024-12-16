@@ -1,7 +1,9 @@
 {config, pkgs, ...}: 
 let
     unstable = import <nixos-unstable> { config.allowUnfree = true; };
+    # rust-overlay = import (fetchTarball "https://github.com/oxalica/rust-overlay/archive/refs/heads/main.tar.gz");
 in {
+    # nixpkgs.overlays = [ rust-overlay ];
     environment.systemPackages = with pkgs; [
     # needed for neovim
         unstable.neovim
@@ -17,8 +19,13 @@ in {
         ocamlPackages.ocamlformat
         ocamlPackages.utop
 
+        # go
+        go
+
         # rust
         rustup
+        cargo
+        # rust-bin.stable.latest.default
 
         # cpp
         clang-tools
