@@ -2,25 +2,16 @@
 let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/Chicago";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -35,7 +26,6 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
   services.xserver = {
     xkb.layout = "us";
     xkb.variant = "";
@@ -52,10 +42,17 @@ in {
   };
 
   home-manager.users.caleb = { config, pkgs, ...}: {
+    nixpkgs.config.allowUnfree = true;
     home.username = "caleb";
     home.homeDirectory = "/home/caleb";
     home.packages = [];
     home.stateVersion = "24.05";
+    home.pointerCursor = {
+      gtk.enable = true;
+      name = "Posy_Cursor_Black";
+      package = pkgs.posy-cursors;
+      size = 24;
+    };
   };
 
 
@@ -65,7 +62,6 @@ in {
     enableLsColors = true;
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;
@@ -103,10 +99,10 @@ in {
     mullvad-vpn
     unstable.obsidian
     unstable.vscodium
-    gnome.nautilus
+    nautilus
     kicad
     stm32cubemx
-    librewolf
+    unstable.librewolf-bin
     firefox
 
     # development
@@ -126,9 +122,8 @@ in {
     blueberry
     nsxiv
 
-
-    caffeine-ng
-    libsForQt5.partitionmanager
+    posy-cursors
+    nwg-look
   ];
 
   fonts.packages = with pkgs; [

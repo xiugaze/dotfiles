@@ -14,7 +14,7 @@ in {
         ocaml
         dune_3
         opam
-        ocamlPackages.ocamlformat_0_26_1
+        ocamlPackages.ocamlformat
         ocamlPackages.utop
 
         # rust
