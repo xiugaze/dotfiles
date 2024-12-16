@@ -33,9 +33,9 @@ in {
         # nix
         nil
     ] ++ (with pkgs.llvmPackages_latest; [
-            lldb
-            libcxx
-            libllvm
-            clang
-	  ]);
+        lldb
+        libcxx
+        libllvm
+        clang
+      ]);
 }

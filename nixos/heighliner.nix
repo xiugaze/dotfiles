@@ -37,6 +37,8 @@ in {
     go
     kubectl 
     minikube
+    mcrcon
+    apacheHttpd
   ];
 
   services.openssh.enable = true;

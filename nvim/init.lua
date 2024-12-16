@@ -17,6 +17,7 @@ require("lazy").setup({
         name = "catppuccin",
         priority = 1000,
         config = {
+            transparent_background = true;
             flavor = "macchiato",
             background = {
                 light = "frappe",
@@ -25,7 +26,24 @@ require("lazy").setup({
 
         }
     },
-
+    'vmchale/just-vim',
+    {
+      "christoomey/vim-tmux-navigator",
+      cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+      },
+      keys = {
+        { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+        { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+        { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+        { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      },
+    },
     { "tpope/vim-sleuth" },
 
     -- Telescope
@@ -183,6 +201,7 @@ require("lazy").setup({
                 servers =  {
                     gopls = {},
                     htmx = {},
+                    rust_analyzer = {},
                     lua_ls = {
                         settings = {
                             Lua = {
