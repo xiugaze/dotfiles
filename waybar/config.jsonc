@@ -215,18 +215,18 @@
         "spacing": 10
     }, 
 
-    "custom/separator": {
-        "format": " | ",
-        "tooltip": false,
-    
-    },
+    //"custom/separator": {
+    //    "format": " | ",
+    //    "tooltip": false,
+    //
+    //},
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": "{:%Y-%m-%d %H:%M}"
     },
     "idle_inhibitor": {
-        "format": "{icon}",
+        "format": "{icon}  ",
         "format-icons": {
             "activated": "",
             "deactivated": ""

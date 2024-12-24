@@ -200,6 +200,7 @@ require("lazy").setup({
             local ret = {
                 servers =  {
                     gopls = {},
+                    html = {},
                     htmx = {},
                     rust_analyzer = {},
                     lua_ls = {

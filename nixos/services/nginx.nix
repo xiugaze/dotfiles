@@ -17,12 +17,6 @@
       addSSL = true;
       enableACME = true;
       root = "/var/www/test-site";
-      # locations."/" = {
-      #   return = "200 '<html><body>It works</body></html>'";
-      #   extraConfig = ''
-      #     default_type text/html;
-      #   '';
-      # };
     };
   };
 

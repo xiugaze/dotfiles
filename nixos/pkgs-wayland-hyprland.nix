@@ -3,10 +3,9 @@ let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
   environment.systemPackages = with pkgs; [
-    # xdg-desktop-portal-hyprland
-    # xdg-desktop-portal-gnome
+    xdg-desktop-portal-hyprland
     hyprpaper
-    hyprlock
+    unstable.hyprlock
     hyprshot
     hypridle
     hyprcursor
@@ -25,14 +24,12 @@ in {
     enable32Bit = true;
   };
 
-
-
   services.xserver.videoDrivers = ["nvidia"];
 
   programs.hyprland = {
     enable = true;
-    #enableNvidiaPatches = true;
     xwayland.enable = true;
+    package = unstable.hyprland;
   };
 
   hardware.nvidia = {

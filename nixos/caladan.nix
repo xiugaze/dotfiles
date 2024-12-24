@@ -41,21 +41,6 @@ in {
     shell = pkgs.zsh;
   };
 
-  # home-manager.users.caleb = { config, pkgs, ...}: {
-  #   nixpkgs.config.allowUnfree = true;
-  #   home.username = "caleb";
-  #   home.homeDirectory = "/home/caleb";
-  #   home.packages = [];
-  #   home.stateVersion = "24.05";
-  #   home.pointerCursor = {
-  #     gtk.enable = true;
-  #     name = "Posy_Cursor_Black";
-  #     package = pkgs.posy-cursors;
-  #     size = 24;
-  #   };
-  # };
-
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;

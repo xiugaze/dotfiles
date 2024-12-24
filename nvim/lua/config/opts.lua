@@ -21,6 +21,7 @@ local options = {
     -- tabstop = 2,            -- how many spaces a tab is
     shiftwidth = 4,         -- indent size
     tabstop = 4,            -- how many spaces a tab is
+    softtabstop = 4,
     splitbelow = true,      -- buffers can split below
     splitright = true,      -- buffers split right 
     expandtab = true,       -- tabs expand to spaces
