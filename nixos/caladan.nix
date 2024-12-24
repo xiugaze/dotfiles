@@ -107,7 +107,6 @@ in {
     blueberry
     nsxiv
 
-    posy-cursors
     nwg-look
     ffmpeg-full
     x264

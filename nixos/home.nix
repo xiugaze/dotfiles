@@ -3,26 +3,8 @@
   home.username = "caleb";
   home.homeDirectory = "/home/caleb";
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
 
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
-
-  # set cursor size and dpi for 4k monitor
-
-  # Packages that should be installed to the user profile.
-
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [ posy-cursors ];
 
   home.sessionVariables = {
       EDITOR = "nvim";
@@ -34,14 +16,43 @@
     gtk.enable = true;
     name = "Posy_Cursor_Black";
     package = pkgs.posy-cursors;
-    size = 18;
+    size = 16;
   };
 
-  # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
     userName = "Caleb Andreano";
     userEmail = "calebandreano@gmail.com";
+  };
+
+  programs.vim = {
+    enable = true;
+    extraConfig = ''
+      set termguicolors
+      set nu rnu 
+      set autoindent
+      set tabstop=2
+      set shiftwidth=2 
+      set smarttab
+      set softtabstop=2
+      set mouse=a
+      let mapleader = ";"
+      set encoding=UTF-8
+      set clipboard=unnamedplus
+      nnoremap <leader>y "+y
+      nnoremap <leader>p "+p
+      nmap H ^
+      nmap L $
+      nmap E ge
+      nmap K ~
+      vmap < <gv
+      vmap > >gv
+      :colorscheme catppuccin_mocha
+    '';
+    plugins = with pkgs.vimPlugins; [
+      vim-tmux-navigator
+      catppuccin-vim
+    ];
   };
 
   programs.zsh = {
