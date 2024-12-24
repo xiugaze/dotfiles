@@ -11,6 +11,7 @@ in {
     hypridle
     hyprcursor
     hyprpolkitagent
+    hyprsunset
     catppuccin-cursors
     waybar
     rofi-wayland

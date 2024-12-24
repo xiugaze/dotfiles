@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, unstable, ... }:
 let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
@@ -41,19 +41,19 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.caleb = { config, pkgs, ...}: {
-    nixpkgs.config.allowUnfree = true;
-    home.username = "caleb";
-    home.homeDirectory = "/home/caleb";
-    home.packages = [];
-    home.stateVersion = "24.05";
-    home.pointerCursor = {
-      gtk.enable = true;
-      name = "Posy_Cursor_Black";
-      package = pkgs.posy-cursors;
-      size = 24;
-    };
-  };
+  # home-manager.users.caleb = { config, pkgs, ...}: {
+  #   nixpkgs.config.allowUnfree = true;
+  #   home.username = "caleb";
+  #   home.homeDirectory = "/home/caleb";
+  #   home.packages = [];
+  #   home.stateVersion = "24.05";
+  #   home.pointerCursor = {
+  #     gtk.enable = true;
+  #     name = "Posy_Cursor_Black";
+  #     package = pkgs.posy-cursors;
+  #     size = 24;
+  #   };
+  # };
 
 
   programs.zsh = {
@@ -79,10 +79,10 @@ in {
   };
 
   imports = [
-    <home-manager/nixos>
     ./pkgs-base.nix
     ./pkgs-wayland-hyprland.nix
     ./pkgs-neovim.nix 
+    ./services/nginx.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -130,12 +130,16 @@ in {
     rpi-imager
     libxkbcommon
     gparted
+    psst
+    kepubify
   ];
 
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
     nerdfonts
+    # nerd-fonts.fira-code
+    # nerd-fonts.fira-symbols
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -185,10 +189,10 @@ in {
 
       allowedUDPPorts = [ 
         22000 21027 # syncthing
+        80 443      # http/https
       ];
     };
   };
 
-  # don't change this
-  system.stateVersion = "24.05"; 
+  system.stateVersion = "24.11"; 
 }
