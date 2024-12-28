@@ -39,8 +39,8 @@
       let mapleader = ";"
       set encoding=UTF-8
       set clipboard=unnamedplus
-      nnoremap <leader>y "+y
-      nnoremap <leader>p "+p
+      nmap <leader>y "+y
+      nmap <leader>p "+p
       nmap H ^
       nmap L $
       nmap E ge
@@ -51,6 +51,7 @@
     '';
     plugins = with pkgs.vimPlugins; [
       vim-tmux-navigator
+      vim-wayland-clipboard
       catppuccin-vim
     ];
   };

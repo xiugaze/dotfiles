@@ -21,7 +21,6 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/caladan/configuration.nix
-          ./caladan.nix
 
           home-manager.nixosModules.home-manager
           {

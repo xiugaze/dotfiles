@@ -2,18 +2,31 @@
 let
   unstable = import <nixos-unstable> { config.allowUnfree = true; };
 in {
+
+  imports = [
+    ../../modules/base.nix 
+    ../../modules/neovim.nix 
+    ../../modules/hyprland.nix 
+    ../../services/nginx.nix
+  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.overlays = [ (import ../../overlays/custom-pkgs.nix) ];
+  nixpkgs.config.allowUnfree = true;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+
+  # allow binding directly to 80 and 443
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.networkmanager.enable = true;
+  # networking
+  hardware.bluetooth.enable = true;
 
+  # locale
   time.timeZone = "America/Chicago";
-
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -26,13 +39,7 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
-
-  hardware.bluetooth.enable = true;
-
+  programs.zsh.enable = true;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
@@ -40,14 +47,6 @@ in {
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableLsColors = true;
-  };
-
-  nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -63,21 +62,9 @@ in {
       ];
   };
 
-  imports = [
-    ./pkgs-base.nix
-    ./pkgs-wayland-hyprland.nix
-    ./pkgs-neovim.nix 
-    ./services/nginx.nix
-  ];
-
   environment.systemPackages = with pkgs; [
     pipewire
     texlive.combined.scheme-full
-
-    # utilites
-    bitwarden-cli
-
-    # desktop programs
     kitty
     zathura
     pavucontrol
@@ -88,16 +75,11 @@ in {
     kicad
     stm32cubemx
     unstable.librewolf-bin
-    firefox
-
-    # development
+    ungoogled-chromium
     jdk21
     python3
-
     rsync
-
     nftables
-    tree
 
     usbutils
     udiskie
@@ -116,29 +98,24 @@ in {
     gparted
     psst
     kepubify
+    avrdis
   ];
 
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
     nerdfonts
-    # nerd-fonts.fira-code
-    # nerd-fonts.fira-symbols
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # Services
   services = {
     udisks2.enable = true;     # automounting 
     gvfs.enable = true;     
     openssh.enable = true;
+
+    xserver = {
+      xkb.layout = "us";
+      xkb.variant = "";
+    };
 
     mullvad-vpn.enable = true;
 
@@ -164,6 +141,7 @@ in {
   };
 
   networking = {
+    networkmanager.enable = true;
     firewall = {
 
       allowedTCPPorts = [ 
