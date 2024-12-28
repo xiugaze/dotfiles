@@ -65,7 +65,13 @@
       cd="z";
       ls="eza --icons -h --git";
       l="eza --icons -lah --git";
+      dev="nix develop -c zsh";
     };
+    initExtra = ''
+      gc() {
+        nix-collect-garbage --delete-older-than $1
+      }
+    '';
     #sessionVariables = { };
   };
 

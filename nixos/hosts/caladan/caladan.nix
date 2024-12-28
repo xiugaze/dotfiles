@@ -7,7 +7,7 @@ in {
     ../../modules/base.nix 
     ../../modules/neovim.nix 
     ../../modules/hyprland.nix 
-    ../../services/nginx.nix
+    ../../services/web-server-caddy.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
