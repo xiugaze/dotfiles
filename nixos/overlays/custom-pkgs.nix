@@ -1,3 +1,3 @@
-self: super: {
-  avrdis = self.callPackage ./avrdis.nix {};
+final: prev: {
+  avrdis = final.callPackage ./avrdis.nix {};
 }

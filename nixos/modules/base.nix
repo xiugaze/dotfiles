@@ -8,6 +8,7 @@ in {
     wget
     lsb-release
     unzip
+    p7zip
     binutils
     openssh
     vim 
@@ -21,12 +22,12 @@ in {
     tmux
 
     fzf
-    zoxide	# better cd
-    eza		# better ls
-    fd		# better find
-    bat 	# better cat
-    ripgrep	# better grep
-    tealdeer	# simpler man
+    zoxide      # better cd
+    eza         # better ls
+    fd          # better find
+    bat         # better cat
+    ripgrep     # better grep
+    tealdeer    # simpler man
 
     # other
     rsync

@@ -7,6 +7,7 @@ in {
     ../../modules/base.nix 
     ../../modules/neovim.nix 
     ../../modules/hyprland.nix 
+    ../../modules/usb-wakeup-disable.nix 
     ../../services/web-server-caddy.nix
   ];
 
@@ -23,6 +24,10 @@ in {
 
   # networking
   hardware.bluetooth.enable = true;
+
+  hardware.usb.wakeupDisabled = [
+    { vendor = "046d"; product = "c547"; } # G502X
+  ];
 
   # locale
   time.timeZone = "America/Chicago";
@@ -143,15 +148,11 @@ in {
   networking = {
     networkmanager.enable = true;
     firewall = {
-
       allowedTCPPorts = [ 
         8384 22000  # syncthing
-        80 443      # http/https
       ];
-
       allowedUDPPorts = [ 
         22000 21027 # syncthing
-        80 443      # http/https
       ];
     };
   };

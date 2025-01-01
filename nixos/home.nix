@@ -18,7 +18,14 @@
     package = pkgs.posy-cursors;
     size = 16;
   };
+  
 
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/http" = ["librewolf.desktop"];
+    "x-scheme-handler/https" = ["librewolf.desktop"];
+    "text/html" = ["librewolf.desktop"];
+  };
+  
   programs.git = {
     enable = true;
     userName = "Caleb Andreano";
