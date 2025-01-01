@@ -8,7 +8,7 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    go-test-server.url = "path:./go-test-server";
+    go-test-server.url = "github:xiugaze/go-test-server";
   };
 
   outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, go-test-server, ... }: 

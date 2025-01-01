@@ -25,14 +25,17 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-NQ+H9ndcnwxgNZDRMJZTrmVAamHUorwz589i29Cxpqs=",
-        "path": "./go-test-server",
-        "type": "path"
+        "lastModified": 1735770603,
+        "narHash": "sha256-y3LJKsam8EN9c77WO2NG3JEb78YUhUG4EMbSOeNjuM8=",
+        "owner": "xiugaze",
+        "repo": "go-test-server",
+        "rev": "c9bf9b0f2ab5c6fa44870d953cca3cd482539812",
+        "type": "github"
       },
       "original": {
-        "path": "./go-test-server",
-        "type": "path"
+        "owner": "xiugaze",
+        "repo": "go-test-server",
+        "type": "github"
       }
     },
     "gomod2nix": {
