@@ -8,7 +8,6 @@ in {
     ../../modules/neovim.nix 
     ../../modules/hyprland.nix 
     ../../modules/usb-wakeup-disable.nix 
-    ../../services/web-server-caddy.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

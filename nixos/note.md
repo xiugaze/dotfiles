@@ -15,3 +15,16 @@ sudo nixos-rebuild switch --recreate-lock-file --flake .
 ```
 
 Occasionally, you may encounter a "sha256 mismatch" error when running nixos-rebuild switch. This error can be resolved by updating flake.lock using nix flake update.
+
+
+## Go server project
+
+Right now, we're explicitly tracking the main branch.
+Flakes are supposed to be locked for reproducibility. To update, 
+we have to run `nix flake update go-test-server` for that specific input
+or run `nix flake update` for all inputs before rebuilding.
+
+
+
+
+

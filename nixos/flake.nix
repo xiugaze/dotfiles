@@ -8,18 +8,18 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    go-test-server.url = "github:xiugaze/go-test-server";
+    love-letters.url = "github:xiugaze/love-letters?ref=main";
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, go-test-server, ... }: 
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, love-letters, ... }: 
     {
     nixosConfigurations = {
       caladan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit go-test-server; };
+        specialArgs = { inherit love-letters; };
         modules = [
           ./hosts/caladan/configuration.nix
-          ./modules/go-test-server.nix
+          ./services/love-letters.nix
 
           home-manager.nixosModules.home-manager
           {
