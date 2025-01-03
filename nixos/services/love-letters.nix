@@ -41,8 +41,10 @@ in {
 
   services.caddy = {
     enable = true;
-    virtualHosts."test.andreano.dev".extraConfig = ''
-      reverse_proxy localhost:${port}
+    extraConfig = ''
+      test.andreano.dev, 10.0.0.174 {
+        reverse_proxy localhost:${port}
+      }
     '';
   };
 

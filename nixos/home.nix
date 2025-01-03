@@ -2,15 +2,27 @@
 {
   home.username = "caleb";
   home.homeDirectory = "/home/caleb";
-
-
   home.packages = with pkgs; [ posy-cursors ];
-
   home.sessionVariables = {
       EDITOR = "nvim";
       GIT_EDITOR = "nvim";
       PATH = "$PATH:~/bin";
   };
+
+  catppuccin = {
+    flavor = "mocha";
+    accent = "lavender";
+    gtk = {
+      enable = true;
+      icon.enable = true;
+      icon.accent = "lavender";
+    };
+    zathura = {
+      enable = true;
+      flavor = "mocha";
+    };
+  };
+  gtk.enable = true;
 
   home.pointerCursor = {
     gtk.enable = true;
@@ -18,7 +30,6 @@
     package = pkgs.posy-cursors;
     size = 16;
   };
-  
 
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/http" = ["librewolf.desktop"];

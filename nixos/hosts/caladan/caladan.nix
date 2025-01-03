@@ -47,7 +47,7 @@ in {
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
-    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" ];
+    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -76,6 +76,7 @@ in {
     unstable.obsidian
     unstable.vscodium
     nautilus
+    gnome-epub-thumbnailer
     kicad
     stm32cubemx
     unstable.librewolf-bin
@@ -103,6 +104,8 @@ in {
     psst
     kepubify
     avrdis
+    arduino-ide
+    python312Packages.pyserial
   ];
 
   fonts.packages = with pkgs; [
@@ -115,7 +118,9 @@ in {
     udisks2.enable = true;     # automounting 
     gvfs.enable = true;     
     openssh.enable = true;
-
+    udev.packages = with pkgs; [ 
+      platformio-core.udev
+    ];
     xserver = {
       xkb.layout = "us";
       xkb.variant = "";

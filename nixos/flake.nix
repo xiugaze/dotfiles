@@ -8,11 +8,16 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
     love-letters.url = "github:xiugaze/love-letters?ref=main";
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, love-letters, ... }: 
-    {
+  outputs = inputs@{ 
+    nixpkgs, 
+    nixpkgs-unstable, 
+    home-manager, 
+    catppuccin,
+    love-letters, ... }: {
     nixosConfigurations = {
       caladan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -21,11 +26,16 @@
           ./hosts/caladan/configuration.nix
           ./services/love-letters.nix
 
-          home-manager.nixosModules.home-manager
-          {
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.caleb = import ./home.nix;
+            home-manager.users.caleb = {
+                imports = [
+                  ./home.nix
+                  catppuccin.homeManagerModules.catppuccin
+                ];
+            };
           }
         ];
       };
