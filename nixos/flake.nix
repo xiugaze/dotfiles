@@ -21,11 +21,10 @@
     nixosConfigurations = {
       caladan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit love-letters; };
+        specialArgs = { inherit love-letters nixpkgs-unstable; };
         modules = [
           ./hosts/caladan/configuration.nix
           ./services/love-letters.nix
-
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;

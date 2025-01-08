@@ -1,13 +1,11 @@
-{config, pkgs, ...}: 
-let
-  unstable = import <nixos-unstable> { config.allowUnfree = true; };
-in {
+{config, pkgs, unstable, ...}: {
   environment.systemPackages = with pkgs; [
     xdg-desktop-portal-hyprland
     hyprpaper
     unstable.hyprlock
     hyprshot
     hypridle
+    hyprshade
     hyprcursor
     hyprpolkitagent
     hyprsunset

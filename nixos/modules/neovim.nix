@@ -1,8 +1,5 @@
-{config, pkgs, ...}: 
-let
-    unstable = import <nixos-unstable> { config.allowUnfree = true; };
-    # rust-overlay = import (fetchTarball "https://github.com/oxalica/rust-overlay/archive/refs/heads/main.tar.gz");
-in {
+{config, pkgs, unstable, ...}: {
+
     # nixpkgs.overlays = [ rust-overlay ];
     environment.systemPackages = with pkgs; [
     # needed for neovim

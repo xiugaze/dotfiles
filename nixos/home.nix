@@ -28,7 +28,7 @@
     gtk.enable = true;
     name = "Posy_Cursor_Black";
     package = pkgs.posy-cursors;
-    size = 16;
+    size = 32; # also set by hyprcursor on startup, min available is 32 :(
   };
 
   xdg.mimeApps.defaultApplications = {

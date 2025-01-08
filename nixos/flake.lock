@@ -209,11 +209,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1735927104,
-        "narHash": "sha256-SXon0ATzyKhD/If/ErA24vQKyN3+55AI9ZS+c51gmds=",
+        "lastModified": 1736204639,
+        "narHash": "sha256-1yBLbqpHFMmZp8OLo1EkRUf3K8FgGP6qaWYxt1ONSPQ=",
         "owner": "xiugaze",
         "repo": "love-letters",
-        "rev": "94281c98bbce1d4e12cf4b01449f629a4d091e73",
+        "rev": "0f58be16c6a8df453047649ca158f522e0e040a7",
         "type": "github"
       },
       "original": {

@@ -105,7 +105,7 @@ in {
     kepubify
     avrdis
     arduino-ide
-    python312Packages.pyserial
+    system-config-printer
   ];
 
   fonts.packages = with pkgs; [
@@ -115,6 +115,14 @@ in {
   ];
 
   services = {
+    # printing
+    printing.enable = true;
+    # printer discovery
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     udisks2.enable = true;     # automounting 
     gvfs.enable = true;     
     openssh.enable = true;
