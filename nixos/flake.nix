@@ -13,29 +13,45 @@
   };
 
   outputs = inputs@{ 
-    nixpkgs, 
-    nixpkgs-unstable, 
-    home-manager, 
-    catppuccin,
-    love-letters, ... }: {
+      nixpkgs, 
+      nixpkgs-unstable, 
+      home-manager, 
+      catppuccin,   # literally only for gtk theming...
+      love-letters, 
+      ... 
+  }: 
+  let 
+    globalModules = [
+      home-manager.nixosModules.home-manager {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.caleb = {
+          imports = [
+            ./home.nix
+            catppuccin.homeManagerModules.catppuccin
+          ];
+        };
+      }
+      ./modules/base.nix
+    ];
+  in {
     nixosConfigurations = {
+      # desktop
       caladan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit love-letters nixpkgs-unstable; };
-        modules = [
+        modules = globalModules ++ [
           ./hosts/caladan/configuration.nix
           ./services/love-letters.nix
           catppuccin.nixosModules.catppuccin
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.caleb = {
-                imports = [
-                  ./home.nix
-                  catppuccin.homeManagerModules.catppuccin
-                ];
-            };
-          }
+        ];
+      };
+      # wsl 
+      heighliner = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit nixpkgs-unstable; };
+        modules = globalModules ++ [
+          ./hosts/heighliner/configuration.nix
         ];
       };
     };
