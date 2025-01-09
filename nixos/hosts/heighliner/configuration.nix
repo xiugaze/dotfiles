@@ -15,10 +15,14 @@ in {
   programs.nix-ld.libraries = with pkgs; [ ];
 
   users.users.caleb = {
+    isNormalUser = true;
+    description = "caleb";
+    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
+    packages = with pkgs; [];
     shell = pkgs.zsh;
-    extraGroups = [ "docker" ];
   };
 
+  programs.dconf.enable = true;
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -26,8 +30,9 @@ in {
   };
 
   imports = [
-    ./pkgs-neovim.nix 
+    ../../modules/neovim.nix 
   ];
+  _module.args.unstable = unstable;
 
   environment.systemPackages = with pkgs; [
     python3

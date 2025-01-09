@@ -1,6 +1,5 @@
 {config, pkgs, unstable, ...}: {
 
-    # nixpkgs.overlays = [ rust-overlay ];
     environment.systemPackages = with pkgs; [
     # needed for neovim
         unstable.neovim
@@ -18,11 +17,6 @@
 
         # go
         go
-
-        # rust
-        rustup
-        cargo
-        # rust-bin.stable.latest.default
 
         # cpp
         clang-tools
