@@ -43,10 +43,27 @@ in {
     minikube
     mcrcon
     apacheHttpd
+    openssl
   ];
 
   services.openssh.enable = true;
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+  };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
   virtualisation.docker =  {
     enable = true;
+  };
+
+  networking = {
+    firewall = {
+      allowedTCPPorts = [ 
+        8384 22000  # syncthing
+      ];
+      allowedUDPPorts = [ 
+        22000 21027 # syncthing
+      ];
+    };
   };
 }

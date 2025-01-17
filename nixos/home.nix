@@ -41,6 +41,18 @@
     enable = true;
     userName = "Caleb Andreano";
     userEmail = "calebandreano@gmail.com";
+    extraConfig = {
+      init = {
+        defaultBranch = "master";
+      };
+    };
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 
   programs.vim = {
