@@ -17,6 +17,7 @@
     zsh
     starship
     tmux
+    lazygit
 
     fzf
     zoxide      # better cd

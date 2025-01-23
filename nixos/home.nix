@@ -65,6 +65,9 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+    config = {
+      hide_env_diff = true;
+    };
   };
 
   programs.vim = {
