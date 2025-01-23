@@ -32,6 +32,7 @@ in {
 
   hardware.usb.wakeupDisabled = [
     { vendor = "046d"; product = "c547"; } # G502X
+    { vendor = "046d"; product = "c52b"; } # Logitech Unifying Receiver
   ];
 
   # locale
@@ -67,8 +68,9 @@ in {
       enable = true;
       xdgOpenUsePortal = true;
       extraPortals = [
-      	# pkgs.xdg-desktop-portal-hyprland
-      	pkgs.xdg-desktop-portal-gtk
+        # pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-kde
       ];
   };
 
@@ -112,6 +114,7 @@ in {
     avrdis
     arduino-ide
     system-config-printer
+    unstable.ghostty
   ];
 
   fonts.packages = with pkgs; [

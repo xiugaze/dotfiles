@@ -1,4 +1,5 @@
 {config, pkgs, unstable, ...}: {
+
   environment.systemPackages = with pkgs; [
     xdg-desktop-portal-hyprland
     hyprpaper
@@ -15,6 +16,12 @@
     wl-clipboard
     wl-clip-persist
     cliphist
+
+    pipewire
+    wireplumber
+
+    dunst
+    # libsForQt5.qt5wayland
   ];
 
   hardware.graphics = {
@@ -40,7 +47,6 @@
     open = false;
     nvidiaSettings = true;
   };
-
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
