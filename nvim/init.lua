@@ -224,11 +224,11 @@ require("lazy").setup({
                             "--clang-tidy",
                             "--log=verbose",
                         },
-                        init_options = {
-                            fallbackFlags = {
-                                "-std=c++17"
-                            }
-                        }
+                        -- init_options = {
+                        --     fallbackFlags = {
+                        --         "-std=c++17"
+                        --     }
+                        -- }
                     },
 
                 },
