@@ -101,9 +101,9 @@ function M.load_telescope()
     -- end,
 end
 
--- function M.load_plugins()
--- 	local map = M.nmap
--- 	map("<C-f>", ":lua vim.lsp.buf.format()<CR>", "Format")
+function M.load_lsp()
+	local map = M.nmap
+	map("<C-f>", ":lua vim.lsp.buf.format()<CR>", "Format")
 -- 	map("<leader>e", "<cmd>Neotree toggle float<cr>", "Explorer (Neotree)")
 -- 	map("<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", "Tmux Left")
 -- 	map("<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", "Tmux Down")
@@ -138,7 +138,7 @@ end
 -- 	map("<leader>ft", ":TodoTelescope<CR>", "[F]ind [T]odo")
 -- 	-- zenmode
 -- 	map("<leader>z", ":ZenMode<CR>", "[Z]enmode")
--- end
+end
 
 -- For LSP-lines
 -- M.toggle_lines = function()
@@ -158,6 +158,7 @@ end
 function M.setup()
 	M.load_basics()
 	M.load_telescope()
+	M.load_lsp()
 end
 -- M.load_plugins()
 

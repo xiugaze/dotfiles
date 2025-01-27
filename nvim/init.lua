@@ -205,6 +205,8 @@ require("lazy").setup({
                     rust_analyzer = {
                         mason = not is_nixos,
                     },
+                    pylyzer = {}, -- note: not in mason
+                    ruff = {},
                     lua_ls = {
                         settings = {
                             Lua = {
