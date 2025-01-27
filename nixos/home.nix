@@ -31,10 +31,22 @@
     size = 32; # also set by hyprcursor on startup, min available is 32 :(
   };
 
-  xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/http" = ["librewolf.desktop"];
-    "x-scheme-handler/https" = ["librewolf.desktop"];
-    "text/html" = ["librewolf.desktop"];
+  xdg.mime.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    
+    defaultApplications = {
+      "x-scheme-handler/http" = ["librewolf.desktop"];
+      "x-scheme-handler/about" = ["librewolf.desktop"];
+      "x-scheme-handler/https" = ["librewolf.desktop"];
+      "x-scheme-handler/unknown" = ["librewolf.desktop"];
+      "text/html" = ["librewolf.desktop"];
+    };
+    associations.added = {
+      "x-scheme-handler/http" = ["librewolf.desktop"];
+      "x-scheme-handler/https" = ["librewolf.desktop"];
+      "text/html" = ["librewolf.desktop"];
+    };
   };
   
   programs.git = {
@@ -54,6 +66,9 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+    config = {
+      hide_env_diff = true;
+    };
   };
 
   programs.vim = {
@@ -156,7 +171,7 @@
 
     '';
   };
-
+  
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -171,6 +186,19 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      theme = "catppuccin-macchiato";
+      font-size = 14;
+      font-family = "FiraCode Nerd Font";
+      background-opacity = 0.92;
+      background-blur-radius = 20;
+      window-decoration = false;
+    };
   };
 
   home.stateVersion = "24.11";

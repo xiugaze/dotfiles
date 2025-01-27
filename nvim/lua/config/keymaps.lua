@@ -71,6 +71,7 @@ function M.load_telescope()
 	set("<leader>f.", builtin.oldfiles, "[f]ind recent files")
 	set("<leader>fs", builtin.builtin, "[f]ind [s]elect")
 	set("<leader>fk", builtin.keymaps, "[f]ind [k]eymaps")
+	set("<leader>ft", builtin.treesitter, "[f]ind [t]reesitter")
 	vim.keymap.set('n', '<leader>fn', function()
 		builtin.find_files { cwd = vim.fn.stdpath 'config' }
 	end, { desc = '[S]earch [N]eovim files' })

@@ -1,4 +1,4 @@
-command_timeout = 3600
+command_timeout = 10000 #ms 
 
 [aws]
 symbol = "  "
