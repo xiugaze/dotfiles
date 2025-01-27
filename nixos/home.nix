@@ -56,6 +56,7 @@
     extraConfig = {
       init = {
         defaultBranch = "master";
+        help.autocorrect = "prompt";
       };
     };
   };
@@ -103,7 +104,7 @@
 
   programs.zsh = {
     enable = true;
-    defaultKeymap = "vicmd";
+    # defaultKeymap = "vicmd";
     autosuggestion.enable = true;
     enableCompletion = true;
     shellAliases = {
@@ -112,6 +113,12 @@
       l="eza --icons -lah --git";
       dev="nix develop -c zsh";
     };
+    plugins = with pkgs; [
+      {
+        name = zsh-vi-mode.pname;
+        src = zsh-vi-mode.src;
+      }
+    ];
     initExtra = ''
       gc() {
         nix-collect-garbage --delete-older-than $1

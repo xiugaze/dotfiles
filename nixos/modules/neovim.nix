@@ -15,6 +15,11 @@
         ocamlPackages.ocamlformat
         ocamlPackages.utop
 
+        # python
+        pylyzer
+        ruff
+
+
         # go
         go
 

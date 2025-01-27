@@ -9,6 +9,11 @@ in {
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 10d";
+  };
   nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;
@@ -49,6 +54,9 @@ in {
   services.openssh.enable = true;
   services.syncthing = {
     enable = true;
+    user = "caleb";
+    dataDir = "/home/caleb/sync/";
+    configDir = "/home/caleb/.config/syncthing";
     openDefaultPorts = true;
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";

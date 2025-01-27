@@ -4,6 +4,7 @@
     git
     wget
     lsb-release
+    zip
     unzip
     p7zip
     binutils
@@ -26,6 +27,7 @@
     bat         # better cat
     ripgrep     # better grep
     tealdeer    # simpler man
+    fd
 
     # other
     rsync
