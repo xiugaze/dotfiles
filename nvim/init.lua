@@ -202,7 +202,9 @@ require("lazy").setup({
                     gopls = {},
                     html = {},
                     htmx = {},
-                    rust_analyzer = {},
+                    rust_analyzer = {
+                        mason = not is_nixos,
+                    },
                     lua_ls = {
                         settings = {
                             Lua = {
@@ -434,7 +436,8 @@ require("lazy").setup({
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = {
-            enable = disable,
+            enable = true,
+            disable = { "c", "rust", "python" },
             -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
             --  If you are experiencing weird indenting issues, add the language to
             --  the list of additional_vim_regex_highlighting and disabled languages for indent.

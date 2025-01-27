@@ -49,6 +49,9 @@ in {
   services.openssh.enable = true;
   services.syncthing = {
     enable = true;
+    user = "caleb";
+    dataDir = "/home/caleb/sync/";
+    configDir = "/home/caleb/.config/syncthing";
     openDefaultPorts = true;
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
