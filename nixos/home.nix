@@ -129,6 +129,23 @@
     #sessionVariables = { };
   };
 
+  programs.zathura = {
+    enable = true;
+    mappings = {
+      u = "scroll half-up";
+      d = "scroll half-down";
+      D = "toggle_page_mode";
+      r = "reload";
+      R = "rotate";
+      i = "recolor";
+      p = "print";
+      mg = "goto top";
+    };
+    options = {
+      selection-clipboard = "clipboard";
+    };
+  };
+
   programs.tmux = {
     enable = true;
     prefix = "C-a";
