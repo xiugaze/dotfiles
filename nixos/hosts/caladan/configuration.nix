@@ -115,6 +115,7 @@ in {
     arduino-ide
     system-config-printer
     unstable.ghostty
+    kdePackages.kdeconnect-kde
   ];
 
   fonts.packages = with pkgs; [

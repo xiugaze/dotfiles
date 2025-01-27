@@ -202,7 +202,9 @@ require("lazy").setup({
                     gopls = {},
                     html = {},
                     htmx = {},
-                    rust_analyzer = {},
+                    rust_analyzer = {
+                        mason = not is_nixos,
+                    },
                     lua_ls = {
                         settings = {
                             Lua = {
