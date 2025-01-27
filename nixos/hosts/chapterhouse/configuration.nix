@@ -1,16 +1,23 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./pkgs-base.nix
-      ./pkgs-neovim.nix
-      ./services/skrimp_server.nix
-    ];
+{ config, pkgs, inputs, nixpkgs-unstable, ... }: 
+let 
+  unstable = import nixpkgs-unstable {
+    system = "x86_64-linux";
+    config = config.nixpkgs.config;
+  };
+in {
+  networking.hostName = "chapterhouse"; # Define your hostname.
+  imports = [ 
+    ./hardware-configuration.nix
+    ../../modules/base.nix
+    ../../modules/neovim.nix
+    ../../modules/syncthing.nix
+    ../../services/skrimp_server.nix
+  ];
+  _module.args.unstable = unstable;
+  nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -50,9 +57,9 @@
     variant = "";
   };
 
-  users.users.server = {
+  users.users.caleb = {
     isNormalUser = true;
-    description = "server";
+    description = "caleb";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
@@ -81,7 +88,7 @@
   services.openssh.enable = true;
 
   services.skrimp_server.enable = true;
-  services.skrimp_server.user = "server";
+  services.skrimp_server.user = "caleb";
 
   networking.firewall.allowedTCPPorts = [ 25565 25567 ];
   networking.firewall.allowedUDPPorts = [ 25565 25567 ];

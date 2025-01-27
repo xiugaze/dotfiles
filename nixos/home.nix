@@ -2,7 +2,9 @@
 {
   home.username = "caleb";
   home.homeDirectory = "/home/caleb";
-  home.packages = with pkgs; [ posy-cursors ];
+  # home.username = "server";
+  # home.homeDirectory = "/home/server";
+  home.packages = with pkgs; [ posy-cursors dconf ];
   home.sessionVariables = {
       EDITOR = "nvim";
       GIT_EDITOR = "nvim";

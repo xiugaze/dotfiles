@@ -48,7 +48,6 @@
         nixpkgs.overlays = [ rust-overlay.overlays.default ];
         environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
       })
-
       # basic package environment
       ./modules/base.nix
     ];
@@ -62,6 +61,14 @@
           ./hosts/caladan/configuration.nix
           ./services/love-letters.nix
           catppuccin.nixosModules.catppuccin
+        ];
+      };
+      # chapterhouse
+      chapterhouse = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit nixpkgs-unstable; };
+        modules = globalModules ++ [
+          ./hosts/chapterhouse/configuration.nix
         ];
       };
       # wsl 

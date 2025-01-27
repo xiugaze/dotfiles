@@ -35,13 +35,13 @@
        serviceConfig = {
          Type = "simple";
          User = "${cfg.user}";
-         WorkingDirectory = /home/server/minecraft/skrimp_server;
+         WorkingDirectory = /home/caleb/minecraft/skrimp_server;
          ExecStart = 
              let start = pkgs.writeShellApplication {
                  name = "skrimp-server-start";
                  runtimeInputs = with pkgs; [ jdk21_headless ];
                  text = ''
-                   cd /home/server/minecraft/skrimp_server
+                   cd /home/caleb/minecraft/skrimp_server
                    java -Xms12G -Xmx12G -jar server.jar nogui
                  '';
                };
