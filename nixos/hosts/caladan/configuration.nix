@@ -116,7 +116,17 @@ in {
     system-config-printer
     unstable.ghostty
     kdePackages.kdeconnect-kde
+
+    unstable.beeper
   ];
+
+  nixpkgs.config.packageOverrides = unstable: {
+    obsidian = unstable.obsidian.overrideAttrs (old: {
+        desktopItem = old.desktopItem.override (old: {
+          exec = "obsidian --disable-gpu";
+      });
+    });
+  };
 
   fonts.packages = with pkgs; [
     fira-code
