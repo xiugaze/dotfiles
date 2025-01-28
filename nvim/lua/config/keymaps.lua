@@ -104,6 +104,7 @@ end
 function M.load_lsp()
 	local map = M.nmap
 	map("<C-f>", ":lua vim.lsp.buf.format()<CR>", "Format")
+	map("-", "<CMD>Oil<CR>",  "Open parent directory")
 -- 	map("<leader>e", "<cmd>Neotree toggle float<cr>", "Explorer (Neotree)")
 -- 	map("<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", "Tmux Left")
 -- 	map("<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", "Tmux Down")
