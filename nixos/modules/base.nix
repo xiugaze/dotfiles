@@ -13,6 +13,7 @@
     gcc
     gnumake
     just
+    psmisc
 
     # basic environment
     zsh
