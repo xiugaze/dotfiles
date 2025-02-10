@@ -115,6 +115,7 @@
       l="eza --icons -lah --git";
       lg="lazygit";
       dev="nix develop -c zsh";
+      rsync="rsync -avP";
     };
     plugins = with pkgs; [
       {

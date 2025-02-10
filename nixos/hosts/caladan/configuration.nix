@@ -106,7 +106,6 @@ in {
     ffmpeg-full
     x264
     mcrcon
-    rpi-imager
     libxkbcommon
     gparted
     psst
@@ -118,7 +117,11 @@ in {
     kdePackages.kdeconnect-kde
 
     unstable.beeper
+    libreoffice
+    gpclient
   ];
+
+  programs.kdeconnect.enable = true;
 
   nixpkgs.config.packageOverrides = unstable: {
     obsidian = unstable.obsidian.overrideAttrs (old: {
