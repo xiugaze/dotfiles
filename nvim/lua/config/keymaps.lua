@@ -141,27 +141,11 @@ function M.load_lsp()
 -- 	map("<leader>z", ":ZenMode<CR>", "[Z]enmode")
 end
 
--- For LSP-lines
--- M.toggle_lines = function()
--- 	local current = vim.diagnostic.config().virtual_lines
--- 	local new_value
--- 	if current == false then
--- 		new_value = { only_current_line = true }
--- 	else
--- 		new_value = false
--- 		vim.diagnostic.config({ virtual_lines = new_value })
--- 	end
-
--- 	vim.diagnostic.config({ virtual_lines = new_value })
--- 	return new_value
--- end
-
 function M.setup()
 	M.load_basics()
 	M.load_telescope()
 	M.load_lsp()
 end
--- M.load_plugins()
 
 return M
 

@@ -57,7 +57,6 @@ require("lazy").setup({
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make", -- runs on install
                 cond = function() 
-                    -- is make executable
                     return vim.fn.executable("make") == 1
                 end
             },
@@ -74,6 +73,12 @@ require("lazy").setup({
 
                     ["file_browser"] = {
                         hijack_netrw = true,
+                    },
+                    fzf = {
+                      fuzzy = true,                    -- false will only do exact matching
+                      override_generic_sorter = true,  -- override the generic sorter
+                      override_file_sorter = true,     -- override the file sorter
+                      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                     }
                 }
             })
@@ -108,7 +113,6 @@ require("lazy").setup({
                 },
             },
             "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
@@ -205,7 +209,7 @@ require("lazy").setup({
                     rust_analyzer = {
                         mason = not is_nixos,
                     },
-                    pylyzer = {
+                    basedpyright = {
                         mason = not is_nixos,
                     },
                     ruff = {
@@ -223,6 +227,9 @@ require("lazy").setup({
                     nil_ls = {
                         mason = not is_nixos,
                     },
+                    jdtls = {
+                        mason = not is_nixos,
+                    },
 
                     clangd = {
                         mason = not is_nixos,
@@ -231,10 +238,10 @@ require("lazy").setup({
                             "--background-index",
                             "--clang-tidy",
                             "--log=verbose",
+                            "-std=c++20",
                         },
                         -- init_options = {
                         --     fallbackFlags = {
-                        --         "-std=c++17"
                         --     }
                         -- }
                     },
@@ -277,17 +284,13 @@ require("lazy").setup({
                     map("gI", builtin.lsp_implementations, "[g]oto [I]mplementation")
                     map("gs", builtin.lsp_document_symbols, "[g]oto [s]ymbols")
                     map("gS", builtin.lsp_dynamic_workspace_symbols, "[g]oto workspace [S]ymbols")
-
                     map("<leader>rn", vim.lsp.buf.rename, "[r]e[n]ame")
                     map("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
-
-
                     map("gh", vim.lsp.buf.hover, "[g]oto [h]elp (Hover Documentation)")
 
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-                    -- if the current LSP supports inlay hints?
                     if client and client.server_capabilities.documentHighlightProvider and vim.lsp.inlay_hint then 
                         map("<leader>th", function()
                             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -320,11 +323,6 @@ require("lazy").setup({
 
             local have_mason, mlsp = pcall(require, "mason-lspconfig")
 
-            -- NOTE: this breaks on vim.tbl_contains(...), not sure if I am doing this right
-            -- local all_mlsp_severs = {}
-            -- if have_mason then
-            --     all_mlsp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-            -- end
             local ensure_installed = {}
 
             for server, server_opts in pairs(servers) do
@@ -355,86 +353,16 @@ require("lazy").setup({
 
             local lspconfig = require("lspconfig")
             lspconfig.clangd.setup({
-                	cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
-                	init_options = {
-                		fallbackFlags = { "-std=c++17" },
-                	},
+                cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
+                init_options = {
+                    fallbackFlags = { "-std=c++17" },
+                },
             })
-
-
-            -- NOTE: for some reason, this tries to install servers where mason=false...
-            -- local has_mti, mti = pcall(require, "mason-tool-installer")
-            -- if has_mti then
-            --     local ensure_installed = vim.tbl_keys(servers or {})
-            --     mti.setup({ ensure_installed = ensure_installed })
-            -- end
         end
-
-
-
-
-
-
-            -- local servers = {
-        --         lua_ls = {
-        --             -- cmd = {...},
-        --             -- filetypes = { ...},
-        --             -- capabilities = {},
-        --             settings = {
-        --                 Lua = {
-        --                     completion = {
-        --                         callSnippet = 'Replace',
-        --                     },
-        --                 },
-        --             },
-        --         },
-        --         nil_ls = {
-        --             mason = false,
-        --         },
-        --         ocamllsp = {},
-        --     }
-        --
-        --     local lspconfig = require('lspconfig')
-        --     lspconfig.clangd.setup({
-        --         cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-        --         init_options = {
-        --             fallbackFlags = { '-std=c++17' },
-        --         },
-        --     })
-        --     lspconfig.nil_ls.setup({
-        --         cmd = {"nil"}
-        --     })
-        --
-        --     lspconfig.opts = {
-        --         servers = {
-        --             clangd = {
-        --                 mason = false,
-        --             },
-        --             ocamllsp = {
-        --                 mason = false,
-        --             },
-        --             -- nil_ls = {
-        --             --    mason = false,
-        --             -- },
-        --
-        --         },
-        --     }
-        --     require("mason-lspconfig").setup({
-        --         handlers = {
-        --             function(server_name)
-        --                 local server = servers[server_name] or {}
-        --                 -- add specific capabilities from each server
-        --                 server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-        --                 require("lspconfig")[server_name].setup(server)
-        --             end
-        --         }
-        --     })
-        --     require("mason").setup()
-        -- end
     },
 
     -- treesitter
-    { 
+    {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         opts = {
@@ -467,34 +395,65 @@ require("lazy").setup({
         --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         end,
     },
+    -- {
+    --     'lewis6991/gitsigns.nvim',
+    --     opts = {},
+    -- },
 
     {
       'stevearc/oil.nvim',
       ---@module 'oil'
       ---@type oil.SetupOpts
       opts = {},
-      -- Optional dependencies
-      dependencies = { { "echasnovski/mini.icons", opts = {} } },
-      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-      -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+      -- dependencies = { { "echasnovski/mini.icons", opts = {} } },
+      dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
       lazy = false,
     },
     {
-        -- NOTE: Yes, you can install new plugins here!
+      "folke/trouble.nvim",
+      opts = {}, -- for default options, refer to the configuration section for custom setup.
+      cmd = "Trouble",
+      keys = {
+        {
+          "<leader>xx",
+          "<cmd>Trouble diagnostics toggle<cr>",
+          desc = "Diagnostics (Trouble)",
+        },
+        {
+          "<leader>xX",
+          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+          desc = "Buffer Diagnostics (Trouble)",
+        },
+        {
+          "<leader>cs",
+          "<cmd>Trouble symbols toggle focus=false<cr>",
+          desc = "Symbols (Trouble)",
+        },
+        {
+          "<leader>cl",
+          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+          desc = "LSP Definitions / references / ... (Trouble)",
+        },
+        {
+          "<leader>xL",
+          "<cmd>Trouble loclist toggle<cr>",
+          desc = "Location List (Trouble)",
+        },
+        {
+          "<leader>xQ",
+          "<cmd>Trouble qflist toggle<cr>",
+          desc = "Quickfix List (Trouble)",
+        },
+      },
+    },
+
+    {
         'mfussenegger/nvim-dap',
-        -- NOTE: And you can specify dependencies as well
         dependencies = {
-            -- Creates a beautiful debugger UI
             'rcarriga/nvim-dap-ui',
-
-            -- Required dependency for nvim-dap-ui
             'nvim-neotest/nvim-nio',
-
-            -- Installs the debug adapters for you
             'williamboman/mason.nvim',
             'jay-babu/mason-nvim-dap.nvim',
-
-            -- Add your own debuggers here
             'leoluz/nvim-dap-go',
         },
         keys = function(_, keys)
@@ -514,7 +473,6 @@ require("lazy").setup({
                 end,
                 desc = 'Debug: Set Breakpoint',
             },
-            -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
             { '<F7>', dapui.toggle, desc = 'Debug: See last session result.' },
             unpack(keys),
             }
@@ -522,7 +480,6 @@ require("lazy").setup({
         config = function()
             local dap = require 'dap'
             local dapui = require 'dapui'
-
             require('mason-nvim-dap').setup {
                 -- Makes a best effort to setup the various debuggers with
                 -- reasonable debug configurations
@@ -539,26 +496,21 @@ require("lazy").setup({
                 },
             }
 
-            -- Dap UI setup
-            -- For more information, see |:help nvim-dap-ui|
             dapui.setup {
-            -- Set icons to characters that are more likely to work in every terminal.
-            --    Feel free to remove or use ones that you like more! :)
-            --    Don't feel like these are good choices.
-            icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-            controls = {
-                icons = {
-                pause = '⏸',
-                play = '▶',
-                step_into = '⏎',
-                step_over = '⏭',
-                step_out = '⏮',
-                step_back = 'b',
-                run_last = '▶▶',
-                terminate = '⏹',
-                disconnect = '⏏',
+                icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+                controls = {
+                    icons = {
+                    pause = '⏸',
+                    play = '▶',
+                    step_into = '⏎',
+                    step_over = '⏭',
+                    step_out = '⏮',
+                    step_back = 'b',
+                    run_last = '▶▶',
+                    terminate = '⏹',
+                    disconnect = '⏏',
+                    },
                 },
-            },
             }
 
             dap.listeners.after.event_initialized['dapui_config'] = dapui.open
@@ -567,11 +519,11 @@ require("lazy").setup({
 
             -- Install golang specific config
             require('dap-go').setup {
-            delve = {
-                -- On Windows delve must be run attached or it crashes.
-                -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-                detached = vim.fn.has 'win32' == 0,
-            },
+                delve = {
+                    -- On Windows delve must be run attached or it crashes.
+                    -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+                    detached = vim.fn.has 'win32' == 0,
+                },
             }
         end,
     },
@@ -587,10 +539,8 @@ require("lazy").setup({
 
 })
 
--- load keymaps
 require("config.keymaps").setup()
 
--- set colorscheme
 local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not ok then
     vim.notify("colorscheme " .. colorscheme " not found...")

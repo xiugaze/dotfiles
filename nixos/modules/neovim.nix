@@ -16,9 +16,12 @@
         ocamlPackages.utop
 
         # python
-        pylyzer
+        basedpyright
         ruff
 
+
+        # java
+        jdt-language-server
 
         # go
         go

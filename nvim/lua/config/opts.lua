@@ -1,6 +1,17 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.diagnostic.config {
+  underline = true,
+  virtual_text = false,
+  signs = true,
+  severity_sort = true,
+}
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+})
+
 local options = {
     number = true,          -- show linenumbers
     relativenumber = true,  -- relative line numbers
@@ -11,20 +22,19 @@ local options = {
         nbsp = '␣' , 
         -- eol = '¬'
     },
-    clipboard = 'unnamedplus',
+    -- statuscolumn = "%=%{v:relnum?v:relnum:v:lnum} %s",
+    -- clipboard = "unnamed",
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
     termguicolors = true,   -- truecolor terminals
     wrap = false,           -- linewrapping
-    shiftround = false,     -- indent rounding
-    -- shiftwidth = 2,         -- indent size
-    -- tabstop = 2,            -- how many spaces a tab is
+    shiftround = true,     -- indent rounding
     shiftwidth = 2,         -- indent size
     tabstop = 2,            -- how many spaces a tab is
     softtabstop = 2,
+    expandtab = true,       -- tabs expand to spaces
     splitbelow = true,      -- buffers can split below
     splitright = true,      -- buffers split right 
-    expandtab = true,       -- tabs expand to spaces
     mouse = "a",            -- mouse enabled in all modes
     showtabline = 1,        -- tabline when two or more tabs
     undofile = true,        -- undos are stored
@@ -35,7 +45,7 @@ local options = {
     sidescrolloff = 8,      -- keep columns left and right cursor
     scrolloff = 6,          -- keep lines above and below cursor
     pumheight = 12,         -- maximum popup items
-    signcolumn = "yes",     -- display the signcolumn always
+    signcolumn = "yes:1",     -- display the signcolumn always
     hlsearch = true,        -- highlight all search results
 
     -- not sure what these are
@@ -61,6 +71,7 @@ local load = function(opts)
         vim.opt[k] = v
     end
     vim.opt.shortmess:append "c"
+    vim.opt.iskeyword:remove("_")
     -- vim.opt.shortmess:append "I" -- don't show the intro
 
     -- moving left/right wraps to next line

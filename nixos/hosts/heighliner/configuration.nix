@@ -41,14 +41,6 @@ in {
 
   environment.systemPackages = with pkgs; [
     python3
-    jdk
-    mysql84
-    go
-    kubectl 
-    minikube
-    mcrcon
-    apacheHttpd
-    openssl
   ];
 
   services.openssh.enable = true;
