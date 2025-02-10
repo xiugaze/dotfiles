@@ -113,6 +113,7 @@
       cd="z";
       ls="eza --icons -h --git";
       l="eza --icons -lah --git";
+      lg="lazygit";
       dev="nix develop -c zsh";
       rsync="rsync -avP";
     };
@@ -153,8 +154,9 @@
     shell = "${pkgs.zsh}/bin/zsh";
     mouse = true;
     extraConfig = ''
-      bind | split-window -h
-      bind - split-window -v
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
       unbind '"'
       unbind %
 
