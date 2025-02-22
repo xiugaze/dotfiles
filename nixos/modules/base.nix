@@ -3,32 +3,34 @@
     # system
     git
     wget
-    lsb-release
+    lsb-release # linux standard base
     zip
     unzip
     p7zip
+
     binutils
     openssh
     vim 
     gcc
     gnumake
-    just
     psmisc
 
     # basic environment
     zsh
     starship
+    lf
+    zellij
     tmux
     lazygit
+    just
 
     fzf
-    zoxide      # better cd
-    eza         # better ls
-    fd          # better find
-    bat         # better cat
-    ripgrep     # better grep
-    tealdeer    # simpler man
+    zoxide
+    eza
     fd
+    bat
+    ripgrep
+    tealdeer
 
     # other
     rsync
@@ -36,6 +38,5 @@
     pfetch
     htop
     tree
-
   ];
 }

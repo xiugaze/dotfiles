@@ -104,6 +104,16 @@
     ];
   };
 
+  programs.lf = {
+    enable = true;
+    keybindings = {
+      d = "";
+      dd = "delete";
+      dD = "dD $IFS=':'; rm -rf $fx";
+    };
+
+  };
+
   programs.zsh = {
     enable = true;
     # defaultKeymap = "vicmd";
@@ -116,6 +126,7 @@
       lg="lazygit";
       dev="nix develop -c zsh";
       rsync="rsync -avP";
+      cat="bat";
     };
     plugins = with pkgs; [
       {
@@ -125,8 +136,12 @@
     ];
     initExtra = ''
       gc() {
+        nix-collect-garbage --delete-old
+      }
+      gco() {
         nix-collect-garbage --delete-older-than $1
       }
+      set bell-style none
     '';
     envExtra = ''
       if [ -x /usr/libexec/path_helper ]; then

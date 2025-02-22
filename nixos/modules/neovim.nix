@@ -19,6 +19,8 @@
         basedpyright
         ruff
 
+        # web
+        superhtml
 
         # java
         jdt-language-server
@@ -31,6 +33,7 @@
 
         # nix
         nil
+        nixfmt-rfc-style
     ] ++ (with pkgs.llvmPackages_latest; [
         lldb
         libcxx

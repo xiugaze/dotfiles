@@ -6,7 +6,6 @@ let
   };
 in {
   networking.hostName = "heighliner";
-  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
@@ -36,6 +35,7 @@ in {
 
   imports = [
     ../../modules/neovim.nix 
+    ../../modules/syncthing.nix 
   ];
   _module.args.unstable = unstable;
 
@@ -45,26 +45,8 @@ in {
   ];
 
   services.openssh.enable = true;
-  services.syncthing = {
-    enable = true;
-    user = "caleb";
-    dataDir = "/home/caleb/sync/";
-    configDir = "/home/caleb/.config/syncthing";
-    openDefaultPorts = true;
-  };
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+
   virtualisation.docker =  {
     enable = true;
-  };
-
-  networking = {
-    firewall = {
-      allowedTCPPorts = [ 
-        8384 22000  # syncthing
-      ];
-      allowedUDPPorts = [ 
-        22000 21027 # syncthing
-      ];
-    };
   };
 }
