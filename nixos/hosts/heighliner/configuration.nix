@@ -41,6 +41,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     python3
+    zathura
   ];
 
   services.openssh.enable = true;
