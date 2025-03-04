@@ -21,7 +21,7 @@ symbol = " "
 [direnv]
 style = 'bold blue'
 disabled = false
-# format = "[$loaded ]($style)"
+format = "[$loaded ]($style)"
 loaded_msg = "○"
 unloaded_msg = "◒"
 

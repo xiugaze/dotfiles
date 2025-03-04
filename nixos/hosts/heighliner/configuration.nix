@@ -39,7 +39,11 @@ in {
   ];
   _module.args.unstable = unstable;
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ 
+    python314
+    pandoc
+    texliveFull
+  ];
 
   services.openssh.enable = true;
 
