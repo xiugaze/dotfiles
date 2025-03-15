@@ -1,7 +1,3 @@
-## things to do for script
-symlink vimrc
-symlink init.vim
-symlink .zshrc
-
-install coc-rust-analyzer
-install nerdfonts
+# System Maintenance
+- [ ] try out fish shell
+- [ ] gabriel fontes nixos configuration: selective home manager stuff

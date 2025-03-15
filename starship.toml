@@ -1,5 +1,47 @@
 command_timeout = 10000 #ms 
+format = """
+$directory\
+$direnv\
+$fill\
+$git_branch\
+$git_commit\
+$git_state\
+$nix_shell\
+$line_break\
+$character
+"""
 
+[fill]
+symbol = ' '
+
+[nix_shell]
+format = '[($name)]($style)'
+symbol = " "
+
+[direnv]
+style = 'bold blue'
+disabled = false
+format = "[$loaded ]($style)"
+loaded_msg = "○"
+unloaded_msg = "◒"
+
+[directory]
+truncation_symbol = "…/"
+truncate_to_repo = false
+repo_root_style = "bold green"
+read_only = " 󰌾"
+
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+symbol = " "
+style = "bold green"
+
+[git_metrics]
+disabled = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+
+# Symbols from here down
 [aws]
 symbol = "  "
 
@@ -18,14 +60,6 @@ symbol = " "
 [dart]
 symbol = " "
 
-[directory]
-#truncation_symbol = "󱗘/"
-truncation_symbol = ".../"
-truncate_to_repo = false
-repo_root_style = "bold green"
-read_only = " 󰌾"
-
-
 [docker_context]
 symbol = " "
 
@@ -40,15 +74,6 @@ symbol = " "
 
 [fossil_branch]
 symbol = " "
-
-[git_branch]
-format = '[$symbol$branch(:$remote_branch)]($style) '
-symbol = " "
-style = "bold green"
-
-[git_metrics]
-disabled = false
-format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 
 [golang]
 symbol = " "
@@ -89,8 +114,6 @@ symbol = "󰔷 "
 [nim]
 symbol = "󰆥 "
 
-[nix_shell]
-symbol = " "
 
 [nodejs]
 symbol = " "
@@ -175,3 +198,4 @@ symbol = " "
 
 [zig]
 symbol = " "
+
