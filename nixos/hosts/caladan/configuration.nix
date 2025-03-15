@@ -1,6 +1,6 @@
-{ config, pkgs, inputs, nixpkgs-unstable, ... }: 
+{ config, pkgs, inputs, ... }: 
 let 
-  unstable = import nixpkgs-unstable {
+  unstable = import inputs.nixpkgs-unstable {
     system = "x86_64-linux";
     config = config.nixpkgs.config;
   };
@@ -54,7 +54,7 @@ in {
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
-    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" "wireshark" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -113,12 +113,15 @@ in {
     avrdis
     arduino-ide
     system-config-printer
-    unstable.ghostty
     kdePackages.kdeconnect-kde
 
     unstable.beeper
     libreoffice
     gpclient
+
+    inputs.zen-browser.packages."${system}".beta
+
+
   ];
 
   programs.kdeconnect.enable = true;
@@ -149,22 +152,32 @@ in {
     udisks2.enable = true;     # automounting 
     gvfs.enable = true;     
     openssh.enable = true;
-    udev.packages = with pkgs; [ 
-      platformio-core.udev
-    ];
+    udev = {
+      packages = with pkgs; [ 
+        platformio-core.udev
+
+      ];
+      extraRules = ''
+        SUBSYSTEM=="wlp5s0", GROUP="wireshark", MODE="0640"
+      '';
+    };
     xserver = {
       xkb.layout = "us";
       xkb.variant = "";
     };
 
     mullvad-vpn.enable = true;
-
-    syncthing = {
+    tailscale = {
       enable = true;
-      user = "caleb";
-      dataDir = "/home/caleb/sync/";
-      configDir = "/home/caleb/.config/syncthing";
+      package = unstable.tailscale;
     };
+
+    # syncthing = {
+    #   enable = true;
+    #   user = "caleb";
+    #   dataDir = "/home/caleb/sync/";
+    #   configDir = "/home/caleb/.config/syncthing";
+    # };
 
     pipewire = {
       enable = true;
@@ -182,6 +195,13 @@ in {
 
   networking = {
     networkmanager.enable = true;
+    networkmanager.dns = "none";
+    useDHCP = false;
+    dhcpcd.enable = false;
+    nameservers = [
+      "1.1.1.1"
+    ];
+
     firewall = {
       allowedTCPPorts = [ 
         8384 22000  # syncthing
@@ -192,5 +212,15 @@ in {
     };
   };
 
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
+  # security.wrappers.dumpcap = {
+  #   source = "${pkgs.wireshark}/bin/dumpcap";
+  #   permissions = "u+xs,g+x";
+  #   owner = "root";
+  #   group = "wireshark";
+  # };
   system.stateVersion = "24.11"; 
 }

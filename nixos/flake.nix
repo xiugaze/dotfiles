@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     # mine
     love-letters.url = "github:xiugaze/love-letters?ref=main";
   };
@@ -26,6 +27,7 @@
     home-manager, 
     catppuccin,   # literally only for gtk theming...
     love-letters, 
+    zen-browser,
     rust-overlay,
     ... 
   }: 
@@ -56,10 +58,10 @@
       # desktop
       caladan = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit love-letters nixpkgs-unstable; };
+        specialArgs = { inherit inputs; };
         modules = globalModules ++ [
           ./hosts/caladan/configuration.nix
-          ./services/love-letters.nix
+          # ./services/love-letters.nix
           catppuccin.nixosModules.catppuccin
         ];
       };
