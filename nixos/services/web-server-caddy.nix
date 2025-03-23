@@ -3,8 +3,8 @@
 {
   services.caddy = {
     enable = true;
-    virtualHosts."test.andreano.dev".extraConfig = ''
-      reverse_proxy localhost:9999
+    virtualHosts."192.168.1.178".extraConfig = ''
+      respond "Hello world!"
     '';
   };
   networking.firewall.allowedTCPPorts = [ 80 443 ];

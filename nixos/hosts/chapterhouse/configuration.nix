@@ -8,18 +8,20 @@ let
     config = config.nixpkgs.config;
   };
 in {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = "chapterhouse"; # Define your hostname.
   imports = [ 
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/neovim.nix
-    ../../modules/syncthing.nix
+    # ../../modules/syncthing.nix
+    # ../../modules/nextcloud.nix
+    # ../../modules/jellyfin.nix
     ../../services/skrimp_server.nix
   ];
   _module.args.unstable = unstable;
   nixpkgs.config.allowUnfree = true;
 
-  # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
@@ -30,13 +32,10 @@ in {
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/Chicago";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -51,7 +50,6 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -60,38 +58,58 @@ in {
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "nextcloud" "docker" ];
     packages = with pkgs; [];
   };
 
   environment.systemPackages = with pkgs; [
-    vim 
-    neovim
-    wget
-    git
-    neofetch
-    rsync
     mcrcon
     jdk
+    openssl
+    podman
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+    curlie
+    traceroute
+    netcat
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.skrimp_server = {
+    enable = true;
+    user = "caleb";
+  };
 
-  services.skrimp_server.enable = true;
-  services.skrimp_server.user = "caleb";
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+    user = "caleb";
+  };
 
-  networking.firewall.allowedTCPPorts = [ 25565 25567 ];
-  networking.firewall.allowedUDPPorts = [ 25565 25567 ];
+  services = {
+
+    caddy = {
+      enable = true;
+      virtualHosts."test.andreano.dev".extraConfig = ''
+        respond "Hello World!"
+      '';
+    };
+
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 9090 22000];
+  networking.firewall.allowedUDPPorts = [ 80 443 9090 22000];
+
+  virtualisation.podman = {
+    enable = true;
+  };
+
+  virtualisation.oci-containers = {
+    backend = "podman";
+    containers = {
+    };
+  };
 
   system.stateVersion = "24.11"; # Did you read the comment?
 

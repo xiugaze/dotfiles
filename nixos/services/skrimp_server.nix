@@ -28,6 +28,8 @@
    };
  
    config = mkIf cfg.enable {
+     networking.firewall.allowedTCPPorts = [ 25565 25567 ];
+     networking.firewall.allowedUDPPorts = [ 25565 25567 ];
      systemd.services.skrimp_server = {
        wantedBy = [ "default.target" ]; 
        after = [ "network.target" ];
@@ -65,4 +67,5 @@
        };
      };
    };
- }
+
+}
