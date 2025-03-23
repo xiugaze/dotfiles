@@ -17,10 +17,12 @@
 
     # mine
     love-letters.url = "github:xiugaze/love-letters?ref=main";
+    andreano-dev.url = "github:xiugaze/andreano.dev";
+
   };
 
   outputs =
-    inputs@{
+    {
       nixpkgs,
       nixpkgs-unstable,
       nixos-wsl,
@@ -28,8 +30,9 @@
       catppuccin,
       rust-overlay,
       love-letters,
+      andreano-dev,
       ...
-    }:
+    } @ inputs:
     let
       globalModules = [
         home-manager.nixosModules.home-manager
@@ -73,7 +76,7 @@
         };
         heighliner = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs-unstable; };
+          specialArgs = { inherit inputs; };
           modules = globalModules ++ [
             nixos-wsl.nixosModules.default
             {

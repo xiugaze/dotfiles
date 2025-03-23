@@ -1,9 +1,10 @@
-{ config, pkgs, inputs, nixpkgs-unstable, ... }:
+{ config, pkgs, inputs, ... }: 
 let 
-  unstable = import nixpkgs-unstable {
+  unstable = import inputs.nixpkgs-unstable {
     system = "x86_64-linux";
     config = config.nixpkgs.config;
   };
+  # andreano-dev-pkg = inputs.andreano-dev.packages.${pkgs.system}.default;
 in {
   networking.hostName = "heighliner";
 
@@ -36,13 +37,18 @@ in {
   imports = [
     ../../modules/neovim.nix 
     ../../modules/syncthing.nix 
+    inputs.andreano-dev.nixosModules."x86_64-linux".default
   ];
+  # services.andreano-dev.enable = true;
+
   _module.args.unstable = unstable;
 
   environment.systemPackages = with pkgs; [ 
     python314
     pandoc
     texliveFull
+    andreano-dev-pkg
+
   ];
 
   services.openssh.enable = true;

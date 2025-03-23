@@ -7,6 +7,7 @@ $git_branch\
 $git_commit\
 $git_state\
 $nix_shell\
+$python\
 $line_break\
 $character
 """
@@ -17,6 +18,10 @@ symbol = ' '
 [nix_shell]
 format = '[($name)]($style)'
 symbol = " "
+
+[python]
+symbol = " "
+format = ' [${symbol}(\($virtualenv\))]($style)'
 
 [direnv]
 style = 'bold blue'
@@ -178,8 +183,6 @@ symbol = " "
 [pijul_channel]
 symbol = " "
 
-[python]
-symbol = " "
 
 [rlang]
 symbol = "󰟔 "

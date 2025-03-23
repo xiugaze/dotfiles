@@ -74,10 +74,10 @@ require("lazy").setup({
                         hijack_netrw = true,
                     },
                     fzf = {
-                        fuzzy = true,                 -- false will only do exact matching
+                        fuzzy = true,                   -- false will only do exact matching
                         override_generic_sorter = true, -- override the generic sorter
-                        override_file_sorter = true,  -- override the file sorter
-                        case_mode = "smart_case",     -- or "ignore_case" or "respect_case"
+                        override_file_sorter = true,    -- override the file sorter
+                        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
                     }
                 }
             })
@@ -189,6 +189,12 @@ require("lazy").setup({
         end
     },
 
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {}
+    },
+
     -- LSP
     {
         "neovim/nvim-lspconfig",
@@ -199,6 +205,7 @@ require("lazy").setup({
             "j-hui/fidget.nvim",
             -- { 'folke/neodev.nvim', opts = {} }, -- LSP for Neovim config
         },
+
         opts = function()
             local ret = {
                 servers = {
@@ -268,7 +275,7 @@ require("lazy").setup({
                 has_blink and blink.get_lsp_capabilities() or {}
             -- opts.capabilities or {}
             )
-            
+
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -384,7 +391,6 @@ require("lazy").setup({
             require('nvim-treesitter.install').prefer_git = true
             ---@diagnostic disable-next-line: missing-fields
             require('nvim-treesitter.configs').setup(opts)
-
         end,
     },
 
@@ -405,6 +411,11 @@ require("lazy").setup({
             {
                 "<leader>xX",
                 "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xt",
+                "<cmd>Trouble todo toggle<cr>",
                 desc = "Diagnostics (Trouble)",
             },
             {
@@ -533,4 +544,3 @@ local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not ok then
     vim.notify("colorscheme " .. colorscheme " not found...")
 end
-
