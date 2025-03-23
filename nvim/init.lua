@@ -209,6 +209,9 @@ require("lazy").setup({
         opts = function()
             local ret = {
                 servers = {
+                    gopls = {},
+                    html = {},
+                    htmx = {},
                     superhtml = {
                         mason = not is_nixos,
                     },
@@ -402,6 +405,13 @@ require("lazy").setup({
         -- dependencies = { { "echasnovski/mini.icons", opts = {} } },
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         lazy = false,
+    },
+    {
+        "lervag/vimtex",
+        lazy = false, 
+        init = function()
+            vim.g.vimtex_view_method = "zathura"
+        end
     },
     {
         "folke/trouble.nvim",

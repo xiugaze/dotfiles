@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     # mine
     love-letters.url = "github:xiugaze/love-letters?ref=main";
     andreano-dev.url = "github:xiugaze/andreano.dev";
@@ -87,6 +88,48 @@
             ./hosts/heighliner/configuration.nix
           ];
         };
+      }
+      # everyone gets rust lol
+      # docs @ https://github.com/oxalica/rust-overlay
+      ({pkgs, ...}: {
+        nixpkgs.overlays = [ rust-overlay.overlays.default ];
+        environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
+      })
+      # basic package environment
+      ./modules/base.nix
+    ];
+  in {
+    nixosConfigurations = {
+      # desktop
+      caladan = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = globalModules ++ [
+          ./hosts/caladan/configuration.nix
+          # ./services/love-letters.nix
+          catppuccin.nixosModules.catppuccin
+        ];
+      };
+      # chapterhouse
+      chapterhouse = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit nixpkgs-unstable; };
+        modules = globalModules ++ [
+          ./hosts/chapterhouse/configuration.nix
+        ];
+      };
+      # wsl 
+      heighliner = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit nixpkgs-unstable; };
+        modules = globalModules ++ [
+	  nixos-wsl.nixosModules.default {
+	    system.stateVersion = "24.05";
+            wsl.enable = true;
+	    wsl.defaultUser = "caleb";
+	  }
+          ./hosts/heighliner/configuration.nix
+        ];
       };
     };
 }
