@@ -5,6 +5,7 @@ let
     config = config.nixpkgs.config;
   };
 in {
+
   networking.hostName = "caladan"; # Define your hostname.
 
   imports = [ 
