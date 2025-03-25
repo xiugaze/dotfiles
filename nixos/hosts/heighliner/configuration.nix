@@ -37,7 +37,7 @@ in {
   imports = [
     ../../modules/neovim.nix 
     ../../modules/syncthing.nix 
-    inputs.andreano-dev.nixosModules."x86_64-linux".default
+    # inputs.andreano-dev.nixosModules."x86_64-linux".default
   ];
   # services.andreano-dev.enable = true;
 
@@ -47,7 +47,7 @@ in {
     python314
     pandoc
     texliveFull
-    andreano-dev-pkg
+    # andreano-dev-pkg
 
   ];
 

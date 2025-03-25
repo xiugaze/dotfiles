@@ -4,49 +4,65 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    systems.url = "github:nix-systems/default-linux";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     catppuccin.url = "github:catppuccin/nix";
+
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    # mine
+
+    # my packages
     love-letters.url = "github:xiugaze/love-letters?ref=main";
     andreano-dev.url = "github:xiugaze/andreano.dev";
 
   };
 
-  outputs =
-    {
+  outputs = {
+      self,
       nixpkgs,
       nixpkgs-unstable,
       nixos-wsl,
       home-manager,
+      systems,
       catppuccin,
       rust-overlay,
       love-letters,
-      andreano-dev,
       ...
-    }@inputs:
+    } @ inputs :
     let
+      inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs (import systems) (
+        system:
+          import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          }
+      );
       globalModules = [
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.caleb = {
-            imports = [
-              ./home.nix
-              catppuccin.homeManagerModules.catppuccin
-            ];
-          };
-        }
+        # home-manager.nixosModules.home-manager
+        # {
+        #   home-manager.useGlobalPkgs = true;
+        #   home-manager.useUserPackages = true;
+        #   home-manager.users.caleb = {
+        #     imports = [
+        #       ./home.nix
+        #       catppuccin.homeManagerModules.catppuccin
+        #     ];
+        #   };
+        # }
         (
           { pkgs, ... }:
           {
@@ -58,6 +74,8 @@
       ];
     in
     {
+
+      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
       nixosConfigurations = {
         caladan = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -79,14 +97,23 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = globalModules ++ [
-            nixos-wsl.nixosModules.default
-            {
+            nixos-wsl.nixosModules.default {
               system.stateVersion = "24.05";
               wsl.enable = true;
               wsl.defaultUser = "caleb";
             }
             ./hosts/heighliner/configuration.nix
           ];
+        };
+      };
+
+      homeConfigurations = { 
+        "caleb@heighliner" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          modules = [ ./home/caleb/heighliner.nix ];
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
         };
       };
     };
