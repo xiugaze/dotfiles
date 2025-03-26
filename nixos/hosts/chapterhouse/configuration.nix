@@ -1,12 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, inputs, nixpkgs-unstable, ... }: 
+{ config, pkgs, inputs, ... }: 
 let 
-  unstable = import nixpkgs-unstable {
+  unstable = import inputs.nixpkgs-unstable {
     system = "x86_64-linux";
     config = config.nixpkgs.config;
   };
+
+  andreano-dev-pkg = inputs.andreano-dev.packages.${pkgs.system}.default;
 in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = "chapterhouse"; # Define your hostname.
@@ -18,6 +17,7 @@ in {
     # ../../modules/nextcloud.nix
     # ../../modules/jellyfin.nix
     ../../services/skrimp_server.nix
+    inputs.andreano-dev.nixosModules."x86_64-linux".default
   ];
   _module.args.unstable = unstable;
   nixpkgs.config.allowUnfree = true;
@@ -26,11 +26,6 @@ in {
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   networking.networkmanager.enable = true;
 
@@ -73,8 +68,10 @@ in {
     curlie
     traceroute
     netcat
+    andreano-dev-pkg
   ];
 
+  services.andreano-dev.enable = true;
   services.openssh.enable = true;
   services.skrimp_server = {
     enable = true;
@@ -91,8 +88,11 @@ in {
 
     caddy = {
       enable = true;
+      virtualHosts."andreano.dev".extraConfig = ''
+        reverse_proxy :8080
+      '';
       virtualHosts."test.andreano.dev".extraConfig = ''
-        respond "Hello World!"
+        reverse_proxy :8080
       '';
     };
 

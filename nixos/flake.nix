@@ -16,6 +16,7 @@
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
     # mine
     love-letters.url = "github:xiugaze/love-letters?ref=main";
     andreano-dev.url = "github:xiugaze/andreano.dev";
@@ -70,7 +71,7 @@
         };
         chapterhouse = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs-unstable; };
+          specialArgs = { inherit inputs; };
           modules = globalModules ++ [
             ./hosts/chapterhouse/configuration.nix
           ];
