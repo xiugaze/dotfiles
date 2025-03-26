@@ -108,7 +108,8 @@ require("lazy").setup({
                         config = function()
                             require("luasnip.loaders.from_vscode").lazy_load()
                         end,
-                    }
+                    },
+                    { "hrsh7th/cmp-path" },
                 },
             },
             "saadparwaiz1/cmp_luasnip",
@@ -126,7 +127,13 @@ require("lazy").setup({
                 },
                 window = {
                     completion = cmp.config.window.bordered(),
-                    completion = cmp.config.window.bordered(),
+                },
+                sources = {
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                    { name = 'path' },
+                    { name = 'treesitter' },
+                    -- { name = 'crates' },
                 },
                 completion = { completeopt = "menu,menuone,noinsert" },
                 mapping = cmp.mapping.preset.insert({
@@ -178,13 +185,6 @@ require("lazy").setup({
                     --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 
                 }),
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                    { name = 'treesitter' },
-                    -- { name = 'crates' },
-                }
             })
         end
     },

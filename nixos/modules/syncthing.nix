@@ -1,20 +1,42 @@
-{config, pkgs, ...}: {
+{config, pkgs, lib, ...}: 
+let 
+  cfg = config.services.st;
+in with lib;
+{
 
-  services.syncthing = {
-    enable = true;
-    user = "caleb";
-    dataDir = "/home/caleb/sync/";
-    configDir = "/home/caleb/.config/syncthing";
-    openDefaultPorts = true;
+  options.services.st = {
+    enable = mkEnableOption "caleb's syncthing";
+    user = mkOption {
+      default = "caleb";
+      description = "User to run Syncthing as";
+    };
+    dataDir = mkOption {
+      default = "/home/caleb/sync/";
+      description = "Directory for Syncthing data";
+    };
+    configDir = mkOption {
+      default = "/home/caleb/.config/syncthing";
+      description = "Directory for Syncthing configuration";
+    };
   };
 
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+  config = mkIf cfg.enable {
+    services.syncthing = {
+      enable = true;
+      user = cfg.user;
+      dataDir = cfg.dataDir;
+      configDir = cfg.configDir;
+      openDefaultPorts = true;
+    };
 
-  networking = {
-    networkmanager.enable = true;
-    firewall = {
-      allowedTCPPorts = [ 8384 22000 ];
-      allowedUDPPorts = [ 22000 21027 ];
+    systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+
+    networking = {
+      networkmanager.enable = true;
+      firewall = {
+        allowedTCPPorts = [ 8384 22000 ];
+        allowedUDPPorts = [ 22000 21027 ];
+      };
     };
   };
 }

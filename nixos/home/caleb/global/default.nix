@@ -82,9 +82,9 @@
     enableCompletion = true;
     shellAliases = {
       cd="z";
+      dev="nix develop -c zsh";
       ls="eza --icons -lah --git";
       lg="lazygit";
-      dev="nix develop -c zsh";
       rsync="rsync -avP";
       cat="bat";
     };
@@ -94,6 +94,7 @@
         src = zsh-vi-mode.src;
       }
     ];
+
     initExtra = ''
       gc() {
         nix-collect-garbage --delete-old
@@ -109,7 +110,6 @@
               eval `/usr/libexec/path_helper -s`
       fi
     '';
-    #sessionVariables = { };
   };
 
   programs.zathura = {

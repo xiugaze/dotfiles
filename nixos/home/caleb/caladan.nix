@@ -5,6 +5,9 @@
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
 
+  xdg.dataFile."scripts/hyprland-bitwarden-resize.sh".source =
+    (import ./global/bitwarden-resize.nix pkgs);
+
   home.packages = with pkgs; [ 
     posy-cursors
   ];
@@ -22,6 +25,7 @@
       flavor = "mocha";
     };
   };
+
   gtk.enable = true;
 
   home.pointerCursor = {
@@ -31,14 +35,4 @@
     size = 32; # also set by hyprcursor on startup, min available is 32 :(
   };
 
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "text/html" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/http" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/https" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/about" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/unknown" = "io.gitlab.LibreWolf.desktop";
-    };
-  };
 }

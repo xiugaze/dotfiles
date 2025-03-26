@@ -9,8 +9,10 @@ in {
   networking.hostName = "caladan"; # Define your hostname.
 
   imports = [ 
-      ./hardware-configuration.nix
+    ./hardware-configuration.nix
+    ../global/locale.nix
     ../../modules/base.nix 
+    ../../modules/syncthing.nix 
     ../../modules/neovim.nix 
     ../../modules/hyprland.nix 
     ../../modules/usb-wakeup-disable.nix 
@@ -25,31 +27,12 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # allow binding directly to 80 and 443
-  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0; 
-
-  # networking
   hardware.bluetooth.enable = true;
 
   hardware.usb.wakeupDisabled = [
     { vendor = "046d"; product = "c547"; } # G502X
     { vendor = "046d"; product = "c52b"; } # Logitech Unifying Receiver
   ];
-
-  # locale
-  time.timeZone = "America/Chicago";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   programs.zsh.enable = true;
   users.users.caleb = {
@@ -65,65 +48,64 @@ in {
     # add missing dynamic libraries
   ];
 
+
+  # I think the hyprland module already does all this but...
   xdg.portal = {
       enable = true;
-      # xdgOpenUsePortal = true;
+      xdgOpenUsePortal = true;
       extraPortals = [
-        # pkgs.xdg-desktop-portal-hyprland
-        # pkgs.xdg-desktop-portal-gtk
-        # pkgs.xdg-desktop-portal-kde
       ];
   };
 
   environment.systemPackages = with pkgs; [
+
+    # system
     pipewire
     texlive.combined.scheme-full
-    kitty
-    zathura
-    pavucontrol
-    mullvad-vpn
-    unstable.obsidian
-    unstable.vscodium
-    nautilus
-    gnome-epub-thumbnailer
-    kicad
-    stm32cubemx
-    unstable.librewolf-bin
-    ungoogled-chromium
     jdk21
     python3
     rsync
     nftables
-
     usbutils
-    udiskie
+    udiskie # automount usb drives
     udisks
-
     bluez
     blueberry
-    nsxiv
-
-    nwg-look
     ffmpeg-full
     x264
-    mcrcon
     libxkbcommon
-    gparted
-    psst
-    kepubify
-    avrdis
-    arduino-ide
-    system-config-printer
-    kdePackages.kdeconnect-kde
 
+    # desktop programs
+    kitty
+    zathura
+    pavucontrol
+    mullvad-vpn
+    nautilus
+    gnome-epub-thumbnailer
+    unstable.obsidian
+    unstable.vscodium
+    unstable.librewolf-bin
+    kicad
+    stm32cubemx
+    ungoogled-chromium
+    nsxiv
+    psst # spotify
+    gparted
     unstable.beeper
+    gpclient # for MSOE vpn
     libreoffice
-    gpclient
+    wireshark
+
+    # other programs
+    mcrcon  # talk to minecraft server over network
+    nwg-look # gtk settings
+    avrdis # avr disassembler (from overlays)
+    kepubify
+    system-config-printer
 
     inputs.zen-browser.packages."${system}".beta
   ];
-
-  programs.kdeconnect.enable = true;
+  
 
   nixpkgs.config.packageOverrides = unstable: {
     obsidian = unstable.obsidian.overrideAttrs (old: {
@@ -135,13 +117,14 @@ in {
 
   xdg.mime = {
     defaultApplications = {
-      "text/html" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/http" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/https" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/about" = "io.gitlab.LibreWolf.desktop";
-      "x-scheme-handler/unknown" = "io.gitlab.LibreWolf.desktop";
+      "text/html" = "zen.desktop";
+      "x-scheme-handler/http" = "zen.desktop";
+      "x-scheme-handler/https" = "zen.desktop";
+      "x-scheme-handler/about" = "zen.desktop";
+      "x-scheme-handler/unknown" = "zen.desktop";
     };
   };
+
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
@@ -150,6 +133,7 @@ in {
 
   services = {
     # printing
+    st.enable = true; # syncthing
     printing.enable = true;
     # printer discovery
     avahi = {
@@ -158,7 +142,7 @@ in {
       openFirewall = true;
     };
     udisks2.enable = true;     # automounting 
-    gvfs.enable = true;     
+    gvfs.enable = true;
     openssh.enable = true;
     udev = {
       packages = with pkgs; [ 
@@ -175,20 +159,11 @@ in {
       xkb.variant = "";
     };
 
-
-
-    mullvad-vpn.enable = true;
+    mullvad-vpn.enable = false;
     tailscale = {
-      enable = true;
+      enable = false;
       package = unstable.tailscale;
     };
-
-    # syncthing = {
-    #   enable = true;
-    #   user = "caleb";
-    #   dataDir = "/home/caleb/sync/";
-    #   configDir = "/home/caleb/.config/syncthing";
-    # };
 
     pipewire = {
       enable = true;
@@ -200,7 +175,7 @@ in {
     };
   };
 
-  virtualisation.docker =  {
+  virtualisation.podman =  {
     enable = true;
   };
 
@@ -213,26 +188,7 @@ in {
       "192.168.1.165" # pi hole
       "1.1.1.1"       # cloudflare
     ];
-
-    firewall = {
-      allowedTCPPorts = [ 
-        8384 22000  # syncthing
-      ];
-      allowedUDPPorts = [ 
-        22000 21027 # syncthing
-      ];
-    };
   };
 
-  programs.wireshark = {
-    enable = true;
-    package = pkgs.wireshark;
-  };
-  # security.wrappers.dumpcap = {
-  #   source = "${pkgs.wireshark}/bin/dumpcap";
-  #   permissions = "u+xs,g+x";
-  #   owner = "root";
-  #   group = "wireshark";
-  # };
   system.stateVersion = "24.11"; 
 }
