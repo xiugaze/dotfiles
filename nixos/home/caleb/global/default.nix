@@ -83,7 +83,7 @@
     shellAliases = {
       cd="z";
       dev="nix develop -c zsh";
-      ls="eza --icons -lah --git";
+      ls="eza --icons -lah --git -s type";
       lg="lazygit";
       rsync="rsync -avP";
       cat="bat";
@@ -110,6 +110,42 @@
               eval `/usr/libexec/path_helper -s`
       fi
     '';
+  };
+
+  programs.fish = {
+    enable = true;
+
+    functions = {
+
+      # make_blank_lines = {
+      #   body = ''
+      #     string repeat -n 5 \n
+      #     tput cuu 5
+      #   '';
+      #   onEvent = "fish_postexec";
+      # };
+    };
+    interactiveShellInit = ''
+      set -g fish_key_bindings fish_vi_key_bindings
+      set -g fish_greeting ""
+      set fish_cursor_default block
+      set fish_cursor_insert line
+      set fish_cursor_replace_one underscore
+      set fish_cursor_replace underscore
+      bind H beginning-of-line
+      bind L end-of-line
+    '';
+    shellInitLast = ''
+      enable_transience
+    '';
+    shellAliases = {
+      cd="z";
+      dev="nix develop -c zsh";
+      ls="eza --icons -lah --git -s type";
+      lg="lazygit";
+      rsync="rsync -avP";
+      cat="bat";
+    };
   };
 
   programs.zathura = {
@@ -178,17 +214,21 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
     tmux.enableShellIntegration = true;
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
   };
 
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
   };
 
   home.stateVersion = "24.11";

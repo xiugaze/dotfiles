@@ -35,12 +35,14 @@ in {
   ];
 
   programs.zsh.enable = true;
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" "wireshark" ];
     packages = with pkgs; [];
-    shell = pkgs.zsh;
+    useDefaultShell = true;
   };
 
   programs.nix-ld.enable = true;
