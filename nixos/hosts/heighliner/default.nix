@@ -4,9 +4,17 @@ let
     system = "x86_64-linux";
     config = config.nixpkgs.config;
   };
-  # andreano-dev-pkg = inputs.andreano-dev.packages.${pkgs.system}.default;
 in {
   networking.hostName = "heighliner";
+  imports = [
+    inputs.nixos-wsl.nixosModules.default {
+      system.stateVersion = "24.05";
+      wsl.enable = true;
+      wsl.defaultUser = "caleb";
+    }
+    ../../modules/neovim.nix 
+    ../../modules/syncthing.nix 
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
@@ -34,12 +42,8 @@ in {
     enableLsColors = true;
   };
 
-  imports = [
-    ../../modules/neovim.nix 
-    ../../modules/syncthing.nix 
-    inputs.andreano-dev.nixosModules."x86_64-linux".default
-  ];
-  # services.andreano-dev.enable = true;
+
+  nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
 
   _module.args.unstable = unstable;
 
@@ -47,7 +51,7 @@ in {
     python314
     pandoc
     texliveFull
-    andreano-dev-pkg
+    rust-bin.stable.latest.default 
 
   ];
 

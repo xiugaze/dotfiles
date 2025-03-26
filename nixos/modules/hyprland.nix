@@ -1,7 +1,6 @@
 {config, pkgs, unstable, ...}: {
 
   environment.systemPackages = with pkgs; [
-    xdg-desktop-portal-hyprland
     hyprpaper
     unstable.hyprlock
     hyprshot
@@ -21,7 +20,6 @@
     wireplumber
 
     dunst
-    # libsForQt5.qt5wayland
   ];
 
   hardware.graphics = {

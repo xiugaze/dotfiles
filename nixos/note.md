@@ -24,6 +24,11 @@ Flakes are supposed to be locked for reproducibility. To update,
 we have to run `nix flake update go-test-server` for that specific input
 or run `nix flake update` for all inputs before rebuilding.
 
+## home-manager
+```
+home-manager switch --flake .#user@host
+```
+
 
 
 

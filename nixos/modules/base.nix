@@ -1,9 +1,8 @@
 {config, pkgs, unstable, ...}: {
   environment.systemPackages = with pkgs; [
-    # system
     git
     wget
-    lsb-release # linux standard base
+    lsb-release
     zip
     unzip
     p7zip
@@ -15,7 +14,6 @@
     gnumake
     psmisc
 
-    # basic environment
     zsh
     starship
     lf
@@ -32,11 +30,11 @@
     ripgrep
     tealdeer
 
-    # other
     rsync
     neofetch
     pfetch
     htop
     tree
+    dconf
   ];
 }
