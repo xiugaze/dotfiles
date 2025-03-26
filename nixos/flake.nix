@@ -75,7 +75,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = globalModules ++ [
-            ./hosts/chapterhouse/configuration.nix
+            ./hosts/chapterhouse
           ];
         };
         heighliner = nixosSystem {

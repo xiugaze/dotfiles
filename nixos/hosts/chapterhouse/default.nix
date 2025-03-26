@@ -13,7 +13,7 @@ in {
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/neovim.nix
-    # ../../modules/syncthing.nix
+    ../../modules/syncthing.nix
     # ../../modules/nextcloud.nix
     # ../../modules/jellyfin.nix
     ../../services/skrimp_server.nix
@@ -28,7 +28,7 @@ in {
 
 
   networking.networkmanager.enable = true;
-
+  services.st.enable = true;
 
   services.xserver.xkb = {
     layout = "us";
