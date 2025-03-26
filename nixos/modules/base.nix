@@ -35,5 +35,6 @@
     pfetch
     htop
     tree
+    dconf
   ];
 }

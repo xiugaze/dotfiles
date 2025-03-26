@@ -1,60 +1,17 @@
 { inputs, config, pkgs, ... }:
 {
   imports = [
-
-    inputs.catppuccin.homeManagerModules.catppuccin
   ];
+
   home.username = "caleb";
   home.homeDirectory = "/home/caleb";
-  # home.username = "server";
-  # home.homeDirectory = "/home/server";
-  home.packages = with pkgs; [ posy-cursors dconf ];
+
   home.sessionVariables = {
       EDITOR = "nvim";
       GIT_EDITOR = "nvim";
       PATH = "$PATH:~/bin";
   };
 
-  catppuccin = {
-    flavor = "mocha";
-    accent = "lavender";
-    gtk = {
-      enable = true;
-      icon.enable = true;
-      icon.accent = "lavender";
-    };
-    zathura = {
-      enable = true;
-      flavor = "mocha";
-    };
-  };
-  gtk.enable = true;
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    name = "Posy_Cursor_Black";
-    package = pkgs.posy-cursors;
-    size = 32; # also set by hyprcursor on startup, min available is 32 :(
-  };
-
-  xdg.mime.enable = true;
-  xdg.mimeApps = {
-    enable = true;
-    
-    defaultApplications = {
-      "x-scheme-handler/http" = ["librewolf.desktop"];
-      "x-scheme-handler/about" = ["librewolf.desktop"];
-      "x-scheme-handler/https" = ["librewolf.desktop"];
-      "x-scheme-handler/unknown" = ["librewolf.desktop"];
-      "text/html" = ["librewolf.desktop"];
-    };
-    associations.added = {
-      "x-scheme-handler/http" = ["librewolf.desktop"];
-      "x-scheme-handler/https" = ["librewolf.desktop"];
-      "text/html" = ["librewolf.desktop"];
-    };
-  };
-  
   programs.git = {
     enable = true;
     userName = "Caleb Andreano";
@@ -125,8 +82,7 @@
     enableCompletion = true;
     shellAliases = {
       cd="z";
-      ls="eza --icons -h --git";
-      l="eza --icons -lah --git";
+      ls="eza --icons -lah --git";
       lg="lazygit";
       dev="nix develop -c zsh";
       rsync="rsync -avP";
@@ -233,19 +189,6 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-  };
-
-  programs.ghostty = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      theme = "catppuccin-macchiato";
-      font-size = 14;
-      font-family = "FiraCode Nerd Font";
-      background-opacity = 0.92;
-      background-blur-radius = 20;
-      window-decoration = false;
-    };
   };
 
   home.stateVersion = "24.11";

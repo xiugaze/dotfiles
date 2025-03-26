@@ -1,6 +1,16 @@
 {
   description = "NixOS configuration";
 
+  nixConfig = {
+    extra-substituters = [
+      # "https://hyprland.cachix.org"
+    ];
+
+    extra-trusted-public-keys = [
+      # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -39,7 +49,6 @@
       lib = nixpkgs.lib // home-manager.lib; # bring in home-manager library
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
 
-      # for home manager?
       pkgsFor = lib.genAttrs (import systems) (
         system:
           import nixpkgs {
@@ -54,22 +63,22 @@
     {
 
       devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
-      nixosConfigurations = {
-        caladan = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = with nixpkgs.lib; {
+        caladan = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = globalModules ++ [
             ./hosts/caladan
           ];
         };
-        chapterhouse = nixpkgs.lib.nixosSystem {
+        chapterhouse = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = globalModules ++ [
             ./hosts/chapterhouse/configuration.nix
           ];
         };
-        heighliner = nixpkgs.lib.nixosSystem {
+        heighliner = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = globalModules ++ [
@@ -78,15 +87,22 @@
         };
       };
 
-      homeConfigurations = { 
-        "caleb@caladan" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations = with home-manager.lib; { 
+        "caleb@caladan" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
           modules = [ ./home/caleb/caladan.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
-        "caleb@heighliner" = home-manager.lib.homeManagerConfiguration {
+
+        "caleb@heighliner" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
           modules = [ ./home/caleb/heighliner.nix ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+
+        "caleb@chapterhouse" = homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          modules = [ ./home/caleb/chapterhouse.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };

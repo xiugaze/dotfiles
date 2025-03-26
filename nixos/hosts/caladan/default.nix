@@ -67,11 +67,11 @@ in {
 
   xdg.portal = {
       enable = true;
-      xdgOpenUsePortal = true;
+      # xdgOpenUsePortal = true;
       extraPortals = [
         # pkgs.xdg-desktop-portal-hyprland
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-kde
+        # pkgs.xdg-desktop-portal-gtk
+        # pkgs.xdg-desktop-portal-kde
       ];
   };
 
@@ -121,8 +121,6 @@ in {
     gpclient
 
     inputs.zen-browser.packages."${system}".beta
-
-
   ];
 
   programs.kdeconnect.enable = true;
@@ -135,6 +133,15 @@ in {
     });
   };
 
+  xdg.mime = {
+    defaultApplications = {
+      "text/html" = "io.gitlab.LibreWolf.desktop";
+      "x-scheme-handler/http" = "io.gitlab.LibreWolf.desktop";
+      "x-scheme-handler/https" = "io.gitlab.LibreWolf.desktop";
+      "x-scheme-handler/about" = "io.gitlab.LibreWolf.desktop";
+      "x-scheme-handler/unknown" = "io.gitlab.LibreWolf.desktop";
+    };
+  };
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
@@ -158,6 +165,7 @@ in {
         platformio-core.udev
 
       ];
+      # let wireshark read packets
       extraRules = ''
         SUBSYSTEM=="wlp5s0", GROUP="wireshark", MODE="0640"
       '';
@@ -166,6 +174,8 @@ in {
       xkb.layout = "us";
       xkb.variant = "";
     };
+
+
 
     mullvad-vpn.enable = true;
     tailscale = {
@@ -200,7 +210,8 @@ in {
     useDHCP = false;
     dhcpcd.enable = false;
     nameservers = [
-      "1.1.1.1"
+      "192.168.1.165" # pi hole
+      "1.1.1.1"       # cloudflare
     ];
 
     firewall = {
