@@ -20,14 +20,18 @@ in {
   _module.args.unstable = unstable;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.overlays = [ (import ../../overlays/custom-pkgs.nix) ];
+  nixpkgs.overlays = [ 
+    (import ../../overlays/custom-pkgs.nix) 
+  ];
   nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
+  hardware.enableAllFirmware = true;
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   hardware.usb.wakeupDisabled = [
     { vendor = "046d"; product = "c547"; } # G502X
@@ -50,7 +54,6 @@ in {
     # add missing dynamic libraries
   ];
 
-
   # I think the hyprland module already does all this but...
   xdg.portal = {
       enable = true;
@@ -59,13 +62,12 @@ in {
       ];
   };
 
+  # services.emacs.package = pkgs.emacs-unstable;
   environment.systemPackages = with pkgs; [
 
     # system
     pipewire
     texlive.combined.scheme-full
-    jdk21
-    python3
     rsync
     nftables
     usbutils
@@ -76,6 +78,12 @@ in {
     ffmpeg-full
     x264
     libxkbcommon
+    pandoc
+    
+    # development
+    python314
+    rust-bin.stable.latest.default 
+    jdk21
 
     # desktop programs
     kitty
@@ -87,12 +95,13 @@ in {
     unstable.obsidian
     unstable.vscodium
     unstable.librewolf-bin
-    kicad
-    stm32cubemx
     ungoogled-chromium
     nsxiv
     psst # spotify
     gparted
+    exfatprogs
+    emacs-git
+
     unstable.beeper
     gpclient # for MSOE vpn
     libreoffice
@@ -117,16 +126,21 @@ in {
     });
   };
 
+
+
   xdg.mime = {
+    enable = true;
     defaultApplications = {
       "text/html" = "zen.desktop";
       "x-scheme-handler/http" = "zen.desktop";
       "x-scheme-handler/https" = "zen.desktop";
       "x-scheme-handler/about" = "zen.desktop";
       "x-scheme-handler/unknown" = "zen.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
     };
   };
 
+  documentation.man.generateCaches = false;
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
@@ -136,6 +150,9 @@ in {
   services = {
     # printing
     st.enable = true; # syncthing
+
+    displayManager.ly.enable = true;
+
     printing.enable = true;
     # printer discovery
     avahi = {
