@@ -57,6 +57,7 @@ in {
   ];
 
   services.openssh.enable = true;
+  services.envfs.enable = true;
 
   virtualisation.docker =  {
     enable = true;

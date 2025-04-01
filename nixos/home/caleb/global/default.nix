@@ -159,6 +159,8 @@
       i = "recolor";
       p = "print";
       mg = "goto top";
+      j = "feedkeys \"<C-Down>\"";
+      k = "feedkeys \"<C-Up>\"";
     };
     options = {
       selection-clipboard = "clipboard";

@@ -29,6 +29,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    emacs-overlay = {
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+    };
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     # my packages
@@ -56,11 +60,20 @@
             config.allowUnfree = true;
           }
       );
+      globalOverlays = [
+          inputs.rust-overlay.overlays.default
+          (import self.inputs.emacs-overlay)
+      ];
+
       globalModules = [
         ./modules/base.nix
+        { nixpkgs.overlays = globalOverlays; }
       ];
     in
     {
+
+      nixpkgs.overlays = [ 
+      ];
 
       devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
       nixosConfigurations = with nixpkgs.lib; {
