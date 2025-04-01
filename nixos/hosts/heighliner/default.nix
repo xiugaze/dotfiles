@@ -27,6 +27,7 @@ in {
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ ];
 
+  programs.fish.enable = true;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
@@ -56,6 +57,7 @@ in {
   ];
 
   services.openssh.enable = true;
+  services.envfs.enable = true;
 
   virtualisation.docker =  {
     enable = true;
