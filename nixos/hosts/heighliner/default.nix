@@ -27,12 +27,13 @@ in {
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ ];
 
+  programs.fish.enable = true;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
     packages = with pkgs; [];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   programs.dconf.enable = true;
