@@ -44,8 +44,6 @@ in {
   };
 
 
-  nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
-
   _module.args.unstable = unstable;
 
   environment.systemPackages = with pkgs; [ 
@@ -53,6 +51,7 @@ in {
     pandoc
     texliveFull
     rust-bin.stable.latest.default 
+    curl-impersonate
 
   ];
 

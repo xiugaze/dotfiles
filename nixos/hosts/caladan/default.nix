@@ -20,9 +20,11 @@ in {
   _module.args.unstable = unstable;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   nixpkgs.overlays = [ 
     (import ../../overlays/custom-pkgs.nix) 
   ];
+
   nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
