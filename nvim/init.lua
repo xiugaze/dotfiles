@@ -297,7 +297,9 @@ require("lazy").setup({
                     map("gS", builtin.lsp_dynamic_workspace_symbols, "[g]oto workspace [S]ymbols")
                     map("<leader>rn", vim.lsp.buf.rename, "[r]e[n]ame")
                     map("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
-                    map("gh", vim.lsp.buf.hover, "[g]oto [h]elp (Hover Documentation)")
+                    map("gh", function()
+                        vim.lsp.buf.hover { border = "rounded", max_heigh = 25, max_width = 120 }
+                    end, "[g]oto [h]elp (Hover Documentation)")
 
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
