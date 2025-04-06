@@ -1,3 +1,4 @@
 # System Maintenance
-- [ ] try out fish shell
-- [ ] gabriel fontes nixos configuration: selective home manager stuff
+- [x] try out fish shell
+- [x] gabriel fontes nixos configuration: selective home manager stuff
+- [ ] zellij

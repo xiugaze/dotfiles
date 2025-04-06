@@ -27,12 +27,13 @@ in {
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ ];
 
+  programs.fish.enable = true;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
     packages = with pkgs; [];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   programs.dconf.enable = true;
@@ -43,8 +44,6 @@ in {
   };
 
 
-  nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
-
   _module.args.unstable = unstable;
 
   environment.systemPackages = with pkgs; [ 
@@ -52,10 +51,12 @@ in {
     pandoc
     texliveFull
     rust-bin.stable.latest.default 
+    curl-impersonate
 
   ];
 
   services.openssh.enable = true;
+  services.envfs.enable = true;
 
   virtualisation.docker =  {
     enable = true;

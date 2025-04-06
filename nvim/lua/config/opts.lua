@@ -32,7 +32,6 @@ local options = {
     shiftwidth = 2,         -- indent size
     tabstop = 2,            -- how many spaces a tab is
     softtabstop = 2,
-    expandtab = true,       -- tabs expand to spaces
     splitbelow = true,      -- buffers can split below
     splitright = true,      -- buffers split right 
     mouse = "a",            -- mouse enabled in all modes
@@ -63,6 +62,7 @@ local options = {
     updatetime = 250,
     showmode = true,
     breakindent = true,
+    expandtab = true,       -- tabs expand to spaces
 }
 
 local load = function(opts) 
