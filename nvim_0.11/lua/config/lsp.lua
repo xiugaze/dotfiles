@@ -12,13 +12,13 @@ local servers = {
   },
 
   ["rust-analyzer"] = {
-    filetyles = { "rs" },
+    filetypes = { "rs" },
     cmd = {
       "rust-analyzer"
     },
   },
-  ["clangd"] = {
-    filetypes = { "c", "cpp" },
+  ["clangd-c"] = {
+    filetypes = { "c", "h" },
     cmd = {
       "clangd",
       "--background-index",
@@ -26,15 +26,28 @@ local servers = {
       "--log=verbose",
       -- "-std=c++20",
     },
-    -- init_options = {
-    --     fallbackFlags = {
-    --     }
-    -- }
+  },
+
+  ["clangd-cpp"] = {
+    filetypes = { "cpp", "cc", "hpp", "hh" },
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--log=verbose",
+    },
+    root_markers = { '.clangd', 'compile_commands.json' },
+    init_options = {
+      fallbackFlags = {
+        "-std=c++20",
+      }
+    }
   },
 
   ["nil"] = {
     filetypes = { "nix", },
     cmd = { "nil" },
+    -- this doesn't work
     formatting = {
       command = { "nixfmt" },
     },
