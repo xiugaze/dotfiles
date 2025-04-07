@@ -8,6 +8,8 @@
         unstable.lua
         unstable.luarocks
 
+	lua-language-server
+
         # ocaml
         ocaml
         dune_3
