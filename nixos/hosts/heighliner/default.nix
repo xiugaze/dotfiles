@@ -52,12 +52,12 @@ in {
     texliveFull
     rust-bin.stable.latest.default 
     curl-impersonate
-
   ];
 
   services.openssh.enable = true;
   services.envfs.enable = true;
 
+  documentation.man.generateCaches = false;
   virtualisation.docker =  {
     enable = true;
   };
