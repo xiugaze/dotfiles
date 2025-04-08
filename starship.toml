@@ -16,7 +16,7 @@ $character
 symbol = ' '
 
 [nix_shell]
-format = '[($name)]($style)'
+format = '[($name) ]($style)'
 symbol = " "
 
 [python]
