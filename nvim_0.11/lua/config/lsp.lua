@@ -1,3 +1,4 @@
+-- configs at https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 local servers = {
   ["lua-language-server"] = {
     cmd = { "lua-language-server" },
@@ -24,7 +25,6 @@ local servers = {
       "--background-index",
       "--clang-tidy",
       "--log=verbose",
-      -- "-std=c++20",
     },
   },
 
@@ -53,12 +53,15 @@ local servers = {
     },
   },
 
-  jdtls = {},
-  gopls = {},
-  html = {},
+  -- jdtls = {},
+  -- gopls = {},
+  -- html = {},
   superhtml = {},
-  basedpyright = {},
-  ruff = {},
+  ["basedpyright"] = {
+    cmd = {"basedpyright-langserver", "--stdio"},
+    filetypes = { "python" },
+  },
+  -- ruff = {},
 }
 
 for k, v in pairs(servers) do
