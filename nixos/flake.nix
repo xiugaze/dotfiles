@@ -30,7 +30,7 @@
     };
 
     emacs-overlay = {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      url = "github:nix-community/emacs-overlay";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";

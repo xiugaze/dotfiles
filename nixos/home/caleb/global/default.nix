@@ -1,7 +1,16 @@
 { inputs, config, pkgs, ... }:
-{
-  imports = [
-  ];
+let 
+  shellAliases = {
+    cd="z";
+    ls="eza --icons";
+    lt="eza --tree --icons --level";
+    la="eza --icons -lah --git -s type";
+    lg="lazygit";
+    rsync="rsync -avP";
+    cat="bat";
+  };
+in {
+  imports = [];
 
   home.username = "caleb";
   home.homeDirectory = "/home/caleb";
@@ -80,14 +89,7 @@
     # defaultKeymap = "vicmd";
     autosuggestion.enable = true;
     enableCompletion = true;
-    shellAliases = {
-      cd="z";
-      dev="nix develop -c zsh";
-      ls="eza --icons -lah --git -s type";
-      lg="lazygit";
-      rsync="rsync -avP";
-      cat="bat";
-    };
+    shellAliases = shellAliases;
     plugins = with pkgs; [
       {
         name = zsh-vi-mode.pname;
@@ -115,16 +117,7 @@
   programs.fish = {
     enable = true;
 
-    functions = {
-
-      # make_blank_lines = {
-      #   body = ''
-      #     string repeat -n 5 \n
-      #     tput cuu 5
-      #   '';
-      #   onEvent = "fish_postexec";
-      # };
-    };
+    functions = {};
     interactiveShellInit = ''
       set -g fish_key_bindings fish_vi_key_bindings
       set -g fish_greeting ""
@@ -135,42 +128,14 @@
       bind H beginning-of-line
       bind L end-of-line
     '';
-    shellInitLast = ''
-      enable_transience
-    '';
-    shellAliases = {
-      cd="z";
-      dev="nix develop -c zsh";
-      ls="eza --icons -lah --git -s type";
-      lg="lazygit";
-      rsync="rsync -avP";
-      cat="bat";
-    };
+    shellAliases = shellAliases;
   };
 
-  programs.zathura = {
-    enable = true;
-    mappings = {
-      u = "scroll half-up";
-      d = "scroll half-down";
-      D = "toggle_page_mode";
-      r = "reload";
-      R = "rotate";
-      i = "recolor";
-      p = "print";
-      mg = "goto top";
-      j = "feedkeys \"<C-Down>\"";
-      k = "feedkeys \"<C-Up>\"";
-    };
-    options = {
-      selection-clipboard = "clipboard";
-    };
-  };
 
   programs.tmux = {
     enable = true;
     prefix = "C-a";
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${pkgs.fish}/bin/fish";
     mouse = true;
     extraConfig = ''
       bind | split-window -h -c "#{pane_current_path}"
@@ -209,7 +174,6 @@
       set -g status-justify centre
 
       set -ga update-environment 'KITTY_LISTEN_ON'
-
     '';
   };
   

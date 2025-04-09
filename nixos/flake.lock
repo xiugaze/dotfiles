@@ -78,14 +78,17 @@
         "nixpkgs-stable": "nixpkgs-stable_2"
       },
       "locked": {
-        "lastModified": 1743700520,
-        "narHash": "sha256-FTgOgaZks+xkyqqukNOe7FXHPshCYmQ38wxzxJ6T3RQ=",
-        "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"
+        "lastModified": 1744045453,
+        "narHash": "sha256-CqGBZzGZCTcAeFC4MQBXYKE9fCb6KncBr0JVKMFEvas=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "00b6ee68e9fef7cce2a827f248ab935bca5eca6e",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
       }
     },
     "flake-compat": {

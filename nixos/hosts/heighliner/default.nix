@@ -27,7 +27,13 @@ in {
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ ];
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableLsColors = true;
+  };
   programs.fish.enable = true;
+
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
@@ -37,11 +43,6 @@ in {
   };
 
   programs.dconf.enable = true;
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableLsColors = true;
-  };
 
 
   _module.args.unstable = unstable;
@@ -52,12 +53,12 @@ in {
     texliveFull
     rust-bin.stable.latest.default 
     curl-impersonate
-
   ];
 
   services.openssh.enable = true;
   services.envfs.enable = true;
 
+  documentation.man.generateCaches = false;
   virtualisation.docker =  {
     enable = true;
   };
