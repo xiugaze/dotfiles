@@ -1,6 +1,7 @@
 command_timeout = 10000 #ms 
 format = """
 $directory\
+$hostname\
 $direnv\
 $fill\
 $git_branch\
@@ -11,6 +12,12 @@ $python\
 $line_break\
 $character
 """
+
+[hostname]
+ssh_only = false
+ssh_symbol = " "
+format = "[@$hostname$ssh_symbol]($style)"
+style= "bold dimmed white"
 
 [fill]
 symbol = ' '
@@ -95,8 +102,8 @@ symbol = " "
 [hg_branch]
 symbol = " "
 
-[hostname]
-ssh_symbol = " "
+
+
 
 [java]
 symbol = " "
