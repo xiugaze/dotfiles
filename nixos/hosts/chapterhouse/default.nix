@@ -30,16 +30,19 @@ in {
   networking.networkmanager.enable = true;
   services.st.enable = true;
 
+
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
+  programs.fish.enable = true;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" "nextcloud" "docker" ];
     packages = with pkgs; [];
+    shell = pkgs.fish;
   };
 
   environment.systemPackages = with pkgs; [
