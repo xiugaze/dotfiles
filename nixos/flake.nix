@@ -35,6 +35,8 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     # my packages
     love-letters.url = "github:xiugaze/love-letters?ref=main";
     andreano-dev.url = "github:xiugaze/andreano.dev";

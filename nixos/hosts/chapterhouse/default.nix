@@ -9,6 +9,8 @@ let
 in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = "chapterhouse"; # Define your hostname.
+
+  disabledModules = [ "services/web-servers/caddy/default.nix" ];
   imports = [ 
     ./hardware-configuration.nix
     ../../modules/base.nix
@@ -18,6 +20,8 @@ in {
     # ../../modules/jellyfin.nix
     ../../services/skrimp_server.nix
     inputs.andreano-dev.nixosModules."x86_64-linux".default
+    inputs.sops-nix.nixosModules.sops
+    "${inputs.nixpkgs-unstable}/nixos/modules/services/web-servers/caddy/default.nix"
   ];
   _module.args.unstable = unstable;
   nixpkgs.config.allowUnfree = true;
@@ -57,6 +61,7 @@ in {
     traceroute
     netcat
     andreano-dev-pkg
+    sops
   ];
 
   services.andreano-dev.enable = true;
@@ -72,18 +77,34 @@ in {
     user = "caleb";
   };
 
-  services = {
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/caleb/.config/sops/age/keys.txt";
 
-    caddy = {
-      enable = true;
-      virtualHosts."andreano.dev".extraConfig = ''
-        reverse_proxy :8080
+  sops.secrets."CLOUDFLARE_API_KEY" = { };
+  sops.templates."caddy.env" = {
+      content = ''
+        CLOUDFLARE_API_KEY="${config.sops.placeholder."CLOUDFLARE_API_KEY"}"
       '';
-      virtualHosts."test.andreano.dev".extraConfig = ''
-        reverse_proxy :8080
-      '';
+      owner = "caddy";
+  };
+
+  services.caddy = {
+    enable = true;
+    environmentFile = "${config.sops.templates."caddy.env".path}";
+    package = unstable.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/cloudflare@v0.1.0" ];
+      hash = "sha256-KnXqw7asSfAvKNSIRap9HfSvnijG07NYI3Yfknblcl4=";
     };
-
+    virtualHosts."andreano.dev".extraConfig = ''
+      reverse_proxy :8080
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_KEY}
+      }
+    '';
+    # virtualHosts."test.andreano.dev".extraConfig = ''
+    #   reverse_proxy :8080
+    # '';
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 9090 22000];
