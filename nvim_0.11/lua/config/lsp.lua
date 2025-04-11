@@ -13,7 +13,7 @@ local servers = {
   },
 
   ["rust-analyzer"] = {
-    filetypes = { "rs" },
+    filetypes = { "rust" },
     cmd = {
       "rust-analyzer"
     },

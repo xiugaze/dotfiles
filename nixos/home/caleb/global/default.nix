@@ -8,6 +8,7 @@ let
     lg="lazygit";
     rsync="rsync -avP";
     cat="bat";
+    pandoc="ENVFS_RESOLVE_ALWAYS=1 pandoc";
   };
 in {
   imports = [];
