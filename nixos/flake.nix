@@ -35,6 +35,8 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     # my packages
     love-letters.url = "github:xiugaze/love-letters?ref=main";
     andreano-dev.url = "github:xiugaze/andreano.dev";
@@ -60,18 +62,20 @@
             config.allowUnfree = true;
           }
       );
-      globalOverlays = [
-          inputs.rust-overlay.overlays.default
-          (import self.inputs.emacs-overlay)
-      ];
 
       globalModules = [
         ./modules/base.nix
-        { nixpkgs.overlays = globalOverlays; }
+        { 
+          nixpkgs.overlays = [
+            inputs.rust-overlay.overlays.default
+            (import self.inputs.emacs-overlay)
+          ];
+          services.openssh.enable = true;
+          services.envfs.enable = true;
+        }
       ];
     in
     {
-
       nixpkgs.overlays = [ 
       ];
 
