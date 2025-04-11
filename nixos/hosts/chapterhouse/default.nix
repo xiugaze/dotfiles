@@ -89,22 +89,25 @@ in {
       owner = "caddy";
   };
 
-  services.caddy = {
+  services.caddy = 
+    let 
+        apex-config = ''
+        reverse_proxy :8080
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_KEY}
+        }
+      '';
+    in
+
+    {
     enable = true;
     environmentFile = "${config.sops.templates."caddy.env".path}";
     package = unstable.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/cloudflare@v0.1.0" ];
       hash = "sha256-KnXqw7asSfAvKNSIRap9HfSvnijG07NYI3Yfknblcl4=";
     };
-    virtualHosts."andreano.dev".extraConfig = ''
-      reverse_proxy :8080
-      tls {
-        dns cloudflare {env.CLOUDFLARE_API_KEY}
-      }
-    '';
-    # virtualHosts."test.andreano.dev".extraConfig = ''
-    #   reverse_proxy :8080
-    # '';
+    virtualHosts."andreano.dev".extraConfig = apex-config;
+    virtualHosts."www.andreano.dev".extraConfig = apex-config;
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 9090 22000];
