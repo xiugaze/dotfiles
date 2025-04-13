@@ -14,7 +14,7 @@ $character
 """
 
 [hostname]
-ssh_only = false
+ssh_only = true
 ssh_symbol = " "
 format = "[@$hostname $ssh_symbol]($style)"
 style= "bold dimmed white"
