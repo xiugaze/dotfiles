@@ -13,7 +13,7 @@ local servers = {
   },
 
   ["rust-analyzer"] = {
-    filetypes = { "rs" },
+    filetypes = { "rust" },
     cmd = {
       "rust-analyzer"
     },
@@ -60,6 +60,16 @@ local servers = {
   ["basedpyright"] = {
     cmd = {"basedpyright-langserver", "--stdio"},
     filetypes = { "python" },
+  },
+
+
+  ["texlab"] = {
+    cmd = {"texlab"},
+    filetypes = {
+      "tex", "bib",
+    },
+
+
   },
   -- ruff = {},
 }

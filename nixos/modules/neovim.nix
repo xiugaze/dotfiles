@@ -30,6 +30,9 @@
         # go
         go
 
+        # latex
+        texlab
+
         # cpp
         clang-tools
 

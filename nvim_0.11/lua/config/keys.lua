@@ -79,6 +79,10 @@ nmap("<leader>fn", function()
 end, "[S]earch [N]eovim files")
 
 
+
+nmap("<leader>ng", require("neogit").open)
+
+
 nmap("<C-f>", ":lua vim.lsp.buf.format()<CR>", "Format")
 nmap("-", "<CMD>Oil<CR>",  "Open parent directory")
 
