@@ -61,6 +61,16 @@ local servers = {
     cmd = {"basedpyright-langserver", "--stdio"},
     filetypes = { "python" },
   },
+
+
+  ["texlab"] = {
+    cmd = {"texlab"},
+    filetypes = {
+      "tex", "bib",
+    },
+
+
+  },
   -- ruff = {},
 }
 

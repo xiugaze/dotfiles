@@ -51,6 +51,7 @@ in {
     python314
     pandoc
     texliveFull
+    zathura
     rust-bin.stable.latest.default 
     curl-impersonate
   ];

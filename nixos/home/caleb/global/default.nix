@@ -22,6 +22,25 @@ in {
       PATH = "$PATH:~/bin";
   };
 
+  programs.zathura = {
+    enable = true;
+    mappings = {
+      u = "scroll half-up";
+      d = "scroll half-down";
+      D = "toggle_page_mode";
+      r = "reload";
+      R = "rotate";
+      i = "recolor";
+      p = "print";
+      mg = "goto top";
+      j = "feedkeys \"<C-Down>\"";
+      k = "feedkeys \"<C-Up>\"";
+    };
+    options = {
+      selection-clipboard = "clipboard";
+    };
+  };
+
   programs.git = {
     enable = true;
     userName = "Caleb Andreano";
