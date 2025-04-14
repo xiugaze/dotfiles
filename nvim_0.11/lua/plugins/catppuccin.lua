@@ -4,10 +4,16 @@ return {
   priority = 1000,
   opts = {
     transparent_background = true,
-    flavor = "macchiato",
+    flavor = "latte",
     background = {
-      light = "frappe",
+      light = "latte",
       dark = "macchiato",
+    },
+    no_italic = false,
+    styles = {
+      comments = { "italic" },
     }
   }
 }
+
+-- test 

@@ -8,7 +8,7 @@
     hyprshade
     hyprcursor
     hyprpolkitagent
-    hyprsunset
+    unstable.hyprsunset
     catppuccin-cursors
     waybar
     rofi-wayland

@@ -17,6 +17,13 @@ local servers = {
     cmd = {
       "rust-analyzer"
     },
+    on_init = function(client, _)
+      -- semantic token higlighting is weird with treesitter
+      client.server_capabilities.semanticTokensProvider = nil 
+    end,
+    server_capabilities = {
+      semanticTokensProvider = nil
+    }
   },
   ["clangd-c"] = {
     filetypes = { "c", "h" },

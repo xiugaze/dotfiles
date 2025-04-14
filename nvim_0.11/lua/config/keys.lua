@@ -60,6 +60,18 @@ end
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+nmap("<leader>tt", function()
+  if vim.o.background == "dark" then
+    vim.o.background = "light";
+    require("catppuccin").setup({transparent_background = false, flavor = "latte"})
+    vim.cmd.colorscheme "catppuccin"
+  else
+    vim.o.background = "dark";
+    require("catppuccin").setup({transparent_background = true, flavor = "macchiato"})
+    vim.cmd.colorscheme "catppuccin"
+  end
+end, "switch light dark")
+
 -- telescope
 
 local ts = require("telescope.builtin")

@@ -102,9 +102,9 @@ in {
     psst # spotify
     gparted
     exfatprogs
-    ((emacsPackagesFor emacs-git).emacsWithPackages (
-      epkgs: [ epkgs.evil ]
-    ))
+    # ((emacsPackagesFor emacs-unstable).emacsWithPackages (
+    #   epkgs: [ epkgs.evil ]
+    # ))
     unstable.beeper
     gpclient # for MSOE vpn
     libreoffice

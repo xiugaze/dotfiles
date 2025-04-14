@@ -136,7 +136,6 @@ in {
 
   programs.fish = {
     enable = true;
-
     functions = {};
     interactiveShellInit = ''
       set -g fish_key_bindings fish_vi_key_bindings

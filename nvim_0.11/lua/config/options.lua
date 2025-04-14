@@ -19,6 +19,7 @@ local options = {
         -- eol = '¬'
     },
 
+    guicursor = 'n-v-c:block-Cursor/lCursor,i-ci:ver25-Cursor/lCursor',
     winborder = "single",
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
