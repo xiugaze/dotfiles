@@ -109,6 +109,7 @@ in {
     gpclient # for MSOE vpn
     libreoffice
     wireshark
+    inkscape
 
     # other programs
     mcrcon  # talk to minecraft server over network
@@ -116,6 +117,9 @@ in {
     avrdis # avr disassembler (from overlays)
     kepubify
     system-config-printer
+
+    qbittorrent
+
 
     inputs.zen-browser.packages."${system}".beta
   ];
@@ -181,7 +185,7 @@ in {
       xkb.variant = "";
     };
 
-    mullvad-vpn.enable = false;
+    mullvad-vpn.enable = true;
     tailscale = {
       enable = false;
       package = unstable.tailscale;
