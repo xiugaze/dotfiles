@@ -108,6 +108,10 @@ in {
     };
     virtualHosts."andreano.dev".extraConfig = apex-config;
     virtualHosts."www.andreano.dev".extraConfig = apex-config;
+    virtualHosts."jellyfin.local".extraConfig = ''
+        reverse_proxy :8096
+        tls internal
+    '';
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 9090 22000];
