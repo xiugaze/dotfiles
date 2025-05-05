@@ -7,8 +7,11 @@
         unstable.nodejs_22
         unstable.lua
         unstable.luarocks
+        imagemagick
+        luajitPackages.magick
 
-	lua-language-server
+        lua-language-server
+        ghostscript
 
         # ocaml
         ocaml

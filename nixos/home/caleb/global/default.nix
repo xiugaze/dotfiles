@@ -19,8 +19,12 @@ in {
   home.sessionVariables = {
       EDITOR = "nvim";
       GIT_EDITOR = "nvim";
-      PATH = "$PATH:~/bin";
   };
+
+  home.sessionPath = [
+    "$HOME/bin"
+    "$HOME/.cargo/bin"
+  ];
 
   programs.zathura = {
     enable = true;
@@ -35,6 +39,8 @@ in {
       mg = "goto top";
       j = "feedkeys \"<C-Down>\"";
       k = "feedkeys \"<C-Up>\"";
+      h = "feedkeys \"<C-Left>\"";
+      l = "feedkeys \"<C-Right>\"";
     };
     options = {
       selection-clipboard = "clipboard";
