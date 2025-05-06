@@ -77,6 +77,12 @@ in {
     user = "caleb";
   };
 
+  services.immich = {
+    enable = true;
+    port = 2293;
+    mediaLocation = "/mnt/data/immich";
+  };
+
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/caleb/.config/sops/age/keys.txt";
