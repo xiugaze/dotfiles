@@ -16,8 +16,6 @@ in {
     ../../modules/base.nix
     ../../modules/neovim.nix
     ../../modules/syncthing.nix
-    # ../../modules/nextcloud.nix
-    # ../../modules/jellyfin.nix
     ../../services/skrimp_server.nix
     inputs.andreano-dev.nixosModules."x86_64-linux".default
     inputs.sops-nix.nixosModules.sops
@@ -30,10 +28,8 @@ in {
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-
   networking.networkmanager.enable = true;
   services.st.enable = true;
-
 
   services.xserver.xkb = {
     layout = "us";
@@ -41,6 +37,7 @@ in {
   };
 
   programs.fish.enable = true;
+  documentation.man.generateCaches = false;
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
@@ -79,22 +76,53 @@ in {
 
   services.immich = {
     enable = true;
-    port = 2293;
+    port = 2283;
+    openFirewall = true;
     mediaLocation = "/mnt/data/immich";
+  };
+
+  # paperless-ngx
+  services.paperless = {
+    enable = true;
+    dataDir = "/mnt/data/paperless";
+    port = 29891;
   };
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/caleb/.config/sops/age/keys.txt";
 
-  sops.secrets."CLOUDFLARE_API_KEY" = { };
-  sops.templates."caddy.env" = {
-      content = ''
-        CLOUDFLARE_API_KEY="${config.sops.placeholder."CLOUDFLARE_API_KEY"}"
-      '';
-      owner = "caddy";
+
+  # NEXTCLOUD
+  sops.secrets."NEXTCLOUD_ADMIN_PASSWORD" = {};
+  sops.templates."nextcloud" = {
+    content = ''
+      ${config.sops.placeholder."NEXTCLOUD_ADMIN_PASSWORD"}
+    '';
+    owner = "nextcloud";
   };
 
+  # environment.etc."nextcloud-admin-pass".text = "testpass123";
+  services.nextcloud = {
+    enable = true;
+    hostName = "nix-nextcloud"; # local only
+    package = pkgs.nextcloud31;
+    configureRedis = true;
+    config.adminpassFile = "${config.sops.templates."nextcloud".path}";
+    # config.adminpassFile = "/etc/nextcloud-admin-pass";
+    config.adminuser = "root";
+    config.dbtype = "sqlite";
+    settings.trusted_domains = [ "cloud.andreano.dev" ];
+  };
+  services.nginx.virtualHosts."nix-nextcloud".listen = [ { addr = "127.0.0.1"; port = 8009; } ]; # nextcloud module runs nginx
+
+  sops.secrets."CLOUDFLARE_API_KEY" = {};
+  sops.templates."caddy.env" = {
+    content = ''
+      CLOUDFLARE_API_KEY="${config.sops.placeholder."CLOUDFLARE_API_KEY"}"
+    '';
+    owner = "caddy";
+  };
   services.caddy = 
     let 
         apex-config = ''
@@ -103,25 +131,45 @@ in {
           dns cloudflare {env.CLOUDFLARE_API_KEY}
         }
       '';
-    in
+    in {
+      enable = true;
+      environmentFile = "${config.sops.templates."caddy.env".path}";
+      package = unstable.caddy.withPlugins {
+        plugins = [ "github.com/caddy-dns/cloudflare@v0.1.0" ];
+        hash = "sha256-KnXqw7asSfAvKNSIRap9HfSvnijG07NYI3Yfknblcl4=";
+      };
+      globalConfig = ''
+        debug
+      '';
+      virtualHosts."andreano.dev".extraConfig = apex-config;
+      virtualHosts."www.andreano.dev".extraConfig = apex-config;
+      virtualHosts."jellyfin.andreano.dev".extraConfig = ''
+          reverse_proxy :8096
+      '';
 
-    {
-    enable = true;
-    environmentFile = "${config.sops.templates."caddy.env".path}";
-    package = unstable.caddy.withPlugins {
-      plugins = [ "github.com/caddy-dns/cloudflare@v0.1.0" ];
-      hash = "sha256-KnXqw7asSfAvKNSIRap9HfSvnijG07NYI3Yfknblcl4=";
-    };
-    virtualHosts."andreano.dev".extraConfig = apex-config;
-    virtualHosts."www.andreano.dev".extraConfig = apex-config;
-    virtualHosts."jellyfin.local".extraConfig = ''
-        reverse_proxy :8096
-        tls internal
-    '';
+      # no TLS for paperless, internal only
+      virtualHosts."http://paperless.andreano.dev".extraConfig = ''
+          reverse_proxy :29891
+      '';
+      virtualHosts."immich.andreano.dev".extraConfig = ''
+          reverse_proxy http://localhost:2283
+      '';
+
+      virtualHosts."cloud.andreano.dev" = {
+        extraConfig = ''
+          redir /.well-known/carddav /remote.php/dav 301
+          redir /.well-known/caldav /remote.php/dav 301
+          redir /.well-known/webfinger /index.php/.well-known/webfinger 301
+          redir /.well-known/nodeinfo /index.php/.well-known/nodeinfo 301
+
+          encode gzip
+          reverse_proxy http://localhost:8009
+        '';
+      };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 9090 22000];
-  networking.firewall.allowedUDPPorts = [ 80 443 9090 22000];
+  networking.firewall.allowedTCPPorts = [ 80 443 9090 22000 2283 ];
+  networking.firewall.allowedUDPPorts = [ 80 443 9090 22000 2283 ];
 
   virtualisation.podman = {
     enable = true;

@@ -7,11 +7,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1742787276,
-        "narHash": "sha256-mojl147DYFfcwdD+fAM+o5NXvCW5/PwW7jByoYLLw1g=",
+        "lastModified": 1747857809,
+        "narHash": "sha256-LJkuMcs2w6DV2OMnLz3w/WiobS8bwNGyezLHsTngtZQ=",
         "owner": "xiugaze",
         "repo": "andreano.dev",
-        "rev": "bda778bc80bef3d89481e7930f66878703b93bef",
+        "rev": "60513d1377fa61a57a2afae7ef659ee91da71d1c",
         "type": "github"
       },
       "original": {
