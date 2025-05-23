@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "andreano-dev": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1747857809,
+        "narHash": "sha256-LJkuMcs2w6DV2OMnLz3w/WiobS8bwNGyezLHsTngtZQ=",
+        "owner": "xiugaze",
+        "repo": "andreano.dev",
+        "rev": "60513d1377fa61a57a2afae7ef659ee91da71d1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xiugaze",
+        "repo": "andreano.dev",
+        "type": "github"
+      }
+    },
     "catppuccin": {
       "inputs": {
         "catppuccin-v1_1": "catppuccin-v1_1",
