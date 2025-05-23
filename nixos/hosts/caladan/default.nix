@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }: 
+{ config, pkgs, lib, inputs, ... }: 
 let 
   unstable = import inputs.nixpkgs-unstable {
     system = "x86_64-linux";
@@ -84,19 +84,20 @@ in {
     
     # development
     python314
+    octave
     rust-bin.stable.latest.default 
     jdk21
 
     # desktop programs
     kitty
     zathura
+    inputs.zen-browser.packages."${system}".beta
     pavucontrol
     mullvad-vpn
     nautilus
     gnome-epub-thumbnailer
     unstable.obsidian
     unstable.vscodium
-    unstable.librewolf-bin
     ungoogled-chromium
     nsxiv
     psst # spotify
@@ -110,6 +111,9 @@ in {
     libreoffice
     wireshark
     inkscape
+    obs-studio
+    mpv
+    qbittorrent
 
     # other programs
     mcrcon  # talk to minecraft server over network
@@ -117,13 +121,11 @@ in {
     avrdis # avr disassembler (from overlays)
     kepubify
     system-config-printer
+    spotify-player
+    caligula
+    unstable.ergogen
 
-    qbittorrent
-
-
-    inputs.zen-browser.packages."${system}".beta
   ];
-  
 
   nixpkgs.config.packageOverrides = unstable: {
     obsidian = unstable.obsidian.overrideAttrs (old: {
@@ -132,8 +134,6 @@ in {
       });
     });
   };
-
-
 
   xdg.mime = {
     enable = true;
@@ -148,10 +148,11 @@ in {
   };
 
   documentation.man.generateCaches = false;
+
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
-    nerdfonts
+    nerd-fonts.fira-code
   ];
 
   services = {
@@ -199,6 +200,7 @@ in {
       pulse.enable = true;
       socketActivation = true;
     };
+
   };
 
   virtualisation.podman =  {
@@ -211,7 +213,7 @@ in {
     useDHCP = false;
     dhcpcd.enable = false;
     nameservers = [
-      "192.168.1.165" # pi hole
+      # "192.168.1.165" # pi hole
       "1.1.1.1"       # cloudflare
     ];
   };

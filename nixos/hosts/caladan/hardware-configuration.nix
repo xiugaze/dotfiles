@@ -16,7 +16,7 @@
   fileSystems."/" =
     { 
       device = "/dev/disk/by-uuid/2357c214-1a5b-49eb-8581-c5764c921cd5";
-      label = "root";
+      # label = "root";
       fsType = "ext4";
       options = [
         "x-gvfs-show"
@@ -32,7 +32,7 @@
 
   fileSystems."/mnt/windows" =
     { device = "/dev/nvme1n1p2";
-      label = "windows";
+      # label = "windows";
       fsType = "ntfs-3g";
       options = [ 
         "nofail"
@@ -45,7 +45,7 @@
   fileSystems."/mnt/data" =
     { device = "/dev/sdb1";
       fsType = "ntfs-3g";
-      label = "data";
+      # label = "data";
       options = [ 
         "nofail"
         "x-gvfs-show"
@@ -55,7 +55,7 @@
     };
   fileSystems."/mnt/games" =
     { device = "/dev/sda1";
-      label = "games";
+      # label = "games";
       fsType = "ntfs-3g";
       options = [ 
         "nofail"
