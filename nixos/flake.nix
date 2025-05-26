@@ -12,13 +12,13 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,6 +31,7 @@
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -38,8 +39,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     # my packages
-    love-letters.url = "github:xiugaze/love-letters?ref=main";
-    andreano-dev.url = "github:xiugaze/andreano.dev";
+    # love-letters.url = "github:xiugaze/love-letters?ref=main";
+    # andreano-dev.url = "github:xiugaze/andreano.dev";
 
   };
 

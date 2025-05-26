@@ -7,8 +7,11 @@
         unstable.nodejs_22
         unstable.lua
         unstable.luarocks
+        imagemagick
+        luajitPackages.magick
 
-	lua-language-server
+        lua-language-server
+        ghostscript
 
         # ocaml
         ocaml
@@ -39,6 +42,9 @@
         # nix
         nil
         nixfmt-rfc-style
+
+        unstable.zig
+        unstable.zls
     ] ++ (with pkgs.llvmPackages_latest; [
         lldb
         libcxx

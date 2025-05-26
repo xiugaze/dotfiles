@@ -14,31 +14,55 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2357c214-1a5b-49eb-8581-c5764c921cd5";
+    { 
+      device = "/dev/disk/by-uuid/2357c214-1a5b-49eb-8581-c5764c921cd5";
+      # label = "root";
       fsType = "ext4";
+      options = [
+        "x-gvfs-show"
+      ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8247-BAA9";
+    { 
+      device = "/dev/disk/by-uuid/8247-BAA9";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/mnt/windows" =
     { device = "/dev/nvme1n1p2";
+      # label = "windows";
       fsType = "ntfs-3g";
-      options = [ "rw" "uid=caleb" ];
+      options = [ 
+        "nofail"
+        "x-gvfs-show"
+        "rw" 
+        "uid=caleb" 
+      ];
     };
 
   fileSystems."/mnt/data" =
     { device = "/dev/sdb1";
       fsType = "ntfs-3g";
-      options = [ "rw" "uid=caleb" ];
+      # label = "data";
+      options = [ 
+        "nofail"
+        "x-gvfs-show"
+        "rw" 
+        "uid=caleb" 
+      ];
     };
   fileSystems."/mnt/games" =
     { device = "/dev/sda1";
+      # label = "games";
       fsType = "ntfs-3g";
-      options = [ "rw" "uid=caleb" ];
+      options = [ 
+        "nofail"
+        "x-gvfs-show"
+        "rw" 
+        "uid=caleb" 
+      ];
     };
 
   swapDevices =
