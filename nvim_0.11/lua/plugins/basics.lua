@@ -14,5 +14,11 @@ return {
     ---@type render.md.UserConfig
     opts = {},
   },
+  { "lukas-reineke/virt-column.nvim", 
+    opts = {
+      enabled = true,
+       virtcolumn = "+1,80"
+    }
+  },
 
 }
