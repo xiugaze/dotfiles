@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "andreano-dev": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1747857809,
-        "narHash": "sha256-LJkuMcs2w6DV2OMnLz3w/WiobS8bwNGyezLHsTngtZQ=",
-        "owner": "xiugaze",
-        "repo": "andreano.dev",
-        "rev": "60513d1377fa61a57a2afae7ef659ee91da71d1c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "xiugaze",
-        "repo": "andreano.dev",
-        "type": "github"
-      }
-    },
     "catppuccin": {
       "inputs": {
         "catppuccin-v1_1": "catppuccin-v1_1",
@@ -310,11 +290,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1746461020,
-        "narHash": "sha256-7+pG1I9jvxNlmln4YgnlW4o+w0TZX24k688mibiFDUE=",
+        "lastModified": 1748693115,
+        "narHash": "sha256-StSrWhklmDuXT93yc3GrTlb0cKSS0agTAxMGjLKAsY8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3730d8a308f94996a9ba7c7138ede69c1b9ac4ae",
+        "rev": "910796cabe436259a29a72e8d3f5e180fc6dfacc",
         "type": "github"
       },
       "original": {
@@ -499,11 +479,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1744594629,
-        "narHash": "sha256-NpTi3oHTbAlIX9d96DApyOlLmN6Rx64Lg24avysQ9nQ=",
+        "lastModified": 1747998984,
+        "narHash": "sha256-G5UvtOKD3fmVTnVTh1XCZVoD0HsKO8QI18sMWlYxjLs=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "2bc982d49d24c52cab81aea143ee386936bfaf79",
+        "rev": "e48b7105d570f5e66e1891292525e585eeffa58d",
         "type": "github"
       },
       "original": {

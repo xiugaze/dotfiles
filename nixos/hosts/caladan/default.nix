@@ -1,10 +1,11 @@
 { config, pkgs, lib, inputs, ... }: 
-let 
-  unstable = import inputs.nixpkgs-unstable {
-    system = "x86_64-linux";
-    config = config.nixpkgs.config;
-  };
-in {
+# let 
+#   unstable = import inputs.nixpkgs-unstable {
+#     system = "x86_64-linux";
+#     config = config.nixpkgs.config;
+#   };
+# in {
+{
 
   networking.hostName = "caladan"; # Define your hostname.
 
@@ -17,7 +18,7 @@ in {
     ../../modules/hyprland.nix 
     ../../modules/usb-wakeup-disable.nix 
   ];
-  _module.args.unstable = unstable;
+  # _module.args.unstable = unstable;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -106,7 +107,7 @@ in {
     # ((emacsPackagesFor emacs-unstable).emacsWithPackages (
     #   epkgs: [ epkgs.evil ]
     # ))
-    unstable.beeper
+    beeper
     gpclient # for MSOE vpn
     libreoffice
     wireshark
@@ -114,6 +115,8 @@ in {
     obs-studio
     mpv
     qbittorrent
+    arduino-ide
+    adafruit-nrfutil
 
     # other programs
     mcrcon  # talk to minecraft server over network
@@ -189,7 +192,7 @@ in {
     mullvad-vpn.enable = true;
     tailscale = {
       enable = false;
-      package = unstable.tailscale;
+      package = pkgs.unstable.tailscale;
     };
 
     pipewire = {
