@@ -32,14 +32,14 @@ in {
     enableCompletion = true;
     enableLsColors = true;
   };
-  programs.fish.enable = true;
+  # programs.fish.enable = true;
 
   users.users.caleb = {
     isNormalUser = true;
     description = "caleb";
     extraGroups = [ "networkmanager" "wheel" "storage" "docker" "disk" "dialout" ];
     packages = with pkgs; [];
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
   };
 
   programs.dconf.enable = true;
@@ -52,12 +52,16 @@ in {
     pandoc
     texliveFull
     zathura
-    rust-bin.stable.latest.default 
+    # rust-bin.stable.latest.default 
     curl-impersonate
+    qbittorrent
   ];
 
-  services.openssh.enable = true;
-  services.envfs.enable = true;
+  services = {
+    openssh.enable = true;
+    envfs.enable = true;
+    st.enable = true; # syncthing
+  };
 
   documentation.man.generateCaches = false;
   virtualisation.docker =  {

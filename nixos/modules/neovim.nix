@@ -32,6 +32,7 @@
 
         # go
         go
+        gopls
 
         # latex
         texlab
