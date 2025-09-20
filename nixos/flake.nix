@@ -13,6 +13,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-old.url = "github:NixOS/nixpkgs/785d183e69c0899387751928fbdcc316b9aac97e";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
@@ -75,7 +76,7 @@
         ./modules/base.nix
         { 
           nixpkgs.overlays = [
-            # inputs.rust-overlay.overlays.default
+            inputs.rust-overlay.overlays.default
             (import self.inputs.emacs-overlay)
             unstableOverlay
           ];

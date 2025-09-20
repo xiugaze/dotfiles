@@ -4,6 +4,10 @@ let
     system = "x86_64-linux";
     config = config.nixpkgs.config;
   };
+  old = import inputs.nixpkgs-old {
+    system = "x86_64-linux";
+    config = config.nixpkgs.config;
+  };
 
   andreano-dev-pkg = inputs.andreano-dev.packages.${pkgs.system}.default;
 in {
@@ -68,24 +72,116 @@ in {
     user = "caleb";
   };
 
+
+  services.homepage-dashboard = 
+    let 
+      port = 29100;
+    in {
+    enable = true;
+    listenPort = port;
+    widgets = [
+      {
+        resources = {
+            cpu = true;
+            disk = "/";
+            memory = true;
+          };
+      }
+
+      {
+        search = {
+          provider = "custom";
+          url =  "https://kagi.com/search?q=";
+          target = "_blank";
+          suggestionUrl = "https://kagi.com/api/autosuggest?q=";
+          showSearchSuggestions = true;
+        };
+      }
+    ];
+
+    services = [
+      { 
+        "Home" = [
+          {
+            "Calendar" = {
+              href = "https://cloud.andreano.dev/apps/calendar/timeGridWeek/now";
+            };
+          }
+          {
+            "Tasks" = {
+              href = "https://cloud.andreano.dev/apps/tasks/calendars/caleb-andreano";
+            };
+          }
+        ];
+      }
+      {
+        "Media" = [
+          {
+            "Immich" = {
+              description = "Photos";
+              href = "https://immich.andreano.dev";
+            };
+          }
+          {
+            "Jellyfin" = {
+              description = "Movies/TV";
+              href = "https://jellyfin.andreano.dev";
+            };
+          }
+        ];
+      }
+    ];
+  };
+
+
+  services.actual = {
+    enable = true;
+    settings = {
+      hostname = "0.0.0.0";
+      port = 29984;
+    };
+    openFirewall = true;
+  };
+
   services.jellyfin = {
     enable = true;
     openFirewall = true;
-    user = "caleb";
+    user = "jellyfin";
+  };
+
+  services.audiobookshelf = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 29120;
   };
 
   services.immich = {
+    package = pkgs.immich;
     enable = true;
     port = 2283;
     openFirewall = true;
     mediaLocation = "/mnt/data/immich";
   };
 
-  # paperless-ngx
+  # # paperless-ngx
   services.paperless = {
     enable = true;
+    address = "100.64.0.5";
     dataDir = "/mnt/data/paperless";
+    settings = {
+      PAPERLESS_OCR_USER_ARGS = {
+        "invalidate_digital_signatures" = true;
+      };
+    };
     port = 29891;
+  };
+
+  services.headscale = {
+    enable = true;
+    address = "0.0.0.0";
+    port = 29999;
+    settings.dns.base_domain = "andreano.dev";
+    settings.server_url = "https://headscale.andreano.dev:443";
   };
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
@@ -102,7 +198,7 @@ in {
     owner = "nextcloud";
   };
 
-  # environment.etc."nextcloud-admin-pass".text = "testpass123";
+  environment.etc."nextcloud-admin-pass".text = "testpass123";
   services.nextcloud = {
     enable = true;
     hostName = "nix-nextcloud"; # local only
@@ -112,7 +208,12 @@ in {
     # config.adminpassFile = "/etc/nextcloud-admin-pass";
     config.adminuser = "root";
     config.dbtype = "sqlite";
+    settings.overwriteprotocol = "https";
     settings.trusted_domains = [ "cloud.andreano.dev" ];
+    extraApps = {
+      inherit (config.services.nextcloud.package.packages.apps) contacts calendar tasks;
+    };
+    extraAppsEnable = true;
   };
   services.nginx.virtualHosts."nix-nextcloud".listen = [ { addr = "127.0.0.1"; port = 8009; } ]; # nextcloud module runs nginx
 
@@ -135,8 +236,8 @@ in {
       enable = true;
       environmentFile = "${config.sops.templates."caddy.env".path}";
       package = unstable.caddy.withPlugins {
-        plugins = [ "github.com/caddy-dns/cloudflare@v0.1.0" ];
-        hash = "sha256-KnXqw7asSfAvKNSIRap9HfSvnijG07NYI3Yfknblcl4=";
+        plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
+        hash = "sha256-j+xUy8OAjEo+bdMOkQ1kVqDnEkzKGTBIbMDVL7YDwDY=";
       };
       globalConfig = ''
         debug
@@ -146,13 +247,32 @@ in {
       virtualHosts."jellyfin.andreano.dev".extraConfig = ''
           reverse_proxy :8096
       '';
+      virtualHosts."headscale.andreano.dev".extraConfig = ''
+          reverse_proxy :29999
+      '';
+
+      virtualHosts."budget.andreano.dev".extraConfig = ''
+          reverse_proxy :29984
+      '';
+
+      virtualHosts."home.andreano.dev".extraConfig = ''
+          reverse_proxy :29100
+          tls {
+            dns cloudflare {env.CLOUDFLARE_API_KEY}
+          }
+      '';
 
       # no TLS for paperless, internal only
       virtualHosts."http://paperless.andreano.dev".extraConfig = ''
           reverse_proxy :29891
       '';
+
       virtualHosts."immich.andreano.dev".extraConfig = ''
           reverse_proxy http://localhost:2283
+      '';
+
+      virtualHosts."audiobooks.andreano.dev".extraConfig = ''
+          reverse_proxy http://localhost:29120
       '';
 
       virtualHosts."cloud.andreano.dev" = {
@@ -168,8 +288,10 @@ in {
       };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 9090 22000 2283 ];
-  networking.firewall.allowedUDPPorts = [ 80 443 9090 22000 2283 ];
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "enp1s0" "tailscale0" ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9090 22000 2283 29891 config.services.tailscale.port ];
+  networking.firewall.allowedUDPPorts = [ 80 443 9090 22000 2283 29891 config.services.tailscale.port ];
 
   virtualisation.podman = {
     enable = true;
