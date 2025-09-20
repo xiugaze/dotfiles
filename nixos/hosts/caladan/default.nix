@@ -1,10 +1,11 @@
-{ config, pkgs, inputs, ... }: 
-let 
-  unstable = import inputs.nixpkgs-unstable {
-    system = "x86_64-linux";
-    config = config.nixpkgs.config;
-  };
-in {
+{ config, pkgs, lib, inputs, ... }: 
+# let 
+#   unstable = import inputs.nixpkgs-unstable {
+#     system = "x86_64-linux";
+#     config = config.nixpkgs.config;
+#   };
+# in {
+{
 
   networking.hostName = "caladan"; # Define your hostname.
 
@@ -17,7 +18,7 @@ in {
     ../../modules/hyprland.nix 
     ../../modules/usb-wakeup-disable.nix 
   ];
-  _module.args.unstable = unstable;
+  # _module.args.unstable = unstable;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -30,6 +31,10 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+
+
+
 
   hardware.enableAllFirmware = true;
   hardware.bluetooth.enable = true;
@@ -84,19 +89,20 @@ in {
     
     # development
     python314
+    octave
     rust-bin.stable.latest.default 
     jdk21
 
     # desktop programs
     kitty
     zathura
+    inputs.zen-browser.packages."${system}".beta
     pavucontrol
     mullvad-vpn
     nautilus
     gnome-epub-thumbnailer
     unstable.obsidian
     unstable.vscodium
-    unstable.librewolf-bin
     ungoogled-chromium
     nsxiv
     psst # spotify
@@ -105,11 +111,16 @@ in {
     # ((emacsPackagesFor emacs-unstable).emacsWithPackages (
     #   epkgs: [ epkgs.evil ]
     # ))
-    unstable.beeper
+    beeper
     gpclient # for MSOE vpn
     libreoffice
     wireshark
     inkscape
+    obs-studio
+    mpv
+    qbittorrent
+    adafruit-nrfutil
+    unstable.zed-editor
 
     # other programs
     mcrcon  # talk to minecraft server over network
@@ -117,13 +128,11 @@ in {
     avrdis # avr disassembler (from overlays)
     kepubify
     system-config-printer
+    spotify-player
+    caligula
+    unstable.ergogen
 
-    qbittorrent
-
-
-    inputs.zen-browser.packages."${system}".beta
   ];
-  
 
   nixpkgs.config.packageOverrides = unstable: {
     obsidian = unstable.obsidian.overrideAttrs (old: {
@@ -132,8 +141,6 @@ in {
       });
     });
   };
-
-
 
   xdg.mime = {
     enable = true;
@@ -148,10 +155,11 @@ in {
   };
 
   documentation.man.generateCaches = false;
+
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
-    nerdfonts
+    nerd-fonts.fira-code
   ];
 
   services = {
@@ -187,9 +195,10 @@ in {
 
     mullvad-vpn.enable = true;
     tailscale = {
-      enable = false;
-      package = unstable.tailscale;
+      enable = true;
+      package = pkgs.unstable.tailscale;
     };
+
 
     pipewire = {
       enable = true;
@@ -199,6 +208,7 @@ in {
       pulse.enable = true;
       socketActivation = true;
     };
+
   };
 
   virtualisation.podman =  {
@@ -211,10 +221,13 @@ in {
     useDHCP = false;
     dhcpcd.enable = false;
     nameservers = [
-      "192.168.1.165" # pi hole
+      # "192.168.1.165" # pi hole
       "1.1.1.1"       # cloudflare
     ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 8080 8000 ];
+  networking.firewall.allowedUDPPorts = [ 8080 8000 ];
 
   system.stateVersion = "24.11"; 
 }

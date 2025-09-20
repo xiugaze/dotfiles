@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ...}: {
+{ inputs, lib, pkgs, config, ...}: {
 
   imports = [
     ./global
@@ -38,5 +38,28 @@
     package = pkgs.posy-cursors;
     size = 32; # also set by hyprcursor on startup, min available is 32 :(
   };
+
+  # services.hypridle = {
+  #   enable = true;
+  #   package = pkgs.hypridle;
+  #   settings = {
+  #     general = {
+  #       lock_cmd  = "pidof hyprlock || ${lib.getExe config.programs.hyprlock.package}";
+  #       after_sleep_cmd = "hyprctl dispatch dpms on";
+  #       before_sleep_cmd = "loginctl lock-session";
+  #     };
+  #     listener = [
+  #       {
+  #         timeout = 300;
+  #         on-timeout = "hyprctl dispatch dpms off";
+  #         on-resume = "hyprctl dispatch dpms on";
+  #       }
+  #       {
+  #         timeout = 600;
+  #         on-timeout = "systemctl suspend";
+  #       }
+  #     ];
+  #   };
+  # };
 
 }

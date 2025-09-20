@@ -32,6 +32,7 @@
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -39,8 +40,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     # my packages
-    love-letters.url = "github:xiugaze/love-letters?ref=main";
-    andreano-dev.url = "github:xiugaze/andreano.dev";
+    # love-letters.url = "github:xiugaze/love-letters?ref=main";
+    # andreano-dev.url = "github:xiugaze/andreano.dev";
 
   };
 
@@ -64,12 +65,20 @@
           }
       );
 
+      unstableOverlay = final: prev: {
+        unstable = import inputs.nixpkgs-unstable {
+          system = final.system;
+          config = final.config;
+        };
+      };
+
       globalModules = [
         ./modules/base.nix
         { 
           nixpkgs.overlays = [
             inputs.rust-overlay.overlays.default
             (import self.inputs.emacs-overlay)
+            unstableOverlay
           ];
           services.openssh.enable = true;
           services.envfs.enable = true;
@@ -77,8 +86,9 @@
       ];
     in
     {
-      nixpkgs.overlays = [ 
-      ];
+      # nixpkgs.overlays = [ 
+      #   unstableOverlay
+      # ];
 
       devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
       nixosConfigurations = with nixpkgs.lib; {

@@ -7,7 +7,6 @@ let
     la="eza --icons -lah --git -s type";
     lg="lazygit";
     rsync="rsync -avP";
-    cat="bat";
     pandoc="ENVFS_RESOLVE_ALWAYS=1 pandoc";
   };
 in {

@@ -1,4 +1,4 @@
-{config, pkgs, unstable, ...}: {
+{config, pkgs, ...}: {
 
     environment.systemPackages = with pkgs; [
     # needed for neovim
@@ -32,6 +32,7 @@
 
         # go
         go
+        gopls
 
         # latex
         texlab
@@ -42,6 +43,9 @@
         # nix
         nil
         nixfmt-rfc-style
+
+        unstable.zig
+        unstable.zls
     ] ++ (with pkgs.llvmPackages_latest; [
         lldb
         libcxx

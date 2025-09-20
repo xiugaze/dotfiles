@@ -1,4 +1,4 @@
-{config, pkgs, unstable, ...}: {
+{inputs, config, pkgs, ...}: {
 
   environment.systemPackages = with pkgs; [
     hyprpaper
@@ -32,14 +32,12 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = unstable.hyprland;
+    package = pkgs.unstable.hyprland;
   };
 
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.production;
     modesetting.enable = true;
-    # powerManagement.enable = false;
-    # powerManagement.finegrained = false;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
     open = false;

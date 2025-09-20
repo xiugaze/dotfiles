@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage[english]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage[
+  backend=biber,
+  style=apa,
+]{biblatex}
+
+\addbibresource{refs.bib}
+\usepackage[autostyle, english = american]{csquotes} % enable " for quotes
+
+% for double space
+% \usepackage{setspace}
+% \doublespacing
+
+\begin{document}
+
+\begin{titlepage}
+  \title{Title}
+  \author{Caleb Andreano}
+  \date{15 April 2025}
+  \maketitle
+  % \centering{Dr. Andrew McAninch\\PHL 6001}
+  % \tableofcontents
+  \thispagestyle{empty} % don't have a page number on title
+\end{titlepage}
+\clearpage
+\setcounter{page}{1}
+
+\pagebreak
+\printbibliography
+\end{document}
