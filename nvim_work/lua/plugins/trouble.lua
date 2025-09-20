@@ -21,7 +21,7 @@ return {
     },
     {
       "<leader>cs",
-      "<cmd>Trouble lsp_document_symbols toggle focus=true win = { type = split, position = right, size = 0.4 }<cr>",
+      "<cmd>Trouble symbols toggle focus=false<cr>",
       desc = "Symbols (Trouble)",
     },
     {
