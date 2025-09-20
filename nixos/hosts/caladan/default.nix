@@ -31,6 +31,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+
+
+
 
   hardware.enableAllFirmware = true;
   hardware.bluetooth.enable = true;
@@ -115,8 +119,8 @@
     obs-studio
     mpv
     qbittorrent
-    arduino-ide
     adafruit-nrfutil
+    unstable.zed-editor
 
     # other programs
     mcrcon  # talk to minecraft server over network
@@ -191,9 +195,10 @@
 
     mullvad-vpn.enable = true;
     tailscale = {
-      enable = false;
+      enable = true;
       package = pkgs.unstable.tailscale;
     };
+
 
     pipewire = {
       enable = true;
@@ -220,6 +225,9 @@
       "1.1.1.1"       # cloudflare
     ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 8080 8000 ];
+  networking.firewall.allowedUDPPorts = [ 8080 8000 ];
 
   system.stateVersion = "24.11"; 
 }

@@ -75,7 +75,7 @@
         ./modules/base.nix
         { 
           nixpkgs.overlays = [
-            # inputs.rust-overlay.overlays.default
+            inputs.rust-overlay.overlays.default
             (import self.inputs.emacs-overlay)
             unstableOverlay
           ];
