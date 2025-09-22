@@ -50,6 +50,9 @@
 
     shellAliases = {
         cd="z";
+        g="git";
+        ga="git add -A";
+        gc="git commit -m"
         ls="eza --icons";
         lt="eza --tree --icons --level";
         la="eza --icons -lah --git -s type";
@@ -58,6 +61,7 @@
         roc="z ~/src/satcode/rocket";
         rsync="rsync -avP";
     };
+
     initExtra = ''
       ta() {
         bazel test //...
