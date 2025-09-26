@@ -63,6 +63,7 @@ in {
     netcat
     andreano-dev-pkg
     sops
+    php
   ];
 
   services.andreano-dev.enable = true;
