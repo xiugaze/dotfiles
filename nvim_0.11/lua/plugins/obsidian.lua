@@ -46,7 +46,20 @@ return {
         end,
       }
     },
-    -- ui = {
+    ui = {
+      hl_groups = {
+        ObsidianTodo = { bold = true, fg = "#ffffff" },
+        ObsidianDone = { bold = true, fg = "#89ddff" },
+        ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+        ObsidianTilde = { bold = true, fg = "#ff5370" },
+        ObsidianImportant = { bold = true, fg = "#d73128" },
+        ObsidianBullet = { bold = true, fg = "#89ddff" },
+        ObsidianRefText = { underline = true, fg = "#c792ea" },
+        ObsidianExtLinkIcon = { fg = "#c792ea" },
+        ObsidianTag = { italic = true, fg = "#89ddff" },
+        ObsidianBlockID = { italic = true, fg = "#89ddff" },
+        ObsidianHighlightText = { bg = "#75662e" },
+      },
     --   checkboxes = {
     --     [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
     --     ["x"] = { char = "", hl_group = "ObsidianDone" },
@@ -55,8 +68,9 @@ return {
     --     -- ["!"] = { char = "", hl_group = "ObsidianImportant" },
     --   }
     -- },
-    checkbox = {
-      order = { " ", "x" },
-    },
+      checkbox = {
+        order = { " ", "x" },
+      },
+    }
   }
 }

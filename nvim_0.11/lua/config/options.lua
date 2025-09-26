@@ -43,13 +43,15 @@ local options = {
     scrolloff = 6,          -- keep lines above and below cursor
     pumheight = 12,         -- maximum popup items
     -- signcolumn = "yes:1",     -- display the signcolumn always
-    signcolumn = "no",     -- display the signcolumn always
+    -- signcolumn = "no",     -- display the signcolumn always
+    signcolumn = "yes:1",     -- display the signcolumn always
     hlsearch = true,        -- highlight all search results
 
     -- not sure what these are
     foldmethod = "manual",
     hidden = true,
-    cmdheight = 0,
+
+    cmdheight = 1,
     conceallevel = 1,
 
     -- from kickstart
@@ -79,5 +81,6 @@ local load = function(opts)
     -- moving left/right wraps to next line
     -- vim.opt.whichwrap:append "<,>,[,],h,l" 
 end
+
 
 load(options)

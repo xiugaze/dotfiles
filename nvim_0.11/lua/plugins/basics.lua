@@ -10,6 +10,13 @@ return {
     }
   },
   {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    }
+  },
+  {
     "HiPhish/rainbow-delimiters.nvim"
   },
   {
@@ -29,8 +36,38 @@ return {
   {
     'seblyng/nvim-tabline',
         dependencies = { 'nvim-tree/nvim-web-devicons' }, -- Optional
-        opts = { },
+        opts = {
+        },
   },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      current_line_blame = true,
+    },
+  },
+    {
+        "linrongbin16/gitlinker.nvim",
+        cmd = "GitLink",
+        opts = {
+          router = {
+            browse = {
+              ["stash"] = "https://stash/projects/"
+                .. "{_A.ORG}/repos/"
+                .. "{_A.REPO}/browse/"
+                -- .. "{_A.FILE}?at="
+                .. "{_A.FILE}#"
+                -- .. "{_A.REV}#"
+                .. "{_A.LSTART}"
+                .. "{(_A.LEND > _A.LSTART and ('-' .. _A.LEND) or '')}",
+            },
+          },
+
+        },
+        keys = {
+          { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
+          { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
+        },
+    },
 {
       "reybits/scratch.nvim",
       lazy = true,

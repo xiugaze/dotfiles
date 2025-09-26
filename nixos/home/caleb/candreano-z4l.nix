@@ -1,5 +1,11 @@
-{ pkgs, lib, ...}: {
-  imports = [./global];
+{ config, pkgs, lib, inputs, ...}: {
+  imports = [
+    ./global
+    # (builtins.fetchurl {
+    #   url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+    #   sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
+    # })
+  ];
 
   home.stateVersion = lib.mkForce "25.05"; # Please read the comment before changing.
   home.username = lib.mkForce "candreano";
@@ -8,6 +14,11 @@
   targets.genericLinux.enable = true;
   fonts.fontconfig.enable = true;
 
+
+  nixGL = {
+    packages = inputs.nixgl.packages;
+    defaultWrapper = "mesa";
+  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -26,7 +37,9 @@
     fira-code
     fira-code-symbols
     nerd-fonts.fira-code
-    firefox
+    nixgl.nixGLIntel
+    (config.lib.nixGL.wrap firefox)
+    (config.lib.nixGL.wrap ghostty)
     zathura
     harper
   ];
@@ -52,7 +65,7 @@
         cd="z";
         g="git";
         ga="git add -A";
-        gc="git commit -m"
+        gc="git commit -m";
         ls="eza --icons";
         lt="eza --tree --icons --level";
         la="eza --icons -lah --git -s type";
@@ -95,16 +108,30 @@
         popd
       }
 
-      gc() {
+      garbage() {
         nix-collect-garbage --delete-old
       }
-      gco() {
+      garbageold() {
         nix-collect-garbage --delete-older-than $1
       }
       set bell-style none
     '';
   };
+  xdg.configFile."environment.d/envvars.conf".text = ''
+    PATH="$HOME/.nix-profile/bin:$PATH"
+  '';
 
 
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   package = config.lib.nixGL.wrap pkgs.hyprland;
+  #   settings = {
+  #     general = {
+  #       gaps_in = 0;
+  #       gaps_out = 0;
+  #       border_size = 20;
+  #     };
+  #   };
+  # };
 }
 

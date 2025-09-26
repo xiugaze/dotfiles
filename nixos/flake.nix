@@ -17,7 +17,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-
+    nixgl.url = "github:nix-community/nixGL";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,13 +75,18 @@
       globalModules = [
         ./modules/base.nix
         { 
+          services.openssh.enable = true;
+          services.envfs.enable = true;
+        }
+      ];
+      overlays = [
+        {
           nixpkgs.overlays = [
             inputs.rust-overlay.overlays.default
             (import self.inputs.emacs-overlay)
             unstableOverlay
+            inputs.nixgl.overlay
           ];
-          services.openssh.enable = true;
-          services.envfs.enable = true;
         }
       ];
     in
@@ -95,21 +100,21 @@
         caladan = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
-          modules = globalModules ++ [
+          modules = globalModules ++ overlays ++ [
             ./hosts/caladan
           ];
         };
         chapterhouse = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
-          modules = globalModules ++ [
+          modules = globalModules ++ overlays ++ [
             ./hosts/chapterhouse
           ];
         };
         heighliner = nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = globalModules ++ [
+          modules = globalModules ++ overlays ++ [
             ./hosts/heighliner
           ];
         };
@@ -137,7 +142,7 @@
 
         "candreano@candreano-z4l" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
-          modules = [ ./home/caleb/candreano-z4l.nix ];
+          modules = overlays ++ [ ./home/caleb/candreano-z4l.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };

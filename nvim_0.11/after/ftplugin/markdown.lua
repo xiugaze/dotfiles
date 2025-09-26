@@ -4,7 +4,7 @@ vim.keymap.set({"n"}, "<leader>oy", ":Obsidian yesterday<CR>", {silent = true})
 vim.cmd("highlight Urgent ctermfg=red guifg=#ff0000 gui=bold")
 vim.cmd("highlight Fixed ctermfg=green guifg=#77ec6f gui=bold")
 vim.cmd("highlight Done ctermfg=blue guifg=#78bff4 gui=bold")
-vim.cmd("highlight Team term=bold cterm=bold gui=bold")
+vim.cmd("highlight Bold term=bold cterm=bold gui=bold")
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
@@ -19,8 +19,8 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 
 
-    vim.fn.matchadd("Team", [[\<\%(Adam\|Aldrin\|Andrey\|Sandy\|Shreyas\)\>]])
-
+    vim.fn.matchadd("Bold", [[\<\%(Adam\|Aldrin\|Andrey\|Sandy\|Shreyas\)\>]])
+    vim.fn.matchadd("Bold", [[\<>]])
     vim.w.urgent_match = vim.fn.matchadd("Urgent", [[\<URGENT\>]])
     vim.w.fixed_match = vim.fn.matchadd("Fixed", [[\<FIXED\>]])
     vim.w.fixed_match = vim.fn.matchadd("Done", [[\<\%(DONE\|CLOSED\)\>]])

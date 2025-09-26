@@ -85,6 +85,7 @@ end, "switch light dark")
 
 local ts = require("telescope.builtin")
 nmap("<leader>ff", ts.find_files, "[f]ind [f]iles")
+nmap("<leader>fq", ts.oldfiles, "find old")
 nmap("<leader>fw", ts.grep_string, "[f]ind [w]ord")
 nmap("<leader>fg", ts.live_grep, "[f]ind [g]rep")
 nmap("<leader>ff", ts.find_files, "[f]ind [f]iles")
@@ -156,3 +157,13 @@ vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
 --     end
 -- end, {silent = true})
 -- loaded!!
+--
+--
+-- load the session for the current directory
+vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
+-- select a session to load
+vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end)
+-- load the last session
+vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
+-- stop Persistence => session won't be saved on exit
+vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)

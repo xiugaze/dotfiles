@@ -1,1 +1,2 @@
-home-manager switch --flake .#caleb@heighliner
+switch:
+    home-manager switch --flake .#candreano@candreano-z4l
