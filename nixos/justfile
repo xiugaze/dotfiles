@@ -1,2 +1,5 @@
-switch:
-    home-manager switch --flake .#candreano@candreano-z4l
+home-manager:
+    home-manager switch --flake .#"{{env_var('USER')}}@{{`hostname`}}"
+
+nextcloud:
+  sudo -u nextcloud nextcloud-occ files:scan --all

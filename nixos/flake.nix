@@ -41,7 +41,7 @@
 
     # my packages
     # love-letters.url = "github:xiugaze/love-letters?ref=main";
-    # andreano-dev.url = "github:xiugaze/andreano.dev";
+    andreano-dev.url = "github:xiugaze/andreano.dev";
 
   };
 
