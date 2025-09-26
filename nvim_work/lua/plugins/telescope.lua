@@ -12,9 +12,7 @@ return {
       end
     },
     "nvim-telescope/telescope-ui-select.nvim",
-    "albenisolmos/telescope-oil.nvim",
-    { "nvim-tree/nvim-web-devicons" },
-
+    { "nvim-tree/nvim-web-devicons" }
   },
 
   config = function()
@@ -32,13 +30,7 @@ return {
           override_generic_sorter = true, -- override the generic sorter
           override_file_sorter = true,    -- override the file sorter
           case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-        },
-        oil = {
-            hidden = true,
-            debug = false,
-            no_ignore = false,
-            show_preview = true,
-        },
+        }
       }
     })
     pcall(require('telescope').load_extension, 'fzf')

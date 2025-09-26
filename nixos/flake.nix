@@ -115,6 +115,7 @@
         };
       };
 
+      # home-manager switch --flake .#<output>
       homeConfigurations = with home-manager.lib; { 
         "caleb@caladan" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
@@ -131,6 +132,12 @@
         "caleb@chapterhouse" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
           modules = [ ./home/caleb/chapterhouse.nix ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+
+        "candreano@candreano-z4l" = homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          modules = [ ./home/caleb/candreano-z4l.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };

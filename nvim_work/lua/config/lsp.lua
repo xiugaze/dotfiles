@@ -34,16 +34,6 @@ local servers = {
       "--log=verbose",
     },
   },
-  -- ["clangd-sx"] = {
-  --   filetypes = { "cpp", "c", "h" },
-  --   cmd = {
-  --     "clangd",
-  --     "--query-driver",
-  --     "/home/candreano/src/satcode/gidney/.toolchains/**/bin/*",
-  --     "-j",
-  --     "40",
-  --   },
-  -- }
 
   ["clangd-cpp"] = {
     filetypes = { "cpp", "cc", "hpp", "hh" },
@@ -103,13 +93,6 @@ local servers = {
     },
 
 
-  },
-  ["harper-ls"] = {
-    cmd = {"harper-ls", "--stdio"},
-    filetypes = {
-      "tex", "bib", "markdown",
-    },
-    root_markers = { '.git' },
   },
   -- ruff = {},
 }

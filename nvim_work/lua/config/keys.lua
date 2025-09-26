@@ -1,18 +1,16 @@
 local keymaps = {
   -- any
   [""] = {
-    ["<leader>y"] = "\"+y",
-    ["<leader>p"] = "\"+p",
-    ["<leader>l"] = ":tabn<CR>",
-    ["<leader>h"] = ":tabp<CR>",
-    -- ["Y"] = "\"+y",
-    -- ["P"] = "\"+p",
+    ["Y"] = "\"+y",
+    ["P"] = "\"+p",
     ["L"] = "g$",
     ["E"] = "ge",
     ["H"] = "g^",
   },
   -- normal mode
   ["n"] = {
+    -- ["<leader>y"] = "\"+y",
+    -- ["<leader>p"] = "\"+p",
     -- ["<leader>sh"] = ":set list!<CR>", -- hide list (visible spaces, etc)
     ["q:"] = "<nop>",
   },
@@ -59,13 +57,6 @@ for mode, maps in pairs(keymaps) do
   end
 end
 
-function insertFullPath()
-  local filepath = vim.fn.expand('%')
-  vim.fn.setreg('+', filepath) -- write to clippoard
-end
-
-vim.keymap.set('n', '<leader>pc', insertFullPath, { noremap = true, silent = true })
-
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
@@ -89,31 +80,20 @@ nmap("<leader>fw", ts.grep_string, "[f]ind [w]ord")
 nmap("<leader>fg", ts.live_grep, "[f]ind [g]rep")
 nmap("<leader>ff", ts.find_files, "[f]ind [f]iles")
 nmap("<leader>fd", ts.diagnostics, "[f]ind [d]iagnostics")
-nmap("<leader>fe", "<cmd>Telescope oil<CR>", "[f]ind [d]iagnostics")
-nmap("<leader>fr", ts.resume, "[f]ind [r]esume") -- don't understand this
+-- set("<leader>fr", builtin.resume, "[f]ind [r]esume") -- don't understand this
 nmap("<leader>f.", ts.oldfiles, "[f]ind recent files")
 nmap("<leader>fs", ts.builtin, "[f]ind [s]elect")
 nmap("<leader>fk", ts.keymaps, "[f]ind [k]eymaps")
-nmap("<leader>fb", ts.current_buffer_fuzzy_find, "[f]ind [b]uffer")
--- nmap("<leader>fR", ":lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<cr>", "[f]ind [r]eferences")
-nmap("<leader>fR", ts.lsp_references, "[f]ind [r]eferences")
-nmap("<leader>foc", ts.lsp_outgoing_calls, "[f]ind [o]utgoing [c]alls")
-nmap("<leader>fic", ts.lsp_incoming_calls, "[f]ind [i]ncoming [c]alls")
+nmap("<leader>fr", ":lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<cr>", "[f]ind [r]eferences")
 nmap("<leader>ft", ts.treesitter, "[f]ind [t]reesitter")
-nmap("<leader>fs", ts.lsp_document_symbols, "[f]ind lsp [s]ymbols")
 nmap("<leader>fn", function()
   ts.find_files { cwd = vim.fn.stdpath 'config' }
 end, "[S]earch [N]eovim files")
 
 
-nmap("<leader>dd", ":Neogen<CR>", "[dd]ocumentation")
-nmap("<leader>ng", require("neogit").open)
-
 
 nmap("<C-f>", vim.lsp.buf.format, "Format")
 nmap("-", "<CMD>Oil<CR>",  "Open parent directory")
-
--- nmap("<C-e>", require('render-markdown').toggle)
 
 -- nmap("<leader>m", function ()
 --   require("blink.cmp").setup({ completion = { menu = { enabled = false }}})
@@ -144,15 +124,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 
-local ls = require("luasnip")
 
-vim.keymap.set({"i"}, "<M-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
-
--- vim.keymap.set({"i", "s"}, "<C-e>", function()
---     if ls.choice_active() then
---         ls.change_choice(1)
---     end
--- end, {silent = true})
--- loaded!!

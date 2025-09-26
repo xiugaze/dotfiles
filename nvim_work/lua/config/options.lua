@@ -16,19 +16,18 @@ local options = {
         tab = '» ', 
         trail = '·', 
         nbsp = '␣' , 
-        eol = '¬'
+        -- eol = '¬'
     },
 
-    -- guicursor = 'n-v-c:block-Cursor/lCursor,i-ci:ver25-Cursor/lCursor',
-    winborder = "single",
+    guicursor = 'n-v-c:block-Cursor/lCursor,i-ci:ver25-Cursor/lCursor',
     ignorecase = true,      -- ignore case when searches
     smartcase = true,       -- don't igore case when first is caps
     termguicolors = true,   -- truecolor terminals
     wrap = false,           -- linewrapping
     shiftround = true,     -- indent rounding
-    shiftwidth = 4,         -- indent size
-    tabstop = 4,            -- how many spaces a tab is
-    softtabstop = 4,
+    shiftwidth = 2,         -- indent size
+    tabstop = 2,            -- how many spaces a tab is
+    softtabstop = 2,
     splitbelow = true,      -- buffers can split below
     splitright = true,      -- buffers split right 
     mouse = "a",            -- mouse enabled in all modes
@@ -42,8 +41,7 @@ local options = {
     sidescrolloff = 8,      -- keep columns left and right cursor
     scrolloff = 6,          -- keep lines above and below cursor
     pumheight = 12,         -- maximum popup items
-    -- signcolumn = "yes:1",     -- display the signcolumn always
-    signcolumn = "no",     -- display the signcolumn always
+    signcolumn = "yes:1",     -- display the signcolumn always
     hlsearch = true,        -- highlight all search results
 
     -- not sure what these are
@@ -62,9 +60,6 @@ local options = {
     showmode = true,
     breakindent = true,
     expandtab = true,       -- tabs expand to spaces
-
-    eol = false,
-    fixeol = false
 }
 
 local load = function(opts) 
