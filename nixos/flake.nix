@@ -142,7 +142,7 @@
 
         "candreano@candreano-z4l" = homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
-          modules = overlays ++ [ ./home/caleb/candreano-z4l.nix ];
+          modules = overlays ++ [ ./home/caleb/candreano-z4l ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };

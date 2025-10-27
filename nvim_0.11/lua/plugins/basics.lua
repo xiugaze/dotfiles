@@ -19,16 +19,20 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim"
   },
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, 
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
-  },
+  -- {
+  --   'MeanderingProgrammer/render-markdown.nvim',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, 
+  --   ---@module 'render-markdown'
+  --   ---@type render.md.UserConfig
+  --   opts = {},
+  -- },
   {
     "danymat/neogen",
     config = true,
+  },
+  { 
+    "shortcuts/no-neck-pain.nvim",
+    opts = { width = 120 },
   },
   {
     "tpope/vim-sleuth",

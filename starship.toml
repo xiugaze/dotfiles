@@ -4,6 +4,7 @@ $directory\
 $hostname\
 $direnv\
 $fill\
+$shell\
 $git_branch\
 $git_commit\
 $git_state\
@@ -11,6 +12,13 @@ $nix_shell\
 $line_break\
 $character
 """
+
+[shell]
+bash_indicator="#!"
+fish_indicator="><>"
+disabled = false
+style= "bold green"
+
 
 [hostname]
 ssh_only = true

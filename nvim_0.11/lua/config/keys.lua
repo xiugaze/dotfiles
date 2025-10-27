@@ -84,6 +84,7 @@ end, "switch light dark")
 -- telescope
 
 local ts = require("telescope.builtin")
+
 nmap("<leader>ff", ts.find_files, "[f]ind [f]iles")
 nmap("<leader>fq", ts.oldfiles, "find old")
 nmap("<leader>fw", ts.grep_string, "[f]ind [w]ord")
@@ -93,7 +94,7 @@ nmap("<leader>fd", ts.diagnostics, "[f]ind [d]iagnostics")
 nmap("<leader>fe", "<cmd>Telescope oil<CR>", "[f]ind [d]iagnostics")
 nmap("<leader>fr", ts.resume, "[f]ind [r]esume") -- don't understand this
 nmap("<leader>f.", ts.oldfiles, "[f]ind recent files")
-nmap("<leader>fs", ts.builtin, "[f]ind [s]elect")
+nmap("<leader>fS", ts.builtin, "[f]ind [s]elect")
 nmap("<leader>fk", ts.keymaps, "[f]ind [k]eymaps")
 nmap("<leader>fb", ts.current_buffer_fuzzy_find, "[f]ind [b]uffer")
 -- nmap("<leader>fR", ":lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<cr>", "[f]ind [r]eferences")
@@ -106,6 +107,11 @@ nmap("<leader>fn", function()
   ts.find_files { cwd = vim.fn.stdpath 'config' }
 end, "[S]earch [N]eovim files")
 
+require('telescope').load_extension('box-drawing')
+nmap("<leader>fx", require('telescope').extensions['box-drawing']['box-drawing'], "[f]ind bo[x]")
+
+
+nmap("<leader>fs", ts.lsp_document_symbols, "[f]ind lsp [s]ymbols")
 
 nmap("<leader>dd", ":Neogen<CR>", "[dd]ocumentation")
 nmap("<leader>ng", require("neogit").open)

@@ -14,7 +14,7 @@ return {
     "nvim-telescope/telescope-ui-select.nvim",
     "albenisolmos/telescope-oil.nvim",
     { "nvim-tree/nvim-web-devicons" },
-
+    'nullromo/telescope-box-drawing.nvim',
   },
 
   config = function()
