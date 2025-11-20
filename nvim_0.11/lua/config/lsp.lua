@@ -94,6 +94,13 @@ local servers = {
     cmd = {"basedpyright-langserver", "--stdio"},
     filetypes = { "python" },
   },
+  
+  ["ruff"] = {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+
+  },
 
 
   ["texlab"] = {
@@ -111,7 +118,6 @@ local servers = {
     },
     root_markers = { '.git' },
   },
-  -- ruff = {},
 }
 
 for k, v in pairs(servers) do

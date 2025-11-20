@@ -106,6 +106,9 @@ nmap("<leader>fs", ts.lsp_document_symbols, "[f]ind lsp [s]ymbols")
 nmap("<leader>fn", function()
   ts.find_files { cwd = vim.fn.stdpath 'config' }
 end, "[S]earch [N]eovim files")
+nmap("<leader>fN", function()
+  ts.find_files { cwd = '~/.dotfiles/nixos' }
+end, "[f]ind [n]ixos files")
 
 require('telescope').load_extension('box-drawing')
 nmap("<leader>fx", require('telescope').extensions['box-drawing']['box-drawing'], "[f]ind bo[x]")
@@ -173,3 +176,6 @@ vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end
 vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
 -- stop Persistence => session won't be saved on exit
 vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
+
+
+

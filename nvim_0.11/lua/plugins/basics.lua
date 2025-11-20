@@ -9,15 +9,27 @@ return {
       }
     }
   },
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {
-      -- add any custom options here
-    }
-  },
+  -- { 'nvim-mini/mini.pairs', version = false, opts = {}, },
+  -- {
+  --   "folke/persistence.nvim",
+  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  --   opts = {
+  --     -- add any custom options here
+  --   }
+  -- },
   {
     "HiPhish/rainbow-delimiters.nvim"
+  },
+  {
+    "tpope/vim-obsession",
+    event = 'VimEnter',
+    init = function()
+        vim.api.nvim_create_autocmd('VimLeave', {
+            pattern = '*',
+            group = vim.api.nvim_create_augroup('Obsession', { clear = true }),
+            callback = function() vim.cmd('Obsess ' .. vim.fn.stdpath('data') .. '/session/Session.vim') end,
+        })
+    end,
   },
   -- {
   --   'MeanderingProgrammer/render-markdown.nvim',
@@ -72,17 +84,13 @@ return {
           { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
         },
     },
-{
-      "reybits/scratch.nvim",
-      lazy = true,
-      keys = {
-          { "<leader>ts", "<cmd>ScratchToggle<cr>", desc = "Toggle Scratch Buffer" },
-      },
-      cmd = {
-          "ScratchToggle",
-      },
-      opts = {},
-  }
+  {
+      "Speiser/bitbucket-url.nvim",
+      config = function()
+          local bitbucket = require("bitbucket-url")
+          vim.keymap.set("n", "<leader>bb", bitbucket.open_current_in_bitbucket, {})
+      end,
+  },
   -- {'romgrk/barbar.nvim',
   --   dependencies = {
   --     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status

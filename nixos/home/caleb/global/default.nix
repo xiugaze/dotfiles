@@ -48,6 +48,7 @@ in {
 
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
     userName = "Caleb Andreano";
     userEmail = "calebandreano@gmail.com";
     extraConfig = {
@@ -161,6 +162,22 @@ in {
     prefix = "C-a";
     shell = "${pkgs.fish}/bin/fish";
     mouse = true;
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resur'rect-strategy-nvim 'session'
+          set -g @resurrect-session-dir '~/.local/share/nvim/session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '15'
+        '';
+      }
+    ];
     extraConfig = ''
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"

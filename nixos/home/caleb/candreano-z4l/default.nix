@@ -5,6 +5,7 @@ let
 in {
   imports = [
     ../global
+    ../modules/neovim.nix
   ];
 
   home.stateVersion = lib.mkForce "25.05"; # Please read the comment before changing.
@@ -14,19 +15,24 @@ in {
   targets.genericLinux.enable = true;
   fonts.fontconfig.enable = true;
 
+  home.pointerCursor = {
+    x11.enable = true;
+    name = "Posy_Cursor_Black";
+    package = pkgs.posy-cursors;
+    size = 24;
+  };
+
+  nvim = {
+    enable = true;
+    lang.python = true;
+  };
 
   nixGL = {
     packages = inputs.nixgl.packages;
     defaultWrapper = "mesa";
   };
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
-
   home.packages = with pkgs; [
-    neovim
-    vscode
     starship
     lazygit
     fzf
@@ -44,11 +50,30 @@ in {
     libqalculate
     flameshot
     feh
+    neofetch
+    htop
+    blueberry
+    spotifyd
+    pavucontrol
+    pasystray
+    dunst
+    unstable.uv
+    unstable.mergiraf
+    fuc # fast unix commands
+    frangipanni
+
+    # blocked by network security lol
+    # rust-bin.stable.latest.default 
 
     ## gui apps
     (wrap unstable.firefox)
     (wrap zathura)
-
+    (wrap kitty)
+    (wrap spotify-qt)
+    i3
+    unclutter
+    # (wrap i3lock)
+    dmenu
   ];
 
   programs.zathura = {
@@ -57,15 +82,15 @@ in {
 
   programs.git = lib.mkForce {
     enable = true;
+    package = pkgs.git;
     userName = "Caleb Andreano";
-    userEmail = "caleb.andreano@spacex.com";
+    userEmail = "Caleb.Andreano@spacex.com";
     extraConfig = {
       init = {
         help.autocorrect = "prompt";
       };
     };
   };
-
 
   programs.starship = {
     enableTransience = true;
@@ -90,6 +115,8 @@ in {
         gid="z ~/src/satcode/gidney";
         roc="z ~/src/satcode/rocket";
         rsync="rsync -avP";
+        mg="mergiraf";
+        fr="frangipanni";
     };
 
     initExtra = ''
@@ -135,7 +162,34 @@ in {
     '';
   };
 
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      os.editPreset = "neovim";
+      os.editAtLine = "nvim +{{line}} {{filename}}";
+      os.editAtLineAndWait = "nvim +{{line}} {{filename}}";
+      os.edit = "nvim {{filename}}";
+    };
+
+  };
+
   programs.fish = {
+    shellAliases = {
+        cd="z";
+        g="git";
+        ga="git add -A";
+        gc="git commit -m";
+        ls="eza --icons";
+        lt="eza --tree --icons --level";
+        la="eza --icons -lah --git -s type";
+        lg="lazygit";
+        gid="z ~/src/satcode/gidney";
+        roc="z ~/src/satcode/rocket";
+        rsync="rsync -avP";
+        mg="mergiraf";
+        rm="rmz";
+        cp="cpz";
+    };
     functions = lib.mkAfter {
       gcm = {
         body = ''

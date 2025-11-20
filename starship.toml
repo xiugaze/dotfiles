@@ -14,8 +14,9 @@ $character
 """
 
 [shell]
-bash_indicator="#!"
-fish_indicator="><>"
+bash_indicator="bash"
+fish_indicator="fish"
+zsh_indicator="zsh"
 disabled = false
 style= "bold green"
 

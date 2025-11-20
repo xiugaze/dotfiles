@@ -7,6 +7,7 @@ require("config.options")
 require("config.lazy")
 require("config.lsp")
 require("config.keys")
+require("config.sx")
 
 
 vim.diagnostic.config({

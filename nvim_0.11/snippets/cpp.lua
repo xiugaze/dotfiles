@@ -4,11 +4,6 @@ return {
   }),
   s("stc", {
     t({"static_cast<"}), i(1), t({">("}), i(2), t(")")} ),
-  s("todo", d(1, function()
-      local branch = vim.fn.trim(vim.fn.system("git branch --show-current"))
-      local ticket = branch:match("SATSW%-%d+") or "<ticket>"
-      return sn(nil, {t("TODO (" .. ticket .. "): ")})
-  end)),
   }, {
   s("result", t("result_t")),
   s("u8", t("uint8_t")),
